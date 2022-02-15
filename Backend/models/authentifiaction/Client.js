@@ -11,10 +11,10 @@ const clientSchema = mongoose.Schema
     pays: { type: String, required: true },
     dateDeNaissance: { type: Date, required: true },
     email: { type: String, required: true, lowercase: true, unique: true, validate: [isEmail], trimp: true },
-    password: { type: String, required: true, minlegth: 8, maxlength: 16},
+    password: { type: String, required: true, minlegth: 8},
     telephone: { type: Number, maxlength: 10, minlegth: 10 },
     sexe: { type: Boolean, required: true }, 
-    confirmation: { type: Boolean, default: false }
+    confirmation: { type: Boolean, default:false }
 
 });
 

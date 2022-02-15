@@ -1,18 +1,22 @@
 {
-  "dependencies": {
-    "express": "^4.17.2",
-    "mongoose": "^6.2.1",
-    "nodemon": "^2.0.15",
-    "vue": "^3.2.31"
-  },
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.1",
+    "nodemon": "^2.0.15",
+    "validator": "^13.7.0",
+    "vue": "^3.2.31"
+  }
 }
