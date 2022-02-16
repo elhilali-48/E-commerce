@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const routesauth = require('./routes/authentification/client')
+const routesres = require('./routes/authentification/responsable')
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
 
@@ -22,5 +23,5 @@ app.get('*', checkClient)
 app.get('/', (req, res) => res.render('register'))
 
 app.use(routesauth)
-
+app.use(routesres)
 module.exports = app;
