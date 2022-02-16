@@ -8,3 +8,5 @@ router.post('/admin/login', userCtrl.login_post)
 router.get('/admin/logout', userCtrl.logout)
 
 module.exports = router
+
+
