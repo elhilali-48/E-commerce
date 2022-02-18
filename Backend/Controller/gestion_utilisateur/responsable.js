@@ -4,27 +4,8 @@ module.exports.updateResponsable = async (req, res) =>
 {   
     try
     {
-        await Responsable.findOneAndUpdate(
-
-            {_id: req.params.id },
-            { $set: { email: req.body.email }},
-            { $set: { adresse: req.body.adresse }},
-            { $set: { codePostale: req.body.codePostale }},
-            { $set: { ville: req.body.ville }},
-            { $set: { pays: req.body.pays }},
-            { $set: { téléphone: req.body.téléphone }},
-            { new: true, upsert: true, setDefaultsOnInsert: true },
-            (err, data) => {
-                if(err)
-                {
-                    return res.status(500).json(err)
-                } 
-                if(!err)
-                {
-                    return res.status(201).json({ data })
-                } 
-            }     
-        )
+        const data = await Responsable.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+        res.status(201).json({ data })
     }catch(error){
         console.log(error)
     }
@@ -34,8 +15,11 @@ module.exports.ajouterResponsable_post = async (req, res) =>
 {
     try
     {
+        const salt = await bcrypt.genSalt(10);
+        const hashpassword = await bcrypt.hash(req.body.password, salt)
         const responsable = await Responsable.create
         ({
+
             nom: req.body.nom,
             prenom: req.body.prenom,
             adresse: req.body.adresse,
@@ -44,7 +28,7 @@ module.exports.ajouterResponsable_post = async (req, res) =>
             pays: req.body.pays,
             dateDeNaissance: req.body.dateDeNaissance,
             email : req.body.email,
-            password: req.body.password,
+            password: req.body.hashpassword,
             telephone: req.body.telephone,
             sexe: req.body.sexe,
 
@@ -73,12 +57,12 @@ module.exports.deleteResponsable = async (req, res, next) =>
         
 }
 
-module.exports.afficherInformation = (req, res, next) =>
+module.exports.afficherInformation = async (req, res, next) =>
 {
     try
     {
-        const respo = Responsable.findById
-        ({_id: req.params.id }, {... req.body, _id: req.params.id })
+        const respo =await Responsable.findById
+        ({_id: req.params.id }, {... req.body })
 
         res.status(201).json({ respo })
     }
@@ -88,3 +72,4 @@ module.exports.afficherInformation = (req, res, next) =>
     }
     
 }
+
