@@ -47,7 +47,8 @@ module.exports.register_post = async (req, res) =>
 
 module.exports.login_get = (req, res) =>
 {
-    res.render('login');
+    res.send('HII')
+    res.render('login')
 }
 module.exports.logout = (req, res) =>
 {
