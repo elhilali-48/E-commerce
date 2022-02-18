@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const routesauth = require('./routes/authentification/client')
 const routesAuthUser = require('./routes/authentification/user')
 const routesres = require('./routes/gestion_utilisateur/responsable')
+const routescli = require('./routes/gestion_utilisateur/client')
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
 
@@ -24,6 +25,7 @@ app.get('*', checkClient)
 app.get('/', (req, res) => res.render('register'))
 
 app.use(routesauth)
-app.use(routesres)
+app.use("/responsable/gestion",routesres)
 app.use(routesAuthUser)
+app.use("/client/gestion",routescli)
 module.exports = app;
