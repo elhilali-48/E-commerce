@@ -1,4 +1,5 @@
 const Responsable = require('../../models/authentifiaction/User')
+const bcrypt = require('bcrypt');
 
 module.exports.updateResponsable = async (req, res) =>
 {   
@@ -17,6 +18,7 @@ module.exports.ajouterResponsable_post = async (req, res) =>
     {
         const salt = await bcrypt.genSalt(10);
         const hashpassword = await bcrypt.hash(req.body.password, salt)
+        
         const responsable = await Responsable.create
         ({
 
@@ -28,9 +30,10 @@ module.exports.ajouterResponsable_post = async (req, res) =>
             pays: req.body.pays,
             dateDeNaissance: req.body.dateDeNaissance,
             email : req.body.email,
-            password: req.body.hashpassword,
+            password: hashpassword,
             telephone: req.body.telephone,
             sexe: req.body.sexe,
+            role: req.body.role,
 
         })      
         res.status(201).json({ responsable: responsable._id })
