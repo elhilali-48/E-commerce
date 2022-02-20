@@ -1,15 +1,17 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
 
-const categorySchema = mongoose.Schema
+const categorieSchema = mongoose.Schema
 ({
     nom: { type:String, required: true, maxlength : 40 },
     product: [ {
-        type : mongoose.Schema.Types.ObjectId,
+        type : ObjectId,
         ref : "Produit"
     } ]
 })
 
 
-module.exports = mongoose.model('Categorie', categorySchema)
+module.exports = mongoose.model('Categorie', categorieSchema)
 
 

@@ -1,10 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+
 const routesauth = require('./routes/authentification/client')
 const routesAuthUser = require('./routes/authentification/user')
 const routesres = require('./routes/gestion_utilisateur/responsable')
 const routescli = require('./routes/gestion_utilisateur/client')
+const routesarticle = require('./routes/gestion_de_vente/article')
+const routesproduit = require('./routes/gestion_de_vente/produit')
+
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
 
@@ -28,4 +32,6 @@ app.use(routesauth)
 app.use("/responsable/gestion",routesres)
 app.use(routesAuthUser)
 app.use("/client/gestion",routescli)
+app.use("/responsable/article", routesarticle)
+app.use("/responsable/produit", routesproduit)
 module.exports = app;
