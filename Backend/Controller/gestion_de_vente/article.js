@@ -13,13 +13,14 @@ module.exports.ajouterArticle = async (req, res) =>
             description: req.body.description,
             prix: req.body.prix,
             avis: req.body.avis,
+            produit: req.body.produit
 
         })      
         res.status(201).json({ message: "ok"})
     }
     catch(err)
     {
-        res.status(400).json({ err })
+        res.status(400).json({ err: "fhkfvkjf" })
     }    
 }
 

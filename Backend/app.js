@@ -9,6 +9,7 @@ const routescli = require('./routes/gestion_utilisateur/client')
 const cors =require('cors')
 const routesarticle = require('./routes/gestion_de_vente/article')
 const routesproduit = require('./routes/gestion_de_vente/produit')
+const routescategorie = require('./routes/gestion_de_vente/categorie')
 
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
@@ -43,4 +44,8 @@ app.use(routesAuthUser)
 app.use("/client/gestion",routescli)
 app.use("/responsable/article", routesarticle)
 app.use("/responsable/produit", routesproduit)
+app.use("/responsable/categorie", routescategorie)
+
+routescategorie
+
 module.exports = app;
