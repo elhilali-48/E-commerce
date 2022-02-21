@@ -10,7 +10,7 @@ module.exports.ajouterProduit = async (req, res) =>
         await Produit.create
         ({
             nom: req.body.nom,
-            articles: req.body.articles
+            categorie: req.body.categorie
         })      
         res.status(201).json({ message: "ok"})
     }

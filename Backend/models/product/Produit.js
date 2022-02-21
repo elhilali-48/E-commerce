@@ -4,11 +4,11 @@ const ObjectId = Schema.ObjectId
 
 const produitSchema = mongoose.Schema(
     {
-        nom: { type :String} ,
-        categorie : {
+        nom: { type :String },
+        categorie: {
             type : ObjectId,
             ref : 'Categorie',
-            required : true,
+            required: true
         }
     }
 )
