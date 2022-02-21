@@ -5,11 +5,20 @@ const routesauth = require('./routes/authentification/client')
 const routesAuthUser = require('./routes/authentification/user')
 const routesres = require('./routes/gestion_utilisateur/responsable')
 const routescli = require('./routes/gestion_utilisateur/client')
+const cors =require('cors')
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
 
 const app = express();
-
+app.use(cors({
+    origin : "http://localhost:8080",
+}))
+// app.use((req,res,next)=>{
+//     res.setHeader("Access-Control-Allow-Origin","*")
+//     res.setHeader("Access-Control-Allow-Methods","*")
+//     res.setHeader("Access-Control-Allow-Headers","Authorization")
+//     next()
+// })
 mongoose.connect('mongodb+srv://admin:admin@cluster0.nctg3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -28,4 +37,5 @@ app.use(routesauth)
 app.use("/responsable/gestion",routesres)
 app.use(routesAuthUser)
 app.use("/client/gestion",routescli)
+
 module.exports = app;

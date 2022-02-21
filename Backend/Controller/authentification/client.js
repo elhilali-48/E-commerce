@@ -69,14 +69,14 @@ module.exports.login_post = async (req, res) =>
 
             if(!passwordValide)
              {
-                 console.log('password incorrecte')
+                 res.status(404).json("Password no mathc")
              }
              else
              {
                  try{
                         const token = createToken(client._id)
                         res.cookie('jwt', token, { httpOnly: true })
-                        res.status(200).json({ client: client._id })
+                        res.status(200).json({ client: client })
                  }
                  catch(err){
                     res.status(400).json({ errors })
