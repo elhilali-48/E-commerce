@@ -5,7 +5,7 @@ module.exports.updateResponsable = async (req, res) =>
 {   
     try
     {
-        const data = await Responsable.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+        const data = await Responsable.updateOne({ _id: req.params.id }, { ...req.body})
         res.status(201).json({ data })
     }catch(error){
         console.log(error)
@@ -49,7 +49,7 @@ module.exports.deleteResponsable = async (req, res, next) =>
     try
     {
        await Responsable.findOneAndDelete
-        ({ _id: req.params.id }, { ...req.body, _id: req.params.id })    
+        ({ _id: req.params.id }, { ...req.body,})    
 
         res.status(201).json({ message: 'ok' })
     }
