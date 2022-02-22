@@ -7,12 +7,14 @@ module.exports.ajouterProduit = async (req, res) =>
 {
     try
     {  
-        await Produit.create
+        const data = await Produit.create
         ({
+
             nom: req.body.nom,
             categorie: req.body.categorie
+
         })      
-        res.status(201).json({ message: "ok"})
+        res.status(201).json({ data, message: "l\'article a bien été creée"})
     }
     catch(err)
     {
@@ -20,47 +22,68 @@ module.exports.ajouterProduit = async (req, res) =>
     }    
 }
 
-module.exports.afficher_information = async (req, res) =>
+module.exports.voirall = async (req, res) =>
 {
-    try
-    {
-        const produit =await Produit.findOne({_id: req.params.id})
+    try {
 
-        res.status(201).json({ produit })
-    }
-    catch(err)
-    {
-        res.status(400).json({ err })
-    }
-}
+        const data = await Article.find
+        (
 
-module.exports.insertProduit = async (req, res) =>
-{
-    try
-    {  
-        await Produit.updateMany
-        ( {},{ $push:{ articles: req.body.articles } })      
-        res.status(201).json({ message: "ok"})
-    }
-    catch(err)
-    {
-        res.status(400).json({ err: err.message })
-    }    
-}
-
-module.exports.deleteProduit = async (req, res, next) =>
-{   
-    try
-    {
-
-        await Article.findOneAndRemove(req.body.articles)
-        await Produit.findByIdAndRemove(req.params.id)
-           
-        res.status(201).json({ message: 'ok' })
-    }
-    catch(err)
-    {
-        res.status(400).json({ err: err.message })
-    }
+        )
+        res.status(200).json(data)
         
+    } 
+    catch (err) 
+    {
+       res.status(400).json({err}) 
+    }
+}
+
+module.exports.modifierArticle = async (req, res) =>
+{
+    try 
+    {
+        const data = await Article.findOneAndUpdate
+        (
+            {_id: req.params.id},
+            { ...req.body}
+        )
+        res.status(201).json(data)
+    } 
+    catch (err) 
+    {
+        res.status(400).json(err)
+    }
+}
+
+module.exports.supprimerArticle = async (req, res) =>
+{
+    try 
+    {
+        await Article.findOneAndRemove
+        (
+            {_id: req.params.id}
+        )   
+        res.status(201).json('l\'article a bien été supprimer')
+    } 
+    catch (err) 
+    {
+        res.status(400).json(err, err.message)
+    }
+}
+
+module.exports.voirArticle = async (req, res) =>
+{
+    try 
+    {
+        const data = await Produit.findOne
+        (
+            {_id: req.params.id},
+        )
+        res.status(200).json(data)
+    } 
+    catch (err) 
+    {
+        res.status(400).json(err)
+    }
 }
