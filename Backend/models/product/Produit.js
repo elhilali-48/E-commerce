@@ -9,6 +9,10 @@ const produitSchema = mongoose.Schema(
             type : ObjectId,
             ref : 'Categorie',
             required: true
+        },
+        article: {
+            type : ObjectId,
+            ref : 'Article',
         }
     }
 )

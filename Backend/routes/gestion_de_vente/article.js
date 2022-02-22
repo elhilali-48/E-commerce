@@ -4,5 +4,9 @@ const router  = express.Router();
 
 
 router.post('/ajouter', articleCtrl.ajouterArticle);
+router.put('/modifier/:id', articleCtrl.modifierArticle);
+router.delete('/supprimer/:id', articleCtrl.supprimerArticle);
+router.get('/voirarticle/:id', articleCtrl.voirArticle);
+router.get('/voir', articleCtrl.voirall);
 
 module.exports = router

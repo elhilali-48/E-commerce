@@ -4,9 +4,11 @@ const router  = express.Router();
 
 
 router.post('/ajouter', produitCtrl.ajouterProduit);
-router.get('/information/:id', produitCtrl.afficher_information);
-router.post('/inserer/:id', produitCtrl.insertProduit);
-router.delete('/supprimer/:id', produitCtrl.deleteProduit);
+router.put('/modifier/:id', produitCtrl.modifierproduit);
+router.delete('/supprimer/:id', produitCtrl.supprimerProduit);
+router.get('/voirarticle/:id', produitCtrl.voirProduit);
+router.get('/voir', produitCtrl.voirall);
+
 
 
 

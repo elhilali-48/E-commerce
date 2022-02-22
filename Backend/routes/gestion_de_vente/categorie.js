@@ -4,6 +4,7 @@ const router  = express.Router();
 
 
 router.post('/ajouter', categorieCtrl.ajouterCategorie);
+router.get('/voir', categorieCtrl.voirall);
 
 
 
