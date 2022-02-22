@@ -11,7 +11,8 @@
                 <input class="form-control mr-5 " type="search" placeholder="Chercher un produit" aria-label="Search">
                 </form>
                 <div>
-                   <router-link to="/signIn">Se Connecter</router-link>
+                   <router-link to="/signIn" class="mx-2">Se Connecter</router-link>
+                   <router-link to="/register">S'inscrire</router-link>
                 </div>
 
         </div>

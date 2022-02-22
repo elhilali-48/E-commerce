@@ -28,7 +28,6 @@
 
 <script>
 import axios from 'axios'
-// import {required} from 'vuelidate/lib/validators/'
 export default {
   methods: {
       connecter(){
@@ -36,7 +35,7 @@ export default {
             email : this.client.email,
             password : this.client.password
         }).then((res)=>{
-            alert(res.data.client.nom)
+            console.log(res)
         }).catch((err)=>{
             this.errors.push(err.message)
         })
@@ -44,6 +43,8 @@ export default {
       checkForm(e){
            if (this.client.email && this.client.password) {
                 this.connecter()
+
+                // this.$router.push({name: 'HomePage'})
              }
 
             this.errors = [];

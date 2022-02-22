@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import SignIn from '../views/Authentification/SignIn.vue'
 import RegisterIn from '../views/Authentification/RegisterIn.vue'
+import HomePage from "../views/Pages/HomePage.vue"
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path : "/",
+    name : "HomePage",
+    component : HomePage
   },
+
   {
     path : '/signIn',
     name : 'signin',
@@ -32,6 +33,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: "history",
   routes
 })
 
