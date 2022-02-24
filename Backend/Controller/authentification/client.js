@@ -75,8 +75,9 @@ module.exports.login_post = async (req, res) =>
              {
                  try{
                         const token = createToken(client._id)
+                        console.log(token)
                         res.cookie('jwt', token, { httpOnly: true })
-                        res.status(200).json({ client: client })
+                        res.status(200).json({ client: client, token })
                  }
                  catch(err){
                     res.status(400).json({ errors })
@@ -84,11 +85,13 @@ module.exports.login_post = async (req, res) =>
              }
             
         }
-
-        console.log('client non trouvé')
+        else{
+            console.log('client non trouvé')
+        }
+        
 
         
-        res.status(201).json({ client: client._id })
+        res.status(201).json({ client: client._id})
     }
     catch(err)
     {

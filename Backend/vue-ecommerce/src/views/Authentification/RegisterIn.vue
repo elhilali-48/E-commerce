@@ -74,70 +74,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row d-flex justify-content-center">
-         <div class="col-4 mx-0">
-    <form @submit="creerCompte">
-        
-        <div class="form-group">
-            <label for="nom">Nom</label>
-            <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Nom" v-model="client.nom">
-        </div>
-        <div class="form-group">
-            <label for="prenom">prenom</label>
-            <input type="text" class="form-control" id="prenom" aria-describedby="emailHelp" placeholder="Prenom" v-model="client.prenom">
-        </div>
-        <div class="form-group">
-            <label for="prenom">Date de naissance</label>
-            <input type="date" class="form-control" id="date" aria-describedby="emailHelp" v-model="client.dateDeNaissance">
-        </div>
-        <div class="form-group">
-            <label for="Adresse">Adresse</label>
-            <input type="text" class="form-control" id="Adresse" aria-describedby="emailHelp" placeholder="Adresse" v-model="client.adresse">
-        </div>
-        <div class="form-group">
-            <label for="ville">Ville</label>
-            <input type="text" class="form-control" id="ville" aria-describedby="emailHelp" placeholder="ville" v-model="client.ville">
-        </div>
-        <div class="form-group">
-            <label for="code">Code postal</label>
-            <input type="number" class="form-control" id="code" aria-describedby="emailHelp" placeholder="code" v-model="client.codePostale">
-        </div>
-         <div class="form-group">
-            <label for="pays">Pays</label>
-            <input type="text" class="form-control" id="pays" aria-describedby="emailHelp" placeholder="pays" v-model="client.pays">
-        </div>
-         <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email" v-model="client.email">
-        </div>
-         <div class="form-group">
-            <label for="telephone">Telephone</label>
-            <input type="number" class="form-control" id="telephone" aria-describedby="emailHelp" placeholder="telephone" v-model="client.telephone">
-        </div>
-         <div class="form-group">
-            <label for="Sexe">Sexe</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="true" checked v-model="client.sexe">
-                <label class="form-check-label" for="exampleRadios1">
-                    Femme
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="false" v-model="client.sexe">
-                <label class="form-check-label" for="exampleRadios2">
-                    Homme
-                </label>
-             </div>     
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="client.password">
-        </div>
-      
-        <button type="submit" class="btn btn-primary">Créer mon compte</button>
-    </form>
-  </div>
-    </div> -->
 </template>
 
 <script>
@@ -176,8 +112,7 @@ export default {
               pays : this.client.pays,
               dateDeNaissance : this.client.dateDeNaissance,
           }).then((res)=>{
-              console.log(res)
-              
+                console.log(res)              
           }).catch((err)=>{
               alert(err)
           })

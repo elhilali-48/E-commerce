@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-4 mx-auto border border-primary rounded border-bold py-4 px-4">
-            <h1 class="text-center">Se connecter</h1>
+            <h1 class="text-center">{{token}}</h1>
             <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
                 <ul>
@@ -28,7 +28,6 @@
 
 <script>
 import axios from 'axios'
-// import {required} from 'vuelidate/lib/validators/'
 export default {
   methods: {
       connecter(){
@@ -36,7 +35,7 @@ export default {
             email : this.client.email,
             password : this.client.password
         }).then((res)=>{
-            alert(res.data.client.nom)
+            console.log(res)
         }).catch((err)=>{
             this.errors.push(err.message)
         })
@@ -44,6 +43,8 @@ export default {
       checkForm(e){
            if (this.client.email && this.client.password) {
                 this.connecter()
+
+                // this.$router.push({name: 'HomePage'})
              }
 
             this.errors = [];
@@ -57,6 +58,11 @@ export default {
 
             e.preventDefault();
         }
+  },
+  computed:{
+      token(){
+            return  this.$store.state.token
+      }
   },
  name : "SignIn",
   data () {
