@@ -10,10 +10,10 @@ const produitSchema = mongoose.Schema(
             ref : 'Categorie',
             required: true
         },
-        article: {
+        article: [{
             type : ObjectId,
             ref : 'Article',
-        }
+        }]
     }
 )
 

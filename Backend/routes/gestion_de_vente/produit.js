@@ -4,10 +4,8 @@ const router  = express.Router();
 
 
 router.post('/ajouter', produitCtrl.ajouterProduit);
-router.put('/modifier/:id', produitCtrl.modifierproduit);
-router.delete('/supprimer/:id', produitCtrl.supprimerProduit);
-router.get('/voirarticle/:id', produitCtrl.voirProduit);
-router.get('/voir', produitCtrl.voirall);
+router.get('/voirproduit/:id', produitCtrl.voirProduit);
+
 
 
 
