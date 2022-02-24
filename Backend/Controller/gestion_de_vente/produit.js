@@ -26,7 +26,7 @@ module.exports.voirall = async (req, res) =>
 {
     try {
 
-        const data = await Article.find
+        const data = await Produit.find
         (
 
         )
@@ -39,11 +39,11 @@ module.exports.voirall = async (req, res) =>
     }
 }
 
-module.exports.modifierArticle = async (req, res) =>
+module.exports.modifierproduit = async (req, res) =>
 {
     try 
     {
-        const data = await Article.findOneAndUpdate
+        const data = await Produit.findOneAndUpdate
         (
             {_id: req.params.id},
             { ...req.body}
@@ -56,11 +56,11 @@ module.exports.modifierArticle = async (req, res) =>
     }
 }
 
-module.exports.supprimerArticle = async (req, res) =>
+module.exports.supprimerProduit = async (req, res) =>
 {
     try 
     {
-        await Article.findOneAndRemove
+        await Produit.findOneAndRemove
         (
             {_id: req.params.id}
         )   
@@ -72,11 +72,11 @@ module.exports.supprimerArticle = async (req, res) =>
     }
 }
 
-module.exports.voirArticle = async (req, res) =>
+module.exports.voirProduit = async (req, res) =>
 {
     try 
     {
-        const data = await Produit.findOne
+        const data = await Produit.find
         (
             {_id: req.params.id},
         )

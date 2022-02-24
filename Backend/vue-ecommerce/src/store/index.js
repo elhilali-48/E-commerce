@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: ''
+    token  : "I am token"
   },
   getters: {
   },
@@ -19,3 +19,6 @@ export default new Vuex.Store({
   modules: {
   }
 })
+
+
+

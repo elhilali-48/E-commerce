@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-4 mx-auto border border-primary rounded border-bold py-4 px-4">
-            <h1 class="text-center">Se connecter</h1>
+            <h1 class="text-center">{{token}}</h1>
             <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
                 <ul>
@@ -58,6 +58,11 @@ export default {
 
             e.preventDefault();
         }
+  },
+  computed:{
+      token(){
+            return  this.$store.state.token
+      }
   },
  name : "SignIn",
   data () {
