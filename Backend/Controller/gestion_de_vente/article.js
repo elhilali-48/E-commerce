@@ -36,7 +36,7 @@ module.exports.voirall = async (req, res) =>
         const data = await Article.find
         (
 
-        )
+        ).populate('produit')
         res.status(200).json(data)
         
     } 
