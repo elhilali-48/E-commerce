@@ -43,6 +43,9 @@ module.exports.modifierproduit = async (req, res) =>
 {
     try 
     {
+
+
+
         const data = await Produit.findOneAndUpdate
         (
             {_id: req.params.id},
@@ -79,12 +82,12 @@ module.exports.voirProduit = async (req, res) =>
         const data = await Produit.find
         (
             {_id: req.params.id},
-            {...req.body}
-        )
+            { ...req.body }
+        ).populate('article')
         res.status(200).json(data)
     } 
     catch (err) 
     {
-        res.status(400).json(err)
+        res.status(400).json( err.message)
     }
 }

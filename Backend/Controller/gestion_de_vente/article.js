@@ -1,11 +1,12 @@
 const Article = require('../../models/product/Article')
+const Produit = require('../../models/product/Produit')
 
 
 module.exports.ajouterArticle = async (req, res) =>
 {
     try
     {  
-        await Article.create
+        const article = await Article.create
         ({
 
             nom: req.body.nom,
@@ -15,7 +16,11 @@ module.exports.ajouterArticle = async (req, res) =>
             avis: req.body.avis,
             produit: req.body.produit
 
-        })      
+        }) 
+        await Produit.updateOne
+        (
+            { _id: req.body.produit }, { $push: { article: article }}
+        )     
         res.status(201).json({ message: "l\'article a bien été creée"})
     }
     catch(err)
