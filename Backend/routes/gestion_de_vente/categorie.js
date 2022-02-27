@@ -4,7 +4,11 @@ const router  = express.Router();
 
 
 router.post('/ajouter', categorieCtrl.ajouterCategorie);
+router.put('/modifier/:id', categorieCtrl.modifierCategorie);
+router.delete('/supprimer/:id', categorieCtrl.supprimerCategorie);
+router.get('/voirCategorie/:id', categorieCtrl.voirCategorie);
 router.get('/voir', categorieCtrl.voirall);
+
 
 
 
