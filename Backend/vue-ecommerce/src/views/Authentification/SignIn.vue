@@ -1,63 +1,60 @@
 <template>
     <div class="row">
         <div class="col-4 mx-auto border border-primary rounded border-bold py-4 px-4">
-            <h1 class="text-center">{{token}}</h1>
-            <p v-if="errors.length">
-                <b>Please correct the following error(s):</b>
-                <ul>
-                <li v-for="(error,i) in errors" :key="i">{{ error }}</li>
-                </ul>
-            </p>
-            <form @submit="checkForm">
+            <h1 class="text-center">Se connecter</h1>
+            <span v-if="error" class="alert alert-danger"> {{error}}</span>
+            <form @submit.prevent="submitForm" >
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input v-model="client.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
+                     <label for="validationCustomUsername" class="form-label ">Email</label>
+                    <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input v-model="email" type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" >
+                    <span v-if="!$v.email.required && $v.email.$dirty" class="text-danger" >
+                        Vous devez indiquer une adresse email valide.
+                    </span>
+                    <span v-if="!$v.email.email && $v.email.$dirty" class="text-danger" >
+                        C'est pas un email.
+                    </span>
+                    </div>
+                </div>  
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input v-model="client.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <input v-model="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <span v-if="!$v.password.required  && $v.password.$dirty" class="text-danger">
+                        Vous devez indiquer un mot de passe.
+                    </span>
+                     <span v-if="!$v.password.minLength  && $v.password.$dirty" class="text-danger">
+                        Le mot de passe se compose minimum de 8 caractère.
+                    </span>
                 </div>
-               
+                
                 <button  type="submit" class="btn btn-primary">Se connecter</button>
             </form>
-        </div>
+        </div> 
         
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import {required,email,minLength} from 'vuelidate/lib/validators'
 export default {
   methods: {
       connecter(){
-        axios.post('http://localhost:3500/login',{
-            email : this.client.email,
-            password : this.client.password
-        }).then((res)=>{
-            console.log(res)
-        }).catch((err)=>{
-            this.errors.push(err.message)
-        })
+          this.$store.dispatch('login',{
+              email : this.email,
+              password : this.password
+          })
       },
-      checkForm(e){
-           if (this.client.email && this.client.password) {
-                this.connecter()
 
-                // this.$router.push({name: 'HomePage'})
-             }
+      submitForm(){
+          this.$v.$touch()
+            
+          if(!this.$v.$invalid){
+            this.connecter()
+          }
+           
 
-            this.errors = [];
-
-            if (!this.email) {
-                this.errors.push('email required.');
-            }
-            if (!this.password) {
-                this.errors.push('password required.');
-            }
-
-            e.preventDefault();
-        }
+      }
   },
   computed:{
       token(){
@@ -66,13 +63,21 @@ export default {
   },
  name : "SignIn",
   data () {
-    return {
-        client : {
-            email : "",
-            password : ""
-        },
-        errors : []
+    return { 
+        email : "",
+        password : "",
+        error : ""
     }
+  },
+  validations:{
+      email : {
+          required,
+          email
+      },
+      password :{
+          minLength : minLength(8),
+          required
+      }
   },
 
 
