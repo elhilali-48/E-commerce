@@ -3,13 +3,23 @@ import VueRouter from 'vue-router'
 import SignIn from '../views/Authentification/SignIn.vue'
 import RegisterIn from '../views/Authentification/RegisterIn.vue'
 import HomePage from "../views/Pages/HomePage.vue"
+import store from '@/store'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path : "/",
     name : "HomePage",
-    component : HomePage
+    component : HomePage,
+    beforeEnter: (to, from, next) => {
+     console.log(store.state)
+      if(store.state.token == ""){
+        return next({
+          path: '/signin'
+        })
+      }
+      next()
+    }
   },
 
   {
@@ -36,5 +46,7 @@ const router = new VueRouter({
   mode: "history",
   routes
 })
+
+
 
 export default router

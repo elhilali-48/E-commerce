@@ -62,6 +62,7 @@ module.exports.login_post = async (req, res) =>
     try
     {
         const client = await Client.findOne({ email: req.body.email })
+        
 
         if(client)
         {
@@ -80,18 +81,18 @@ module.exports.login_post = async (req, res) =>
                         res.status(200).json({ client: client, token })
                  }
                  catch(err){
-                    res.status(400).json({ errors })
+                    res.status(400).json({ err: err.message })
                  }
              }
             
         }
         else{
-            console.log('client non trouvé')
+            res.status(404).json({message : "Aucn client est enregistrer avec cet adresse emailu"})
         }
         
 
         
-        res.status(201).json({ client: client._id})
+        
     }
     catch(err)
     {
