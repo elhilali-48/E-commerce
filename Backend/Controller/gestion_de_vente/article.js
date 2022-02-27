@@ -1,4 +1,5 @@
 const Article = require('../../models/product/Article')
+const Panier = require('../../models/product/Panier')
 const Produit = require('../../models/product/Produit')
 
 
@@ -93,4 +94,9 @@ module.exports.voirArticle = async (req, res) =>
     {
         res.status(400).json(err)
     }
+}
+
+module.exports.insererArticle = async(req, res) =>
+{
+   
 }

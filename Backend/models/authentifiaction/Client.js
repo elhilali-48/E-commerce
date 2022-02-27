@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const {isEmail} = require('validator')
+const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
 const clientSchema = mongoose.Schema
 ({
     nom:{ type: String, required: true, maxlength: 30, minlegth: 2 },
@@ -13,7 +15,12 @@ const clientSchema = mongoose.Schema
     password: { type: String, required: true, minlegth: 8},
     telephone: { type: Number, maxlength: 10, minlegth: 10 },
     sexe: { type: Boolean, required: true }, 
-    confirmation: { type: Boolean, default:false }
+    confirmation: { type: Boolean, default:false },
+    panier:
+    {
+        type : ObjectId,
+        ref : 'Panier',
+    }
 
 });
 

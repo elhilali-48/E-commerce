@@ -9,8 +9,4 @@ router.delete('/supprimer/:id', categorieCtrl.supprimerCategorie);
 router.get('/voirCategorie/:id', categorieCtrl.voirCategorie);
 router.get('/voir', categorieCtrl.voirall);
 
-
-
-
-
 module.exports = router
