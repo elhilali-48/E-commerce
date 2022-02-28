@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Client = require('../../models/authentifiaction/Client');
+const Panier = require('../../models/product/Panier');
 
 
 const createToken = (id) => {
@@ -36,8 +37,9 @@ module.exports.register_post = async (req, res) =>
             sexe: req.body.sexe,
             confirmation: req.body.confirmation,
 
-        })      
-        res.status(201).json({ client: client._id })
+        })
+           
+        res.status(201).json({ client, message: "le client a bien été créer" })
     }
     catch(err)
     {

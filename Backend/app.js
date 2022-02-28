@@ -1,15 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+const cors =require('cors')
 
 const routesauth = require('./routes/authentification/client')
 const routesAuthUser = require('./routes/authentification/user')
 const routesres = require('./routes/gestion_utilisateur/responsable')
 const routescli = require('./routes/gestion_utilisateur/client')
-const cors =require('cors')
 const routesarticle = require('./routes/gestion_de_vente/article')
 const routesproduit = require('./routes/gestion_de_vente/produit')
 const routescategorie = require('./routes/gestion_de_vente/categorie')
+const routespanier = require('./routes/livraison/panier')
 
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
@@ -38,13 +39,14 @@ app.use(cookieParser())
 app.get('*', checkClient)
 app.get('/', (req, res) => res.render('register'))
 
-app.use(routesauth)
+app.use("/client", routesauth)
 app.use("/responsable/gestion",routesres)
 app.use(routesAuthUser)
 app.use("/client/gestion",routescli)
 app.use("/responsable/article", routesarticle)
 app.use("/responsable/produit", routesproduit)
 app.use("/responsable/categorie", routescategorie)
+app.use("/achat/panier", routespanier)
 
 routescategorie
 

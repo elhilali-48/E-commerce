@@ -10,7 +10,14 @@ const livraisonSchema = mongoose.Schema
         ref : 'Article',
 
     }],
+    livraison: 
+    {
+        type: ObjectId,
+        ref: 'Livraison',
+    },
+    totale: { type: Number },
     
+
 },
 { timestamps: true }
 )

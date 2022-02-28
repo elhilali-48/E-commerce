@@ -1,19 +1,11 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const ObjectId = Schema.ObjectId
 
 const panierSchema = mongoose.Schema
 ({
-    articles: 
-    [{
-        type : ObjectId,
-        ref : 'Article',
-
-    }],
-    totale: { type: Number}
-},
-{ timestamps: true }
-)
+    
+    produitselectionner: { type: Array, default: '' },
+    prix_totale: {type: Number, default: 0}
+})
 
 
 module.exports = mongoose.model('Panier', panierSchema)
