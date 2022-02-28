@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    
+    <h1>DQSDQSDSQDQSD</h1>
+   <h1>here !  </h1>
    {{user.id}}
  
   </div>
@@ -34,7 +35,9 @@ export default {
   } 
   },
   created(){
+   
     this.getUserDetails();
-  }
+  },
+  
 }
 </script>

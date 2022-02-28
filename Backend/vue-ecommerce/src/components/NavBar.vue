@@ -12,9 +12,9 @@
                 <input class="form-control mr-5 " type="search" placeholder="Chercher un produit" aria-label="Search">
                 </form>
                 <div>
-                   <router-link v-if="token == ''"  to="/signIn" class="mx-2">Se Connecter</router-link>
-                   <router-link v-if='token == ""' to="/register">S'inscrire</router-link>
-                   <button v-if="token != ''" class="btn btn-outline-success "  @click="logout">Logout</button>
+                   <router-link v-if="!check"  to="/signIn" class="mx-2">Se Connecter</router-link>
+                   <router-link v-if='!check' to="/register">S'inscrire</router-link>
+                   <button v-if="check" class="btn btn-outline-success "  @click="logout">Logout</button>
                 </div>
 
         </div>
@@ -26,7 +26,8 @@
 export default {
   data () {
     return {
-        token :''
+        token :'',
+        check : false
     }
   },
     name: "NavBar",
@@ -42,7 +43,14 @@ export default {
         },
     },
     mounted(){
-        this.getUserDetails()
+        const login =  localStorage.getItem('user')
+
+        if(login){
+          this.check = true
+        }
+        else{
+          this.check = false
+        }
     }
 
 }

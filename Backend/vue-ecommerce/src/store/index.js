@@ -7,20 +7,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token  : "",
-    client :{}
+    client :{},
+    isLogged : false
   },
   getters: {
     getToken(state){
       return state.token
+    },
+    getStatus(state){
+      return state.isLogged
     }
   },
   mutations: {
     setToken (state,val){
       state.token = val
     },
-    setClient(state, val){
-      state.client = val
-      
+    setClient(state){
+      state.isLogged = true
     }
     
   },
@@ -31,20 +34,28 @@ export default new Vuex.Store({
         password : form.password
       }).then((res)=>{
         console.log(res.data.token)
-       localStorage.setItem('user',res.data.token)
-        dispatch('fetchClient', res.data.client)
+        localStorage.setItem('user',res.data.token)
+        dispatch('loginSuccess')
         dispatch('fetchToken', res.data.token)
       })
-      
-  
     },
-    async fetchClient({commit},client){
-      commit('setClient',client)
-      commit('setToken',)
+    async loginSuccess({commit}){
+      commit('setClient') 
       router.push('/')
     },
     async fetchToken({commit},token){
       await commit('setToken',token)
+    },
+
+    async loginAdmin({dispatch}, form){
+     
+      await axios.post('http://localhost:3500/admin/login',{
+        email : form.email,
+        password : form.password
+      }).then((res)=>{
+        console.log(res)
+        dispatch('fetchUser')
+      })
     }
 
   },

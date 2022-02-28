@@ -3,7 +3,7 @@
   <div id="app">
     <NavBar class="mb-5"/>
     
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
