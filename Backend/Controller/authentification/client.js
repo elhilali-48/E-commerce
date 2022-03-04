@@ -77,13 +77,13 @@ module.exports.login_post = async (req, res) =>
              else
              {
                  try{
-                        const token = createToken(client._id)
+                        const token = createToken(client)
                         console.log(token)
                         res.cookie('jwt', token, { httpOnly: true })
                         res.status(200).json({ client: client, token })
                  }
                  catch(err){
-                    res.status(400).json({ err: err.message })
+                    res.status(400).json({ err: err.message , message:"Error" })
                  }
              }
             

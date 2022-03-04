@@ -6,13 +6,14 @@ const routes = [
         path:'/admin/',
         name : "HomePage",
         component : Home,
-       
+    
     },
     {
         path : "/admin/login",
         name : "LoginPage",
         component : Login,
-    }
+    },
+
 ]
 
 export default routes

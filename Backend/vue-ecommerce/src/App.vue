@@ -1,15 +1,23 @@
 <template>
 
   <div id="app">
-    <NavBar class="mb-5"/>
+      
     
     <router-view></router-view>
   </div>
 </template>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+  @import url('https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css');
+  /* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  } */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -30,10 +38,7 @@ nav a.router-link-exact-active {
 }
 </style>
 <script>
-import NavBar from './components/NavBar.vue'
 export default {
-  components:{
-    NavBar,
-  }
+  
 }
 </script>

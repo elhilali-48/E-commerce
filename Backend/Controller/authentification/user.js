@@ -24,7 +24,7 @@ module.exports.login_post = async (req,res)=>{
             else{
                 
                 try {
-                    const token = createToken(user._id)
+                    const token = createToken(user)
                     res.cookie('jwt', token, { httpOnly: true })
                     res.status(200).json({ user: user, token })
                 } catch (error) {

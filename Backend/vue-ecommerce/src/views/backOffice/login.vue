@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="card bg-light mx-auto" style="width :50%">
+    <div class="card bg-light mx-auto my-5" style="width :50%">
       <div class="text-center text-primary py-3 text-shadow-3">
            <h1 class=''>Admin </h1>
         </div>
