@@ -1,5 +1,8 @@
 <template>
-    <div class="row">
+    <div>
+        <NavBar class="mb-5"/>
+        <div class="row">
+        
         <div class="col-4 mx-auto border border-primary rounded border-bold py-4 px-4">
             <h1 class="text-center">Se connecter</h1>
             <span v-if="error" class="alert alert-danger"> {{error}}</span>
@@ -33,10 +36,13 @@
         </div> 
         
     </div>
+    </div>
+    
 </template>
 
 <script>
 import {required,email,minLength} from 'vuelidate/lib/validators'
+import NavBar from '../../components/NavBar.vue'
 export default {
   methods: {
       connecter(){
@@ -55,6 +61,9 @@ export default {
            
 
       }
+  },
+  components :{
+      NavBar
   },
   computed:{
       token(){

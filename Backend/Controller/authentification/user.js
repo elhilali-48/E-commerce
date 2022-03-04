@@ -12,7 +12,7 @@ module.exports.login_get = (req,res)=>{
 }
 
 module.exports.login_post = async (req,res)=>{
-   
+   console.log(req.body.email)
     try {
         const user = await User.findOne({email:req.body.email})
         if (user){
@@ -22,15 +22,15 @@ module.exports.login_post = async (req,res)=>{
                res.send('pasword not valid')
             }
             else{
-                console.log("passwordValid")
+                
                 try {
-                    const token = createToken(user._id)
+                    const token = createToken(user)
                     res.cookie('jwt', token, { httpOnly: true })
-                    res.status(200).json({ user: user._id })
+                    res.status(200).json({ user: user, token })
                 } catch (error) {
                     res.status(400).json({ errors })
                 }
-                res.status(201).json({ user: user._id })
+                res.status(201).json({ user: user })
 
             }
         }

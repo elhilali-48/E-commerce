@@ -87,7 +87,7 @@ console.log(req.cookie);
                         res.status(200).json({ client: client, token })
                  }
                  catch(err){
-                    res.status(400).json({ err: err.message })
+                    res.status(400).json({ err: err.message , message:"Error" })
                  }
              }
             

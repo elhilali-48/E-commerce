@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    
-   {{user.id}}
+    <NavBar class="mb-5"/>
+   <h1> Welcome {{user.id.nom}} </h1>
  
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
       try {
       //decode token here and attach to the user object
       let decoded = VueJwtDecode.decode(token);
+      
       this.user = decoded;    
       } catch (error) {
         // return error in production env
@@ -34,7 +35,12 @@ export default {
   } 
   },
   created(){
+   
     this.getUserDetails();
-  }
+  },
+  
 }
 </script>
+<style>
+
+</style>
