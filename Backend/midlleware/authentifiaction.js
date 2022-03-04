@@ -36,7 +36,7 @@ const checkClient = (req, res, next) => {
             }
         })
     } else {
-        res.locals.cleint = null
+        res.locals.client = null
         next()
     }
 }

@@ -16,6 +16,8 @@ module.exports.register_get = (req, res) =>
 
 module.exports.register_post = async (req, res) =>
 {   
+    console.log(res.client);
+    console.log(req.cookie);
     try
     {
 //generate password
@@ -49,7 +51,7 @@ module.exports.register_post = async (req, res) =>
 
 module.exports.login_get = (req, res) =>
 {
-    res.send('HII')
+
     res.render('login')
 }
 module.exports.logout = (req, res) =>
@@ -61,6 +63,8 @@ module.exports.logout = (req, res) =>
 //login post
 module.exports.login_post = async (req, res) =>
 {
+    console.log(res.client);
+console.log(req.cookie);
     try
     {
         const client = await Client.findOne({ email: req.body.email })
@@ -77,9 +81,9 @@ module.exports.login_post = async (req, res) =>
              else
              {
                  try{
-                        const token = createToken(client._id)
+                        const token = createToken(client)
                         console.log(token)
-                        res.cookie('jwt', token, { httpOnly: true })
+                        res.cookie('jwt', token, { httpOnly: true }) // http only pour que le coockies ne sera pas visualiser en js
                         res.status(200).json({ client: client, token })
                  }
                  catch(err){

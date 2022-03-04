@@ -44,7 +44,7 @@ module.exports.ajouterResponsable_post = async (req, res) =>
     }
 }
 
-module.exports.deleteResponsable = async (req, res, next) =>
+module.exports.deleteResponsable = async (req, res) =>
 {   
     try
     {
@@ -60,15 +60,30 @@ module.exports.deleteResponsable = async (req, res, next) =>
         
 }
 
-module.exports.afficherInformation = async (req, res, next) =>
+module.exports.afficherInformation = async (req, res) =>
 {
     try
     {
-        const respo =await Responsable.findById
+        const responsable =await Responsable.findById
         ({_id: req.params.id }, {... req.body })
 
-        res.status(201).json({ respo })
+        res.status(201).json({ responsable })
     }
+    catch(err)
+    {
+        res.status(400).json({ err })
+    }
+    
+}
+module.exports.afficherInformationall = async (req, res) =>
+{   try
+    {
+        const responsable = await Responsable.find
+        (
+            {...req.body}
+        )
+        res.status(201).json({ responsable })
+        }
     catch(err)
     {
         res.status(400).json({ err })

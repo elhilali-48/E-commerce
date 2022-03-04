@@ -24,7 +24,7 @@
 <script>
 
 export default {
-  data () {
+  data () { // data les element de html pour recuperer les valuer des champs
     return {
         token :''
     }
@@ -32,7 +32,7 @@ export default {
     name: "NavBar",
     methods: {
         getUserDetails() {
-      // get token from localstorage
+      // get token from localstorage // c'est quoi localstorage ?
         this.token =  this.$store.state.token
      } ,
         logout(){
