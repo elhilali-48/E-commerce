@@ -7,11 +7,15 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
+import VueSweetalert2 from "vue-sweetalert2"
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 // import index from './store/index'
 
 
 Vue.use(Vuex)
 Vue.use(Vuelidate)
+Vue.use(VueSweetalert2)
 Vue.config.productionTip = false
 
 new Vue({
