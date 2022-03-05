@@ -30,8 +30,8 @@
                 <td>{{responsable.sexe ? "Homme" : "Femme"}}</td>
                 <td>
                   <button class="btn btn-sm btn-outline-danger" @click.prevent="deleteResponsable(responsable._id)">Supprimer</button>
-                  <button class="btn btn-sm btn-outline-primary">Modifier</button>
-                  <button class="btn btn-sm btn-outline-warning">Afficher</button>
+                  <router-link :to='{name :"modifier-responsable", params : {id: responsable._id}}' class="btn btn-sm btn-outline-primary">Modifier</router-link>
+                  <router-link :to='{name :"afficher-responsable", params : {id: responsable._id}}' class="btn btn-sm btn-outline-success">Afficher</router-link>
                 </td>
               </tr>
             </tbody>
@@ -43,11 +43,10 @@
 <script>
 import axios from "axios"
 export default {
-  name : "responsable-page ",
+  name : "responsable-page",
   methods: {
       getResponsables(){
           axios.get('http://localhost:3500/responsable/gestion/informationall').then((res)=>{
-            console.log(res)
             this.responsables = res.data.responsable
           })
       },
