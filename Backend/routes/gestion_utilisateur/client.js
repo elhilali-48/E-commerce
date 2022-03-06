@@ -10,5 +10,6 @@ router.get('/afficher/:id', clientCtrl.show_client);
 router.post('/ajouter', clientCtrl.ajouterClient);
 router.put('/modifier/:id', clientCtrl.modifierClient);
 router.delete('/supprimer/:id',clientCtrl.supprimerClient);
+router.get('/informationall', clientCtrl.informationall )
 
 module.exports = router

@@ -3,7 +3,7 @@
       <div class="col-md-8 my-5">
           <div class="card bg-light mx-auto px-3 py-4">
                 <div class="text-center text-bold h1 mb-5">
-              Ajouter un responsable
+              Ajouter un client
           </div>
            <form @submit.prevent="submitForm">
             <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -75,10 +75,25 @@
                     <label class="form-label" for="post">Code Postal</label>
                     <input type="number" id="post" class="form-control" v-model="codePostale" />
                     <span class="text-danger"  v-if="!$v.codePostale.required && $v.codePostale.$dirty" >Code Postale est obligatoire</span>
-                    <span class="text-danger"  v-if="(!$v.codePostale.maxLength) && $v.codePostale.$dirty" >Code postal se compose de 4 chiffres</span>
+                    <span class="text-danger"  v-if="(!$v.codePostale.maxLength) && $v.codePostale.$dirty" >Code postal se compose de 5 chiffres</span>
                 </div>
                 </div>
             </div>
+             <div class="row mb-4">
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="sexe">Sexe</label>
+                    <select class="form-select" aria-label="Default select example" v-model="sexe">
+                        <option selected>Selectionner sexe</option>
+                        <option value="true">Homme</option>
+                        <option value="false">Femme</option>
+                    </select>
+                    <span class="text-danger"  v-if="!$v.sexe.required && $v.sexe.$dirty" >Sexe est obligatoire</span>
+
+                </div>
+                </div>
+            </div>
+
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="form3Example3">Email address</label>
@@ -93,7 +108,7 @@
             <!-- Password input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="form3Example4">Password</label>
-                <input type="password" id="form3Example4" class="form-control" v-model="password" />
+                <input type="password" id="form3Example4" class="form-control" disabled v-model="password" />
                 <span v-if="!$v.password.required  && $v.password.$dirty" class="text-danger">
                         Vous devez indiquer un mot de passe.
                 </span>
@@ -116,28 +131,56 @@
 import axios from "axios"
 import {required , email, minLength,maxLength} from "vuelidate/lib/validators"
 export default {
-    name: "ajouter-responsable",
+    name: "ajouter-client",
     data(){
         return{
             nom : "",
             prenom :"",
-            email :"",
             telephone :"",
-            role :"",
-            sexe : "",
-            password : "",
             dateDeNaissance :"",
             adresse :"",
-            codePostale : "",
+            pays : "",
             ville :"",
-            pays : ""
+            codePostale : "",
+            sexe : "",
+            email :"",
+            password : ""    
         }
     },
     validations :{
         nom : {
-            required
+            required,
+            maxlength: 30, 
+            minlegth: 2,
         },
         prenom : {
+            required,
+            maxlength: 30, 
+            minlegth: 2,
+        },
+        telephone : {
+            required: true,
+            minLength: minLength(10), 
+            maxLength : maxLength(10),
+        },
+        dateDeNaissance : {
+            required
+        },
+        adresse : {
+            required
+        },
+        pays : {
+            required
+        },
+        ville : {
+            required
+        },
+        codePostale : {
+            required,
+            minLength: minLength(2), 
+            maxLength : maxLength(5)
+        },
+        sexe : {
             required
         },
         email : {
@@ -148,66 +191,37 @@ export default {
             required,
             minLength : minLength(8)
         },
-        sexe : {
-            required
-        },
-        role : {
-            required
-        },
-        dateDeNaissance : {
-            required
-        },
-        telephone : {
-            required,
-            minLength: minLength(10),
-            maxLength : maxLength(10),
-        },
-        ville : {
-            required
-        },
-        pays : {
-            required
-        },
-         adresse : {
-            required
-        },
-        codePostale : {
-            required,
-            maxLength : maxLength(5)
-        },
-
     },
 
     methods :{
         submitForm(){
             this.$v.$touch()
             if(!this.$v.$invalid){
-                this.ajouterUser()
+                this.ajouterClient()
             }
         },
-        ajouterUser(){
-            axios.post('http://localhost:3500/responsable/gestion/ajouter',{
+        ajouterClient(){
+            axios.post('http://localhost:3500/client/register',{
                 nom: this.nom,
                 prenom: this.prenom,
-                adresse: this.adresse,
-                codePostale: this.codePostale,
-                ville: this.ville,
-                pays: this.pays,
+                telephone: this.telephone,
                 dateDeNaissance: this.dateDeNaissance,
+                adresse: this.adresse,
+                pays: this.pays, 
+                ville: this.ville,
+                codePostale: this.codePostale,
+                sexe: this.sexe,
                 email : this.email,
                 password: this.password,
-                telephone: this.telephone,
-                sexe: this.sexe,
-                role: this.role,
             }).then(()=>{
                 this.$swal.fire(
                     'Success!',
-                    'Responsable Ajouté!',
+                    'Client Ajouté!',
                     'success'
                 )
-                this.$router.push('/admin/responsable')
+                this.$router.push('/admin/client')
             }).catch((err)=>{
-                console.log(err)
+                console.log({err: err.message})
             })
         }
     },

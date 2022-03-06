@@ -10,8 +10,6 @@ module.exports.show_client= async (req,res)=>{
     }
 }
 
-
-
 module.exports.ajouterClient = async (req,res)=>{
     try {
         const salt = await bcrypt.genSalt(10)
@@ -55,4 +53,20 @@ module.exports.supprimerClient = async (req,res)=>{
     } catch (error) {
         res.status(404).json({err})
     }
+}
+
+module.exports.informationall = async (req,res) =>
+{
+    try
+    {
+        const client = await Client.find
+
+        ({ ...req.body })
+        res.status(201).json({ client })
+    }
+    catch(err)
+    {
+        res.status(400).json({ err })
+    }
+
 }
