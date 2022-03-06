@@ -2,8 +2,17 @@ import Login from "../views/backOffice/login.vue"
 import Home from "../views/backOffice/Home.vue"
 import Responsable from "../views/backOffice/responsable/responsable.vue"
 import AddResponsable from "../views/backOffice/responsable/ajouter.vue"
+<<<<<<< HEAD
 import Client from "../views/backOffice/responsable/client.vue"
 import AddClient from "../views/backOffice/responsable/ajouterClient.vue"
+=======
+import UpdateResponsable from "../views/backOffice/responsable/modifier.vue"
+import showResponsable from "../views/backOffice/responsable/afficher.vue"
+import Categorie from "../views/backOffice/categorie/categorie.vue"
+import AddCategorie from "../views/backOffice/categorie/ajouter.vue"
+import UpdateCategorie from "../views/backOffice/categorie/modifier.vue"
+import showCategorie from "../views/backOffice/categorie/afficher.vue"
+>>>>>>> ab64f0a5fbc7ba0863a0648bfedad5eb1b4e6559
 
 const routes = [
     {
@@ -22,6 +31,7 @@ const routes = [
                 component : AddResponsable
             },
             {
+<<<<<<< HEAD
                 path: "client",
                 name: "client-page",
                 component : Client,
@@ -32,6 +42,37 @@ const routes = [
                 component : AddClient,
             },
             
+=======
+                path : "modifier/responsable/:id",
+                name :"modifier-responsable",
+                component : UpdateResponsable
+            },
+            {
+                path : "afficher/responsable/:id",
+                name :"afficher-responsable",
+                component : showResponsable
+            },
+            {
+                path : "categorie",
+                name : 'categorie-page',
+                component : Categorie
+            },
+            {
+                path : "ajouter/categorie",
+                name : "ajouter-categorie",
+                component : AddCategorie
+            },
+            {
+                path : "modifier/categorie/:id",
+                name : "modifier-categorie",
+                component : UpdateCategorie
+            },
+            {
+                path : "afficher/categorie/:id",
+                name :"afficher-categorie",
+                component : showCategorie
+            },
+>>>>>>> ab64f0a5fbc7ba0863a0648bfedad5eb1b4e6559
         ]
     
     },
