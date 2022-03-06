@@ -2,9 +2,9 @@
   <div class="row d-flex justify-content-center">
       <div class="col-md-10 my-5">
         <div class="d-flex justify-content-center my-5"> 
-          <h3>Categorie : {{categorie.nom}}</h3>
+          <h3>Produit : {{produit.nom}}</h3>
         </div>
-          <h5 class="d-flex justify-content-start">Listes des produits : {{categorie.produit.length}} </h5>
+          <h5 class="d-flex justify-content-start">Listes des articles : {{produit.article.length}} </h5>
           <table class="table">
             <thead>
               <tr>
@@ -14,11 +14,11 @@
                 <th scope="col">Outils</th>
               </tr>
             </thead>
-            <tbody v-for="(produit) in  categorie.produit" :key="produit._id">
-              <tr v-if='produit' >
-                <th scope="row">{{produit._id}}</th>
-                <td>{{produit.nom}}</td>
-                <td>{{produit.article.length}}</td>
+            <tbody v-for="(article) in  produit.article" :key="article._id">
+              <tr v-if='article' >
+                <th scope="row">{{article._id}}</th>
+                <td>{{article.nom}}</td>
+                <td>{{article.prix}}</td>
                 <td>
                   <router-link :to="{name : 'modifier-categorie', params:{id: produit._id}}" class="btn btn-sm btn-outline-primary">Modifier</router-link>
                 </td>
@@ -35,20 +35,21 @@ import axios from 'axios'
 export default {
     data () {
         return {
-            categorie :{}
+            produit :{}
         }
     },
-    name : "afficher-categorie",
+    name : "afficher-produit",
     methods: {
-        getCategories(){
-            axios.get(`http://localhost:3500/responsable/categorie/voirCategorie/${this.$route.params.id}`).then((res)=>{
-              this.categorie = res.data[0]
-            })
+        getProduit(){
+            axios.get(`http://localhost:3500/responsable/produit/voirProduit/${this.$route.params.id}`).then((res)=>{
+              const produit = res.data[0]
+              this.produit = produit
+        })
         },
        
     },
     created(){
-        this.getCategories();
+        this.getProduit();
     }
 }
 </script>

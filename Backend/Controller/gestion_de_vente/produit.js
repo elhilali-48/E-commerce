@@ -32,7 +32,7 @@ module.exports.voirall = async (req, res) =>
     try {
 
         const data = await Produit.find
-        ().populate('article')
+        ().populate('article').populate('categorie')
         res.status(200).json(data)
         
     }
@@ -85,7 +85,7 @@ module.exports.voirProduit = async (req, res) =>
         (
             {_id: req.params.id},
             { ...req.body }
-        ).populate('article')
+        ).populate('article').populate('categorie')
         res.status(200).json(data)
     } 
     catch (err) 
