@@ -4,6 +4,10 @@ import Responsable from "../views/backOffice/responsable/responsable.vue"
 import AddResponsable from "../views/backOffice/responsable/ajouter.vue"
 import UpdateResponsable from "../views/backOffice/responsable/modifier.vue"
 import showResponsable from "../views/backOffice/responsable/afficher.vue"
+import Categorie from "../views/backOffice/categorie/categorie.vue"
+import AddCategorie from "../views/backOffice/categorie/ajouter.vue"
+import UpdateCategorie from "../views/backOffice/categorie/modifier.vue"
+import showCategorie from "../views/backOffice/categorie/afficher.vue"
 
 const routes = [
     {
@@ -30,7 +34,27 @@ const routes = [
                 path : "afficher/responsable/:id",
                 name :"afficher-responsable",
                 component : showResponsable
-            }
+            },
+            {
+                path : "categorie",
+                name : 'categorie-page',
+                component : Categorie
+            },
+            {
+                path : "ajouter/categorie",
+                name : "ajouter-categorie",
+                component : AddCategorie
+            },
+            {
+                path : "modifier/categorie/:id",
+                name : "modifier-categorie",
+                component : UpdateCategorie
+            },
+            {
+                path : "afficher/categorie/:id",
+                name :"afficher-categorie",
+                component : showCategorie
+            },
         ]
     
     },
