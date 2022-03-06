@@ -1,16 +1,20 @@
 const Client  = require('../../models/authentifiaction/Client')
 const bcrypt = require('bcrypt')
 
-module.exports.show_client= async (req,res)=>{
-    try {
-        const data = await Client.findOne({_id: req.params.id})
-        res.status(201).json({data})
-    } catch (error) {
-        res.status(404).json(error)
+module.exports.show_client= async (req,res)=>
+{
+    try
+    {
+        const client =await Client.findById
+        ({_id: req.params.id }, {... req.body })
+
+        res.status(201).json({ client })
+    }
+    catch(err)
+    {
+        res.status(400).json({ err })
     }
 }
-
-
 
 module.exports.ajouterClient = async (req,res)=>{
     try {
@@ -55,4 +59,20 @@ module.exports.supprimerClient = async (req,res)=>{
     } catch (error) {
         res.status(404).json({err})
     }
+}
+
+module.exports.informationall = async (req,res) =>
+{
+    try
+    {
+        const client = await Client.find
+
+        ({ ...req.body })
+        res.status(201).json({ client })
+    }
+    catch(err)
+    {
+        res.status(400).json({ err })
+    }
+
 }

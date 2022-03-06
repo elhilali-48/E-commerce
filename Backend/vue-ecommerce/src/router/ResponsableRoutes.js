@@ -3,6 +3,10 @@ import Home from "../views/backOffice/Home.vue"
 
 import Responsable from "../views/backOffice/responsable/responsable.vue"
 import AddResponsable from "../views/backOffice/responsable/ajouter.vue"
+import Client from "../views/backOffice/responsable/client.vue"
+import AddClient from "../views/backOffice/responsable/ajouterClient.vue"
+import showClient from "../views/backOffice/responsable/afficherClient.vue"
+
 import UpdateResponsable from "../views/backOffice/responsable/modifier.vue"
 import showResponsable from "../views/backOffice/responsable/afficher.vue"
 
@@ -33,9 +37,25 @@ const routes = [
                 component : AddResponsable
             },
             {
+                path: "client",
+                name: "client-page",
+                component : Client,
+            },
+            {
+                path : "ajouter/client",
+                name : "ajouter-client",
+                component : AddClient,
+            },
+            {
+                path : "afficher/client/:id",
+                name : "afficher-client",
+                component : showClient,
+            },
+            {
+            
                 path : "modifier/responsable/:id",
-                name :"modifier-responsable",
-                component : UpdateResponsable
+                name : "modifier-responsable",
+                component : UpdateResponsable,
             },
             {
                 path : "afficher/responsable/:id",
@@ -90,7 +110,6 @@ const routes = [
         name : "LoginPage",
         component : Login,
     },
-
 ]
 
 export default routes
