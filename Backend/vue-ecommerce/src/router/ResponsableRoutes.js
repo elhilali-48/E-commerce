@@ -4,6 +4,8 @@ import Responsable from "../views/backOffice/responsable/responsable.vue"
 import AddResponsable from "../views/backOffice/responsable/ajouter.vue"
 import Client from "../views/backOffice/responsable/client.vue"
 import AddClient from "../views/backOffice/responsable/ajouterClient.vue"
+import showClient from "../views/backOffice/responsable/afficherClient.vue"
+
 import UpdateResponsable from "../views/backOffice/responsable/modifier.vue"
 import showResponsable from "../views/backOffice/responsable/afficher.vue"
 import Categorie from "../views/backOffice/categorie/categorie.vue"
@@ -36,6 +38,11 @@ const routes = [
                 path : "ajouter/client",
                 name : "ajouter-client",
                 component : AddClient,
+            },
+            {
+                path : "afficher/client/:id",
+                name : "afficher-client",
+                component : showClient,
             },
             {
             

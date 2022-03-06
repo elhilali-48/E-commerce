@@ -30,7 +30,7 @@
                 <td>{{client.confirmation}}</td>
                 <td>
                   <button class="btn btn-sm btn-outline-danger" @click.prevent="deleteClient(client._id)">Supprimer</button>
-                  <button class="btn btn-sm btn-outline-warning" >Afficher</button>
+                  <router-link :to='{name :"afficher-client", params : {id: client._id}}' class="btn btn-sm btn-outline-success">Afficher</router-link>
                 </td>
               </tr>
             </tbody>

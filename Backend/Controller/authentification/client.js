@@ -16,8 +16,7 @@ module.exports.register_get = (req, res) =>
 
 module.exports.register_post = async (req, res) =>
 {   
-    console.log(res.client);
-    console.log(req.cookie);
+
     try
     {
 //generate password
@@ -76,7 +75,7 @@ console.log(req.cookie);
 
             if(!passwordValide)
              {
-                 res.status(404).json("Password no mathc")
+                 res.status(404).json("Password no matche")
              }
              else
              {
@@ -93,7 +92,7 @@ console.log(req.cookie);
             
         }
         else{
-            res.status(404).json({message : "Aucn client est enregistrer avec cet adresse emailu"})
+            res.status(404).json({message : "Aucun client est enregistrer avec cette adresse email"})
         }
         
 

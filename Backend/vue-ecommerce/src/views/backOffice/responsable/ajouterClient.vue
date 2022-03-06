@@ -108,7 +108,7 @@
             <!-- Password input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="form3Example4">Password</label>
-                <input type="password" id="form3Example4" class="form-control" disabled v-model="password" />
+                <input type="password" id="form3Example4" class="form-control" v-model="password" />
                 <span v-if="!$v.password.required  && $v.password.$dirty" class="text-danger">
                         Vous devez indiquer un mot de passe.
                 </span>
