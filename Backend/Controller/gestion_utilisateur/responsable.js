@@ -64,9 +64,11 @@ module.exports.afficherInformation = async (req, res) =>
 {
     try
     {
+
+        
         const responsable =await Responsable.findById
         ({_id: req.params.id }, {... req.body })
-
+        
         res.status(201).json({ responsable })
     }
     catch(err)
@@ -78,6 +80,8 @@ module.exports.afficherInformation = async (req, res) =>
 module.exports.afficherInformationall = async (req, res) =>
 {   try
     {
+        const a = req.body.dateDeNaissance
+        console.log(a);
         const responsable = await Responsable.find
         (
             {...req.body}
