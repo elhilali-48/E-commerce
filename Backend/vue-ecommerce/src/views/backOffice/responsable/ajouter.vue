@@ -79,6 +79,33 @@
                 </div>
                 </div>
             </div>
+
+                         <div class="row mb-4">
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="sexe">Sexe</label>
+                    <select class="form-select" aria-label="Default select example" v-model="sexe">
+                        <option selected>Selectionner sexe</option>
+                        <option value="true">Homme</option>
+                        <option value="false">Femme</option>
+                    </select>
+                    <span class="text-danger"  v-if="!$v.sexe.required && $v.sexe.$dirty" >Sexe est obligatoire</span>
+
+                </div>
+                </div>
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="role">Role</label>
+                    <select class="form-select" aria-label="Default select example" v-model="role">
+                        <option selected>Selectionner Role</option>
+                        <option value="true">Admin</option>
+                        <option value="false">Responsable</option>
+                    </select>
+                    <span class="text-danger"  v-if="!$v.role.required && $v.role.$dirty" >Role est obligatoire</span>
+
+                </div>
+                </div>
+            </div>
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="form3Example3">Email address</label>
