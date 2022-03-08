@@ -19,7 +19,8 @@
              <div class="row mb-4">
                 <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="nom"  >Categorie </label>
+                    <label class="form-label" for="nom"  >Categorie </label> 
+                    <!-- c'est commentaire a supprimer -->
 
                     <select class="form-select" v-model="categorie">
                         <option disabled value="">Selectionner une categorie</option>
