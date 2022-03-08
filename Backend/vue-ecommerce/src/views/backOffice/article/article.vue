@@ -43,11 +43,10 @@ export default {
             articles :[]
         }
     },
-    name : "categorie-page",
+    name : "article-page",
     methods: {
         getProducts(){
             axios.get('http://localhost:3500/responsable/article/voir').then((res)=>{
-                console.log(res.data)
                 this.articles = res.data
             })
         },

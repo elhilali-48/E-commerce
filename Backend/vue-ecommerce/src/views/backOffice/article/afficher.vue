@@ -1,32 +1,107 @@
 <template>
-  <div class="row d-flex justify-content-center">
-      <div class="col-md-10 my-5">
-        <div class="d-flex justify-content-center my-5"> 
-          <h3>Produit : {{produit.nom}}</h3>
-        </div>
-          <h5 class="d-flex justify-content-start">Listes des articles : {{produit.article.length}} </h5>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Nombre des articles</th>
-                <th scope="col">Outils</th>
-              </tr>
-            </thead>
-            <tbody v-for="(article) in  produit.article" :key="article._id">
-              <tr v-if='article' >
-                <th scope="row">{{article._id}}</th>
-                <td>{{article.nom}}</td>
-                <td>{{article.prix}}</td>
-                <td>
-                  <router-link :to="{name : 'modifier-categorie', params:{id: produit._id}}" class="btn btn-sm btn-outline-primary">Modifier</router-link>
-                </td>
-              </tr>
-              
-            </tbody>
-        </table>
+  <div class="row mt-5">
+     <div class="col-md-5 mx-5">
+       <div class="card bg-light rounded-5">
+                   <table class="table table-striped table-hover table-borderless">
+                    <tbody >
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                    Titre                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.nom}}
+                            </td>
+                        </tr>
+                        <tr>    
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                    Produit                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.produit.nom}}
+                            </td>
+                        </tr>
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                    Prix                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.prix}} €
+                            </td>
+                        </tr>
+
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                    Quantité                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.quantite == 0 ? 'Rupture' : article.quantite}}
+                            </td>
+                        </tr>
+
+
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                    Notation                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.avis}}
+                            </td>
+                        </tr>
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                    Nombres des commandes                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                -
+                            </td>
+                        </tr>
+                                                     
+                    </tbody>
+                </table>
+       </div>
+     </div>
+     <div class="col-md-5">
+        <img class="rounded float-right" src="https://gloimg.gbtcdn.com/soa/gb/item/6870745450383863808/16434/goods_img_big-v1/c4ea52da5c8e.jpg" />
+     </div>
+
+     <div class="col-md-10 mx-auto">
+       <ul class="nav nav-tabs nav-justified">
+      <li class="nav-item">
+        <a class="nav-link " @click.prevent="setActive('home')" :class="{ active: isActive('home') }" >Descirption</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" @click.prevent="setActive('profile')" :class="{ active: isActive('profile') }" >Technique</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" @click.prevent="setActive('contact')" :class="{ active: isActive('contact') }" >Reviews</a>
+      </li>
+    </ul>
+    <div class="tab-content py-3" id="myTabContent">
+      <div class="tab-pane fade " :class="{ 'active show': isActive('home') }" id="home">
+        <h4 class="text-secondary">{{article.description}}</h4>
       </div>
+      <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">Description technique </div>
+      <div class="tab-pane fade" :class="{ 'active show': isActive('contact') }" id="contact">Commentaire</div>
+    </div>
+     </div>
   </div>
 </template>
 
@@ -35,21 +110,35 @@ import axios from 'axios'
 export default {
     data () {
         return {
-            produit :{}
+            article :{},
+            activeItem : 'description'
         }
     },
-    name : "afficher-produit",
+    name : "afficher-article",
     methods: {
-        getProduit(){
-            axios.get(`http://localhost:3500/responsable/produit/voirProduit/${this.$route.params.id}`).then((res)=>{
-              const produit = res.data[0]
-              this.produit = produit
+        getArticle(){
+            axios.get(`http://localhost:3500/responsable/article/voirarticle/${this.$route.params.id}`).then((res)=>{
+             this.article = res.data
         })
-        },
        
+      },
+    isActive (menuItem) {
+      return this.activeItem === menuItem
     },
+    setActive (menuItem) {
+      this.activeItem = menuItem
+    },
+
+    },
+    // computed:{
+    //   review(){
+    //     this.forEach(element => {
+          
+    //     });
+    //   }
+    // },
     created(){
-        this.getProduit();
+        this.getArticle();
     }
 }
 </script>

@@ -3,7 +3,7 @@
       <div class="col-md-8 my-5">
           <div class="card bg-light mx-auto px-3 py-4">
                 <div class="text-center text-bold h1 mb-5">
-              Modifier un produit
+              Modifier un article
           </div>
            <form @submit.prevent="submitForm">
             <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -11,21 +11,54 @@
                 <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="nom" >Nom</label>
-                    <input type="text" id="nom" class="form-control" v-model="nom" />
-                    <span class="text-danger"  v-if="!$v.nom.required && $v.nom.$dirty" > Nom est obligatoire</span>
+                    <input type="text" id="nom" class="form-control" v-model="article.nom" />
+                    <span class="text-danger"  v-if="!$v.article.nom.required && $v.article.nom.$dirty" > Nom est obligatoire</span>
+                </div>
+                </div>
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="quantite" >Quatité</label>
+                    <input type="number" min="1" id="quantite" class="form-control" v-model="article.quantite" />
+                    <span class="text-danger"  v-if="!$v.article.quantite.required && $v.article.quantite.$dirty" > Quantite est obligatoire</span>
+                </div>
+                </div>
+            </div>
+             <div class="row mb-4">
+               <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="prix"  >Prix </label>
+                    <input type="number" min="1"  id="prix" class="form-control" v-model="article.prix" />
+                    <span class="text-danger"  v-if="!$v.article.prix.required && $v.article.prix.$dirty" >Prix est obligatoire </span>
+                </div>
+                </div>
+                 <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="avis"  >Avis </label>
+                    <input type="number" min="0" max="5" id="avis" class="form-control" v-model="article.avis" />
+                    <span class="text-danger"  v-if="!$v.article.avis.required && $v.article.avis.$dirty" >Avis est obligatoire </span>
+                </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="nom"  >Produit </label>
+
+                    <select class="form-select" v-model="article.produit._id">
+                        <option disabled value="">Selectionner un produit</option>
+                        <option v-for="produit in produits" :key="produit._id" :value="produit._id">{{produit.nom}}</option>
+                    </select>
+                    <span class="text-danger"  v-if="!$v.article.produit.required && $v.article.produit.$dirty" >Vous devez choisir un produit, sinon <router-link :to="{name :'ajouter-produit'}"> Ajouter un produit </router-link> </span>
                 </div>
                 </div>
             </div>
              <div class="row mb-4">
                 <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="nom"  >Categorie </label>
-
-                    <select class="form-select" v-model="categorie">
-                        <option disabled value="">Selectionner une categorie</option>
-                        <option v-for="categorie in categories" :key="categorie._id" :value="categorie._id">{{categorie.nom}}</option>
-                    </select>
-                    <span class="text-danger"  v-if="!$v.nom.required && $v.nom.$dirty" >Vous devez choisir une categorie, sinon <router-link :to="{name :'ajouter-categorie'}"> Ajouter une categorie </router-link> </span>
+                    <label class="form-label" for="nom"  >Desciption </label>
+                    <textarea class="form-control" rows="6" v-model="article.description"></textarea>
+                   
+                    <span class="text-danger"  v-if="!$v.article.description.required && $v.article.description.$dirty" >description est obligatoire</span>
                 </div>
                 </div>
             </div>
@@ -47,54 +80,85 @@ export default {
     name: "ajouter-produit",
     data(){
         return{
-            nom : "",
-            categories : [],
-            categorie : ""
+            article :{
+                nom : "",
+                prix :"",
+                description: "",
+                avis :"",
+                produit : "",
+                quantite : ""
+            },
+            produits : [],
+            
         }
     },
     validations :{
-        nom : {
-            required
-        },
-        categorie : {
-            required
+        article : {
+            nom : {
+                 required
+            },
+            produit : {
+                required
+            },
+            prix : {
+                required
+            },
+            description : {
+                required
+            },
+            avis : {
+                required
+            },
+            quantite : {
+                required
+            }
         }
+       
     },
 
     methods :{
         submitForm(){
             this.$v.$touch()
             if(!this.$v.$invalid){
-                this.updateProduit()
+                this.modifierArticle()
             }
         },
-        updateProduit(){
-            axios.put(`http://localhost:3500/responsable/produit/modifier/${this.$route.params.id}`,{
-                nom: this.nom,
-                categorie : this.categorie
-               
-            }).then(()=>{
+        modifierArticle(){
+            // const data = {
+            //     nom : this.nom,
+            //     prix : this.prix,
+            //     description: this.description,
+            //     avis :this.avis,
+            //     produit : this.produit,
+            //     quantite : this.quantite
+            // }
+            axios.put(`http://localhost:3500/responsable/article/modifier/${this.$route.params.id}`,{
+                nom : this.article.nom,
+                prix : this.article.prix,
+                description: this.article.description,
+                avis :this.article.avis,
+                produit : this.article.produit,
+                quantite : this.article.quantite
+               }).then(()=>{
                 this.$swal.fire(
                     'Success!',
-                    'Produit Modifié!',
+                    'Article Modifié!',
                     'success'
                 )
-                this.$router.push({name:"produit-page"})
+                this.$router.push({name:"article-page"})
             }).catch((err)=>{
                 console.log(err)
             })
         }
     },
     created(){
-            axios.get('http://localhost:3500/responsable/categorie/voir').then((res)=>{
-                this.categories = res.data
+            axios.get('http://localhost:3500/responsable/produit/voir').then((res)=>{
+                this.produits = res.data
             })
-            axios.get(`http://localhost:3500/responsable/produit/voirProduit/${this.$route.params.id}`).then((res)=>{
-               const produit = res.data[0]
-               this.nom = produit.nom
-               this.categorie = produit.categorie._id
+
+            axios.get(`http://localhost:3500/responsable/article/voirarticle/${this.$route.params.id}`).then((res)=>{
+                this.article = res.data
             })
-            
     }
 
 }
