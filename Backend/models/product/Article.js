@@ -14,7 +14,16 @@ const articleSchema = mongoose.Schema(
             type : ObjectId,
             ref : 'Produit',
             required: true
-        }
+        },
+        filtre: 
+        [
+            { Ram: Number },
+            { Stockage: Number },
+            { avis: Number },
+            { marque: String},
+            { }
+
+        ],
         
     }
 )

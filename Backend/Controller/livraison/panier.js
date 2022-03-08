@@ -19,13 +19,14 @@ module.exports.ajouterPanier = async (req, res) =>
                     idcli: cli
                 }
             )
+            
 
             await Panier.updateOne(
                 
                     { _id: req.client._id }, { $push: { idclient: panier }}
                 
             )
-
+            
             res.status(201).json({message: "panier bien créer"})
 
     }
