@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
+import auth from './auth'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -64,7 +65,8 @@ export default new Vuex.Store({
         password : form.password
       }).then((res)=>{
         console.log(res)
-        localStorage.setItem('tokenAdmin', res.data.token)
+        sessionStorage.setItem('tokenAdmin', res.data.token)
+         document.cookie = res.data.token
         this.commit('setTokenAdmin',res.data.token)
         router.push('/admin')
         dispatch('fetchTokenAdmin')
@@ -75,12 +77,13 @@ export default new Vuex.Store({
       })
     },
     async fetchTokenn({commit}){
-      await commit('setTokenAdmin', localStorage.getItem('tokenAdmin'))
+      await commit('setTokenAdmin', sessionStorage.getItem('tokenAdmin'))
     },
 
 
   },
   modules: {
+    auth,
   }
 })
 

@@ -57,11 +57,11 @@
                            
                     </li>
                     <li  v-if='!admin.id.role'>
-                        <a href="#" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Article</span> </a>
+                        <router-link :to="{name :'article-page'}" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Article</span> </router-link>
                     </li>
                 </ul>
-                <hr>
+                <hr >
                 <div class="dropdown pb-4">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
@@ -77,12 +77,14 @@
                         <li><a class="dropdown-item" href="#">Sign out</a></li>
                     </ul>
                 </div>
+                <button class="btn btn-outline-danger" @click="logout">Log OUT</button>
             </div>
         </div>
         <div class="col py-3 h-100">
             Welecome  {{admin.id.role}}
             <router-view></router-view>
         </div>
+        
     </div>
 </div>
 </template>
@@ -100,7 +102,7 @@ import VueJwtDecode from "vue-jwt-decode";
    
     methods:{
       getDetails(){
-        let tokenAdmin  = localStorage.getItem('tokenAdmin')
+        let tokenAdmin  = sessionStorage.getItem('tokenAdmin')
         // décoder le token 
 
         try {
@@ -109,6 +111,10 @@ import VueJwtDecode from "vue-jwt-decode";
         } catch (error) {
           console.log(error)
         }
+      },
+      logout(){
+          sessionStorage.removeItem('tokenAdmin')
+          this.$router.push({name: "LoginPage"})
       }
     }, 
     created() {
