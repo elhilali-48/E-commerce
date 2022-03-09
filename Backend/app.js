@@ -11,6 +11,7 @@ const routesarticle = require('./routes/gestion_de_vente/article')
 const routesproduit = require('./routes/gestion_de_vente/produit')
 const routescategorie = require('./routes/gestion_de_vente/categorie')
 const routespanier = require('./routes/livraison/panier')
+const routescommentaire = require('./routes/gestion_de_vente/commentaire')
 
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
@@ -47,6 +48,9 @@ app.use("/responsable/article", routesarticle)
 app.use("/responsable/produit", routesproduit)
 app.use("/responsable/categorie", routescategorie)
 app.use("/achat/panier", routespanier)
+app.use("/client/commentaire", routescommentaire)
+
+
 
 routescategorie
 

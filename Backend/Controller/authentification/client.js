@@ -62,8 +62,7 @@ module.exports.logout = (req, res) =>
 //login post
 module.exports.login_post = async (req, res) =>
 {
-    console.log(res.client);
-console.log(req.cookie);
+    console.log(req.client);
     try
     {
         const client = await Client.findOne({ email: req.body.email })
@@ -81,7 +80,6 @@ console.log(req.cookie);
              {
                  try{
                         const token = createToken(client)
-                        console.log(token)
                         res.cookie('jwt', token, { httpOnly: true }) // http only pour que le coockies ne sera pas visualiser en js
                         res.status(200).json({ client: client, token })
                  }

@@ -16,6 +16,13 @@ const clientSchema = mongoose.Schema
     telephone: { type: Number, maxlength: 10, minlegth: 10 },
     sexe: { type: Boolean, required: true }, 
     confirmation: { type: Boolean, default:false },
+    commentaire: 
+    [
+      {
+        type: ObjectId,
+        ref: "Article"
+      }
+    ]
 });
 
 module.exports = mongoose.model('Client', clientSchema);
