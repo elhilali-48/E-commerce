@@ -49,7 +49,8 @@ module.exports.modifierproduit = async (req, res) =>
         const data = await Produit.findOneAndUpdate
         (
             {_id: req.params.id},
-            { $set: { nom: req.body.nom }}
+            // { $set: { nom: req.body.nom }}
+            { ...req.body}
         )
         res.status(201).json({message: "produit a bien été modifié"})
     } 

@@ -26,7 +26,7 @@
                         <option disabled value="">Selectionner une categorie</option>
                         <option v-for="categorie in categories" :key="categorie._id" :value="categorie._id">{{categorie.nom}}</option>
                     </select>
-                    <span class="text-danger"  v-if="!$v.nom.required && $v.nom.$dirty" >Vous devez choisir une categorie, sinon <router-link :to="{name :'ajouter-categorie'}"> Ajouter une categorie </router-link> </span>
+                    <span class="text-danger"  v-if="!$v.categorie.required && $v.categorie.$dirty" >Vous devez choisir une categorie, sinon <router-link :to="{name :'ajouter-categorie'}"> Ajouter une categorie </router-link> </span>
                 </div>
                 </div>
             </div>

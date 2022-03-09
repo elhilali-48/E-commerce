@@ -20,11 +20,25 @@ import AddProduit from "../views/backOffice/produit/ajouter.vue"
 import UpdateProduit from "../views/backOffice/produit/modifier.vue"
 import showProduit from "../views/backOffice/produit/afficher.vue"
 
+import Article from "../views/backOffice/article/article.vue"
+import AddArticle from "../views/backOffice/article/ajouter.vue"
+import UpdateArticle from "../views/backOffice/article/modifier.vue"
+import showArticle from "../views/backOffice/article/afficher.vue"
+
 const routes = [
     {
         path:'/admin/',
         name : "HomePage",
         component : Home,
+        beforeEnter: (to, from, next) => {
+            const isloggin = sessionStorage.getItem('tokenAdmin')
+            if(isloggin != null){
+              next()
+            }
+            else{
+              next("/admin/login")
+            }
+         },
         children: [
             {
                 path : "responsable",
@@ -82,6 +96,7 @@ const routes = [
                 name :"afficher-categorie",
                 component : showCategorie
             },
+            // route pour produit 
             {
                 path : "produit",
                 name : 'produit-page',
@@ -102,6 +117,27 @@ const routes = [
                 name :"afficher-produit",
                 component : showProduit
             },
+            // route pour Article
+            {
+                path : "article",
+                name : 'article-page',
+                component : Article
+            },
+            {
+                path : "ajouter/article",
+                name : "ajouter-article",
+                component : AddArticle
+            },
+            {
+                path : "modifier/article/:id",
+                name : "modifier-article",
+                component : UpdateArticle
+            },
+            {
+                path : "afficher/article/:id",
+                name :"afficher-article",
+                component : showArticle
+            },
         ]
     
     },
@@ -109,6 +145,15 @@ const routes = [
         path : "/admin/login",
         name : "LoginPage",
         component : Login,
+        beforeEnter: (to, from, next) => {
+            const isloggin = sessionStorage.getItem('tokenAdmin')
+            if(isloggin != null){
+              next('/admin')
+            }
+            else{
+              next()
+            }
+         }
     },
 ]
 
