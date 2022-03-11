@@ -13,17 +13,13 @@ const articleSchema = mongoose.Schema({
     ref: "Produit",
     required: true,
   },
-  filtre: {
-      type: ObjectId,
-      ref: "Filtre",
-  },
-  commentaire: 
+  personnecomment: 
   [
-    {
+    [{
       type: ObjectId,
-      ref: "Client",
-      default: ''
-    }
+      ref: "Commentaire",
+      ref: "Client"
+    }],
   ]
 });
 

@@ -99,7 +99,7 @@ export default {
   },
   methods: {
       creerCompte(){
-          axios.post('http://localhost:3500/register',{
+          axios.post('http://localhost:3500/client/register',{
               nom : this.client.nom,
               prenom : this.client.prenom,
               email : this.client.email,
