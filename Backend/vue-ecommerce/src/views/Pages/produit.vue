@@ -17,6 +17,9 @@
                 <option value="USA">USA</option>
                 <option value="Uk">UK</option>
             </select> </div>
+            <div class="">
+                <input type="text" class="form-control" v-model="search" placeholder="Search a product">
+            </div>
     </div>
     <div class="d-sm-flex align-items-sm-center pt-2 clear">
         <div class="text-muted filter-label">Applied Filters:</div>
@@ -90,7 +93,7 @@
         <section id="products">
             <div class="container py-3">
                 <div class="row">
-                    <div  class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1" v-for="article in produit.article" :key="article._id">
+                    <div  class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1" v-for="article in filteredList" :key="article._id">
                         <div @click="showArticle(article._id)" class="card"> <img class="card-img-top" src="https://www.bouyguestelecom.fr/media/catalog/product//g/a/galaxy-s20-fe-navy-face_1.png">
                             <div class="card-body mt-2">
                                 <h6 class="font-weight-bold pt-1">{{article.nom}}</h6>
@@ -130,7 +133,8 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      produit : {}
+      produit : {},
+      search : ''
     }
   },
   // components :{
@@ -157,7 +161,22 @@ export default {
                 this.produit = res.data[0]
                 
             })
-    }
+    },
+    computed : {
+         filteredList() {
+      return this.produit.article.filter(post => {
+        return post.nom.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }},
+    // filterSearch(){
+    //         if(this.search){
+    //         return this.produit.article.filter((item)=>{
+    //             return this.search.toLowerCase().split(' ').every(v => item.nom.toLowerCase().includes(v))
+    //         })
+    //         }else{
+    //             return this.produit.article;
+    //         }
+    //      }
 
 }
 </script>
