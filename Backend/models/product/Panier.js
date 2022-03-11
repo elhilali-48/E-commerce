@@ -4,7 +4,7 @@ const panierSchema = mongoose.Schema
 ({
     
     produitselectionner: { type: Array, default: '' },
-    idcli: { type: String}
+    idcli: { type: String, required : true}
 })
 
 

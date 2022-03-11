@@ -10,7 +10,8 @@ export default new Vuex.Store({
     accessToken  : null,
     client :{},
     isLogged : false,
-    tokenAdmin : null
+    tokenAdmin : null,
+    panier : []
   },
   getters: {
     getToken(state){
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     setTokenAdmin(state,tokenAdmin){
       state.tokenAdmin = tokenAdmin
+    },
+    setClientData(state,data){
+      state.client = data
     }
     
   },
@@ -38,9 +42,11 @@ export default new Vuex.Store({
         email : form.email,
         password : form.password
       }).then((res)=>{
-        console.log(res.data.token)
+        console.log(res.data.client)
         localStorage.setItem('user',res.data.token)
+        localStorage.setItem('client',JSON.stringify(res.data.client))
         this.commit('setToken',res.data.token)
+        this.commit('setClientData',res.data.client)
         dispatch('loginSuccess')
         dispatch('fetchToken')
       }).catch(()=>{
@@ -79,6 +85,13 @@ export default new Vuex.Store({
     async fetchTokenn({commit}){
       await commit('setTokenAdmin', sessionStorage.getItem('tokenAdmin'))
     },
+
+    async addCart(article){
+      axios.post(`http://localhost:3500/achat/panier/ajouter/${article}`).then((res)=>{
+        console.log(res)
+
+      })
+    }
 
 
   },

@@ -18,12 +18,42 @@
     <section class="header-main border-bottom bg-white">
         <div class="container-fluid">
             <div class="row p-2 pt-3 pb-3 d-flex align-items-center">
-                <div class="col-md-2"> <img class="d-none d-md-flex" src="https://i.imgur.com/R8QhGhk.png" width="100"> </div>
+                <div class="col-md-2 " > <img class="d-none d-md-flex " src="https://i.imgur.com/R8QhGhk.png" width="100"> </div>
                 <div class="col-md-8">
                     <div class="d-flex form-inputs"> <input class="form-control" type="text" placeholder="Search any product..."> <i class="bx bx-search"></i> </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="d-flex d-none d-md-flex flex-row align-items-center"> <span class="shop-bag"><i class='bx bxs-shopping-bag'></i></span>
+
+                    <div class="d-flex d-none d-md-flex flex-row align-items-center">    
+                             <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle shop-bag" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bxs-shopping-bag' style="width : 20px"></i>
+                                </button>
+                                <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton1" style="min-width : 390px ; right :0px; left : auto">
+                                    <div class="px-2 d-flex justify-content-between">
+                                        <div>
+                                            <img style="width : 50px" class="mx-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN9chxXkn662lNgJFcmva2sLk4OaYY-zQ5EQLi5h87YXvOHEE5hb7v2UN5FdX9nMcMYVg&usqp=CAU" alt="">
+                                        </div>
+                                        <div class="text-left">
+                                            <strong>Xiaomi</strong>
+                                            <br /> 1 x 23 €
+                                        </div>
+                                        <div>
+                                            <a class="badge bg-danger float-end nav-link">Supprimer</a>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex justify-content-between">
+                                        <span>Total : 40 €</span>
+                                        
+                                    </div>
+                                </div>
+                                <!-- <ul class="dropdown-menu" >
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul> -->
+                            </div>
                         <div class="d-flex flex-column ms-2"> <span class="qty">1 Product</span> <span class="fw-bold">$27.90</span> </div>
                     </div>
                 </div>
@@ -33,7 +63,7 @@
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <router-link to="/"  class="navbar-brand">Acceuil</router-link>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span> 
         </button>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">

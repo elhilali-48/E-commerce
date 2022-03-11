@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     
-   
+   <!-- <h1>{{user.id.nom}}</h1> -->
   <nav-bar></nav-bar>
+  
   <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
