@@ -1,24 +1,4 @@
 <template>
-  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light py-4">
-        <a class="navbar-brand mx-5" href="#">Best Tech</a>
-        <h1>{{token}}</h1>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-           
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                
-                <form class="form-inline my-2 my-lg-0 mx-auto">
-                <input class="form-control mr-5 " type="search" placeholder="Chercher un produit" aria-label="Search">
-                </form>
-                <div>
-                   <router-link v-if="!check"  to="/signIn" class="mx-2">Se Connecter</router-link>
-                   <router-link v-if='!check' to="/register">S'inscrire</router-link>
-                   <button v-if="check" class="btn btn-outline-success "  @click="logout">Logout</button>
-                </div>
-
-        </div>
-    </nav> -->
 <div>
   <header class="section-header">
     <nav class="navbar navbar-dark navbar-expand p-0 bg-dark">
@@ -50,12 +30,35 @@
             </div>
         </div>
     </section>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <router-link to="/"  class="navbar-brand">Acceuil</router-link>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <!-- <a href="#" class="nav-item nav-link active">Home</a>
+                <a href="#" class="nav-item nav-link">Profile</a> -->
+                <div class="nav-item dropdown" v-for="(categorie,i) in categories" :key="i">
+                    <a v-if="categorie.produit.length != 0" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{categorie.nom}}</a>
+                    <div class="dropdown-menu"  >
+                        <div v-for="(produit) in categorie.produit" :key="produit._id" >
+                            
+                              <router-link replace class="dropdown-item" :to="{name :'produit-front',params : {id : produit._id}}" >{{produit.nom}}</router-link>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex" href="#">Categories</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item" v-for="(categorie,i) in categories" :key="i"> <a class="nav-link active" aria-current="page" href="#">{{categorie.nom}}</a> </li>
-                    <!-- <li class="nav-item"> <a class="nav-link" href="#">Fashion</a> </li>
+                    <li class="nav-item"> <a class="nav-link" href="#">Fashion</a> </li>
                     <li class="nav-item"> <a class="nav-link" href="#">Furnitures</a> </li>
                     <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Mobiles </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -63,15 +66,22 @@
                             <li><a class="dropdown-item" href="#">Feature Phones</a></li>
                             <li><a class="dropdown-item" href="#">Mobile Covers</a></li>
                         </ul>
-                    </li> -->
+                    </li>
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
 </header>
 </div>
 </template>
-
+<style>
+.dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
+</style>
 <script>
 import axios from 'axios'
 export default {
@@ -94,6 +104,7 @@ export default {
             this.check = false
             this.$router.push("/signin");
         },
+      
     },
     created(){
       const login =  localStorage.getItem('user')
@@ -105,6 +116,7 @@ export default {
           this.check = false
         }
         axios.get('http://localhost:3500/responsable/categorie/voir').then((res)=>{
+        
           this.categories = res.data
         }).catch((er)=>console.log(er))
     },
@@ -122,7 +134,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   body {
     background-color: purple
 }

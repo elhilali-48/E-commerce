@@ -1,16 +1,18 @@
 <template>
   <div class="home">
-    <NavBar class="mb-5"/>
-   <h1> Welcome {{user.id.nom}} </h1>
- 
+    
+   
+  <nav-bar></nav-bar>
+  <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import VueJwtDecode from "vue-jwt-decode";
-
+import NavBar from "../../components/NavBar.vue"
 export default {
+  components: { NavBar },
   data () {
     return {
       user :{}
@@ -18,6 +20,9 @@ export default {
   },
  
   name: 'HomeView',
+  component : {
+    NavBar
+  },
   methods:{
      getUserDetails() {
       // get token from localstorage
