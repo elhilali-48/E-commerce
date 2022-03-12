@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 const {isEmail} = require('validator')
-const Schema = mongoose.Schema
-const ObjectId = Schema.ObjectId
 const clientSchema = mongoose.Schema
 ({
     nom:{ type: String, required: true, maxlength: 30, minlegth: 2 },

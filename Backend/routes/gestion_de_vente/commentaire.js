@@ -4,7 +4,10 @@ const router  = express.Router();
 const { requireClient, checkClient, } = require("../../midlleware/authentifiaction");
 
 
-router.patch('/ajouter/:id', checkClient,commentaireCtrl.ajouter)
+router.post('/ajouter/:id', checkClient,commentaireCtrl.ajouter)
+router.get('/voircommentaire/:id', checkClient, commentaireCtrl.voircommentaire)
+router.put('/modifier/:id', checkClient, commentaireCtrl.modifier)
+router.delete('/supprimer/:id', checkClient, commentaireCtrl.supprimer)
 
 
 module.exports = router

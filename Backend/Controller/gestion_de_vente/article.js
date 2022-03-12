@@ -1,9 +1,35 @@
 const Article = require('../../models/product/Article')
 const Panier = require('../../models/product/Panier')
 const Produit = require('../../models/product/Produit')
+const multer = require('multer')
+
+// define storage 
+
+// const storage = multer.storage(
+//     {
+//         destination: function(req, File, next)
+//         {
+//             next(null, './public/uploads/images')
+//         },
 
 
-module.exports.ajouterArticle = async (req, res) =>
+//         // add back extension
+
+
+//         filename:function(req, File, next)
+//         {
+//             next(null, file.originalname)
+//         }
+//     })
+
+//     //upload parametre
+
+//     const upload = multer({
+
+//         storage:storage,
+//     })
+
+module.exports.ajouterArticle = /*upload.single('image'),*/ async (req, res) =>
 {
     try
     {  
@@ -15,7 +41,8 @@ module.exports.ajouterArticle = async (req, res) =>
             description: req.body.description,
             prix: req.body.prix,
             avis: req.body.avis,
-            produit: req.body.produit
+            produit: req.body.produit,
+            image: req.file.filename
 
         }) 
         await Produit.updateOne
@@ -87,7 +114,7 @@ module.exports.voirArticle = async (req, res) =>
         const data = await Article.findOne
         (
             {_id: req.params.id}
-        ).populate('produit')
+        ).populate('produit').populate('personnecomment')
         res.status(200).json(data)
     } 
     catch (err) 
