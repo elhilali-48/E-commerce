@@ -37,12 +37,12 @@
             </ul>
         </div>
         <div class="quantite">
-         <h6 class="text-primary"> Quantité :</h6> 
+         <h6 class="text-primary">  Quantité :</h6> 
          
           <input v-if="article.quantite>0"  class="form-input w-25 rounded-1 text-center" type="number" min="1" :max="article.quantite"> {{article.quantite>0 ? `Stock : ${article.quantite}`: "Rupture"}}
         </div>
         <div class="panier">
-          <button class="btn btn-lg btn-success px-5 py-2" >{{article.quantite>0 ? 'Ajouter au panier': "Rupture du stock"}}</button>
+          <button @click.prevent="addCart(article._id)" class="btn btn-lg btn-success px-5 py-2" >{{article.quantite>0 ? 'Ajouter au panier': "Rupture du stock"}}</button>
         </div>
       </div>
       <div class="col-md-10 mx-auto mt-5 mb-5">
@@ -64,6 +64,7 @@
               <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">Description technique </div>
               <div class="tab-pane fade" :class="{ 'active show': isActive('contact') }" id="contact">Commentaire</div>
           </div>
+         
         </div>
     </div>
   </div>
@@ -71,7 +72,9 @@
 
 
 <script>
+import VueJwtDecode from "vue-jwt-decode";
 import axios from 'axios'
+import Vue from "vue"
 export default {
   name: 'article-front',
     data () {
@@ -79,7 +82,8 @@ export default {
         article : {
             
         },
-        activeItem : 'description'
+        activeItem : 'description',
+        idClient : ""
     }
   },
  
@@ -87,17 +91,46 @@ export default {
         axios.get(`http://localhost:3500/responsable/article/voirArticle/${this.$route.params.id}`).then((res)=>{
                 this.article = res.data
                 
-                
-            })
-    },
+          
+        })
+        this.getUserDetails();
+      //  let client =  localStorage.getItem('client')
+            
+
+  },
     methods:{
        isActive (menuItem) {
       return this.activeItem === menuItem
+      },
+      setActive (menuItem) {
+        this.activeItem = menuItem
+      },
+       getUserDetails() {
+      // get token from localstorage
+      let token = Vue.$cookies.get('token');
+      
+      
+      try {
+      //decode token here and attach to the user object
+      let decoded = VueJwtDecode.decode(token);
+      this.idClient = decoded.id._id
+      // this.user = decoded;    
+      } catch (error) {
+        // return error in production env
+        console.log(error, 'error from decoding token')
+      }
+    }, 
+      addCart(idd){
+        
+        axios.post('http://localhost:3500/achat/panier/ajouter/'+idd,{
+          id : idd ,
+          idcli : this.idClient
+        }).then((res)=>{
+        console.log(res);
+      })
+      }
     },
-    setActive (menuItem) {
-      this.activeItem = menuItem
-    },
-    }
+    
 }
 </script>
 

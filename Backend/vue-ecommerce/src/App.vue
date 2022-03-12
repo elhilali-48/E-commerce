@@ -40,7 +40,21 @@ nav a.router-link-exact-active {
 }
 </style>
 <script>
+import axios from "axios"
 export default {
-  
+  created (){
+    axios.interceptors.response.use(undefined, function (err) {
+    return new Promise(function () {
+      if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+      // if you ever get an unauthorized, logout the user
+         localStorage.removeItem("user");
+         delete axios.defaults.headers.common['Authorization']
+      // you can also redirect to /login if needed !
+      }
+      throw err;
+    });
+  });
+  }
+   
 }
 </script>

@@ -12,17 +12,28 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import VueCookies from 'vue-cookies';
+
 
 library.add(faHatWizard)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
+
 Vue.use(Vuex)
 Vue.use(Vuelidate)
 Vue.use(VueSweetalert2)
+Vue.use(VueCookies)
 Vue.config.productionTip = false
 
+const token = Vue.$cookies.get('token')
+
+if(token){
+  axios.defaults.headers.common['Authorization'] = token
+}
+
 new Vue({
+  Vuex,
   // store : index,
   router,
   store,

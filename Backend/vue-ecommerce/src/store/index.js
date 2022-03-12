@@ -2,17 +2,20 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
-import auth from './auth'
+import * as authModule from "@/store/modules/auth"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    accessToken  : null,
+    accessToken  : localStorage.getItem('user') || '',
     client :{},
-    isLogged : false,
-    tokenAdmin : null
+    isLogged : '',
+    tokenAdmin : null,
+    panier : []
   },
   getters: {
+    idAuthenticated :state => !!state.accessToken,
+    authStatus : state => state.isLogged,
     getToken(state){
       return state.token
     },
@@ -23,37 +26,43 @@ export default new Vuex.Store({
   mutations: {
     setToken (state,accessToken){
       state.accessToken = accessToken
+      state.isLogged = "success"
     },
-    setClient(state){
-      state.isLogged = true
-    },
+
     setTokenAdmin(state,tokenAdmin){
       state.tokenAdmin = tokenAdmin
+    },
+    setClientData(state,data){
+      state.client = data
+    },
+    setError(state){
+      state.accessToken = "",
+      state.isLogged = "Error"
     }
     
   },
   actions: {
-    async login({dispatch},form){
+    async login({commit},form){
       await axios.post('http://localhost:3500/client/login',{
         email : form.email,
         password : form.password
       }).then((res)=>{
-        console.log(res.data.token)
-        localStorage.setItem('user',res.data.token)
-        this.commit('setToken',res.data.token)
-        dispatch('loginSuccess')
-        dispatch('fetchToken')
+        localStorage.setItem('user',res.data.token) // enregistrer Token dans LocalStorage
+        Vue.$cookies.set('token',res.data.token,60 * 60 * 12)
+        axios.defaults.headers.common['Authorization'] = res.data.token
+        // localStorage.setItem('client',JSON.stringify(res.data.client))
+        commit('setToken',res.data.token)
+        // commit('setClientData',res.data.client)
+        router.push('/')
+        // dispatch('fetchToken')
       }).catch(()=>{
-        this.commit('setToken',null)
+        commit('setError',null)
+        localStorage.removeItem('user')
+        Vue.$cookies.remove('token')
       })
     },
-    async loginSuccess({commit}){
-      commit('setClient') 
-      router.push('/')
-    },
-    async fetchToken({commit}){
-      await commit('setToken', localStorage.getItem('user'))
-    },
+    
+
     async fetchTokenAdmin({commit}){
       await commit('setToken', localStorage.getItem('tokenAdmin'))
     },
@@ -80,10 +89,17 @@ export default new Vuex.Store({
       await commit('setTokenAdmin', sessionStorage.getItem('tokenAdmin'))
     },
 
+    async addCart(article){
+      axios.post(`http://localhost:3500/achat/panier/ajouter/${article}`).then((res)=>{
+        console.log(res)
+
+      })
+    }
+
 
   },
   modules: {
-    auth,
+    auth : authModule
   }
 })
 
