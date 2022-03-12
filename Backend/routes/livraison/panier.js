@@ -4,6 +4,6 @@ const router = express.Router();
 const { requireClient, checkClient, } = require("../../midlleware/authentifiaction");
 
 router.post("/ajouter/:id", checkClient, panierCtrl.ajouterPanier);
-router.put("/ajouter/:id", checkClient, panierCtrl.ajouterPanier);
+router.get("/voirpanier/:id", checkClient, panierCtrl.voirpanier);
 
 module.exports = router;

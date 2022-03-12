@@ -1,10 +1,16 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
 const panierSchema = mongoose.Schema
 ({
-    
-    produitselectionner: { type: Array, default: '' },
-    idcli: { type: String,}
+    produitselectionner: 
+    [{
+      type: ObjectId,
+      ref: "Article",
+    }],
+    idcli: { type: String,},
+   
 })
 
 
