@@ -54,7 +54,7 @@
                 <a class="nav-link" @click.prevent="setActive('profile')" :class="{ active: isActive('profile') }" >Technique</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" @click.prevent="setActive('contact')" :class="{ active: isActive('contact') }" >Reviews</a>
+                <a class="nav-link" @click.prevent="setActive('contact')" :class="{ active: isActive('contact') }" >Reviews ({{comments.length}})</a>
               </li>
           </ul>
           <div class="tab-content py-3" id="myTabContent">
@@ -62,7 +62,44 @@
                   <h4 class="text-secondary">{{article.description}}</h4>
               </div>
               <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">Description technique </div>
-              <div class="tab-pane fade" :class="{ 'active show': isActive('contact') }" id="contact">Commentaire</div>
+              <div class="tab-pane fade bg-light p-5" :class="{ 'active show': isActive('contact') }" id="contact">
+                <div v-if="comments">
+                  <div class="" v-for="comment in comments" :key="comment._id">
+                    <div class="row d-flex justify-content-between">
+                      <div class="col-md-3">
+                        <img class="w-25" src="https://thumbs.dreamstime.com/b/ic-ne-masculine-d-avatar-dans-le-style-plat-ic-ne-masculine-d-utilisateur-avatar-d-homme-de-bande-dessin%C3%A9e-91462914.jpg" alt="">
+                        <small class="text-primary fw-bold">Client</small>
+                      </div>
+                      <div class="col-md-6">
+                        <div class=" border-5 border-danger">
+                          <p class="mt-4" style="text-align : left">
+                            {{comment.commentaire}}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="mt-4">
+                          25 March 2029
+                          <button class="btn btn-primary" v-if="idClient && (idClient == comment.idclient)">Edit</button>
+                        </div>
+                        
+                      </div>
+                      <hr class="mt-5" size="4"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="fw-bold text-warning" v-else>
+                  Aucun Commentaire pour ce Article
+                </div>
+                <div class="comment">
+                  <form action="" @submit.prevent="addCommentaire">
+                    <label for="commentaire" class="float-start fw-bolder my-3" >Ajouter un commentaire : </label>
+                    <textarea class="form-control" id="commentaire" rows="3" v-model="commentaire"></textarea>
+                    <button type="submit" class="btn btn-outline-success mt-2 float-end text-white">Ajouter</button>
+                  </form>
+              
+                </div>
+              </div>
           </div>
          
         </div>
@@ -82,13 +119,16 @@ export default {
         article : {
             
         },
+        comments : [],
         activeItem : 'description',
-        idClient : ""
+        idClient : "",
+        commentaire : ''
     }
   },
- 
   created () {
         axios.get(`http://localhost:3500/responsable/article/voirArticle/${this.$route.params.id}`).then((res)=>{
+          console.log(res.data.personnecomment);
+                this.comments = res.data.personnecomment
                 this.article = res.data
                 
           
@@ -128,6 +168,14 @@ export default {
         }).then((res)=>{
         console.log(res);
       })
+      },
+      addCommentaire(){
+        axios.post(`http://localhost:3500/client/commentaire/ajouter/${this.$route.params.id}`,{
+          idcli : this.idClient,
+          commentaire : this.commentaire
+        }).then(()=>{
+          this.$router.go()
+        })
       }
     },
     
@@ -162,7 +210,7 @@ export default {
     text-align: left;
     color: black;
   }
-  .btn{
+  .btn .btn-success{
     text-align: left;
     background-color: #44C260;
     border-radius: 10px;

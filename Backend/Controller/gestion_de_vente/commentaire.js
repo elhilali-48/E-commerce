@@ -6,7 +6,7 @@ module.exports.ajouter = async (req, res) => {
   try {
     const comment = await Commentaire.create({
       commentaire: req.body.commentaire,
-      idclient: res.locals.client.id,
+      idclient: req.body.idcli,
     });
     await Article.updateOne(
       { _id: req.params.id },
