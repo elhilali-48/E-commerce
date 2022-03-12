@@ -42,12 +42,19 @@
             <div class="row mb-4">
                 <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="nom"  >Produit </label>
+                    <label class="form-label" for="nom"  >{Produit </label>
 
                     <select class="form-select" v-model="article.produit">
                         <option disabled value="">Selectionner un produit</option>
                         <option v-for="produit in produits" :key="produit._id" :value="produit._id">{{produit.nom}}</option>
                     </select>
+                    <span class="text-danger"  v-if="!$v.article.produit.required && $v.article.produit.$dirty" >Vous devez choisir un produit, sinon <router-link :to="{name :'ajouter-produit'}"> Ajouter un produit </router-link> </span>
+                </div>
+                </div>
+                 <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="nom"  >Image </label>
+                    <input type="file" class="form-control" @change="onImageSelected"/>
                     <span class="text-danger"  v-if="!$v.article.produit.required && $v.article.produit.$dirty" >Vous devez choisir un produit, sinon <router-link :to="{name :'ajouter-produit'}"> Ajouter un produit </router-link> </span>
                 </div>
                 </div>
@@ -86,7 +93,8 @@ export default {
                 description: "",
                 avis :"",
                 produit : "",
-                quantite : ""
+                quantite : "",
+                image :""
             },
             produits : [],
             
@@ -123,15 +131,11 @@ export default {
                 this.ajouterArticle()
             }
         },
+        onImageSelected(e){
+            // console.log(e.target.files[0])
+            this.article.image = e.target.files[0].name
+        },
         ajouterArticle(){
-            // const data = {
-            //     nom : this.nom,
-            //     prix : this.prix,
-            //     description: this.description,
-            //     avis :this.avis,
-            //     produit : this.produit,
-            //     quantite : this.quantite
-            // }
             axios.post('http://localhost:3500/responsable/article/ajouter',{
                 nom : this.article.nom,
                 prix : this.article.prix,
