@@ -1,37 +1,58 @@
-const bodyParser = require('body-parser')
-const Commentaire = require('../../models/product/Commentaire')
-const Client = require('../../models/authentifiaction/Client')
-const Article = require('../../models/product/Article')
+const bodyParser = require("body-parser");
+const Commentaire = require("../../models/product/Commentaire");
+const Article = require("../../models/product/Article");
 
+module.exports.ajouter = async (req, res) => {
+  try {
+    const comment = await Commentaire.create({
+      commentaire: req.body.commentaire,
+      idclient: res.locals.client.id,
+    });
+    await Article.updateOne(
+      { _id: req.params.id },
+      { $push: { personnecomment: comment } }
+    );
+    res.status(201).json({ comment });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+module.exports.voircommentaire = async (req, res) => {
+  try {
+    const comment = await Commentaire.findOne(
+      { _id: req.params.id },
+      { ...req.body }
+    );
 
-module.exports.ajouter = async (req, res) =>
+    res.status(200).json({ comment });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+module.exports.modifier = async (req, res) => {
+  try {
+    const comment = await Commentaire.findByIdAndUpdate(
+
+      { _id: req.params.id }, { $set: { commentaire: req.body.commentaire } }
+    );
+    res.status(201).json({ comment });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
+module.exports.supprimer = async (req,res) =>
 {
-    try
-    {
-      const comment = await Commentaire.create
+  try 
+  {
+      await Commentaire.findByIdAndRemove
       (
-        { commentaire:  req.body.commentaire },
-
+        {_id: req.params.id}
       )
-        await Article.updateOne
-        ( 
-            { _id: req.params.id }, 
-            { personnecomment:
-              [
-                res.locals.client.id, comment
-              ]
-            }
-
-
-            
-        )
-// -----------------------------------------------------------------------------------------------------------------------------------------------
-
-      res.status(201).json({ comment})
-    }
-    catch(err)
-    {
-        res.status(400).json({ err: err.message })
-    }
+      res.status(201).json({ comment: "ce commentaire a bien été supprimer" });
+  } 
+  catch (err) 
+  {
+      res.status(400).json({ err: err.message });
+  }
 }
-
