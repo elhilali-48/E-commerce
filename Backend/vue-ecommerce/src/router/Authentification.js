@@ -1,5 +1,7 @@
 import SignIn from '../views/Authentification/SignIn.vue'
 import RegisterIn from '../views/Authentification/RegisterIn.vue'
+import Vue from "vue"
+
 
 const routes = [
   {
@@ -7,7 +9,7 @@ const routes = [
     name : 'signin',
     component : SignIn,
     beforeEnter: (to, from, next) => {
-       const isloggin = localStorage.getItem('user')
+       const isloggin = Vue.$cookies.get('token')
        if(isloggin != null){
          next('/')
        }

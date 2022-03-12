@@ -2,8 +2,8 @@ const Panier = require("../../models/product/Panier");
 
 module.exports.ajouterPanier = async (req, res) => {
   try {
-    const panier = await Panier.findOne({ idcli: res.locals.client.id });
-    var cli = res.locals.client.id
+    const panier = await Panier.findOne({ idcli: req.body.idcli });
+    var cli = req.body.idcli
     if (!panier) {
       const panier = await Panier.create({
         produitselectionner: req.params.id,
@@ -13,7 +13,7 @@ module.exports.ajouterPanier = async (req, res) => {
       res.status(201).json(panier);
     } else {
       await Panier.updateOne(
-        { idcli: res.locals.client.id },
+        { idcli: req.body.idcli },
         { $push: { produitselectionner: req.params.id } }
       );
       res.status(201).json(panier);

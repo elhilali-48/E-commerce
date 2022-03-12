@@ -130,9 +130,12 @@ export default {
      } ,
         logout(){
             localStorage.removeItem("user");
+            this.$cookies.remove('token')
+            delete axios.defaults.headers.common['Authorization']
             this.token = ""
             this.check = false
             this.$router.push("/signin");
+            
         },
       
     },
@@ -150,16 +153,16 @@ export default {
           this.categories = res.data
         }).catch((er)=>console.log(er))
     },
-    mounted(){
-        const login =  localStorage.getItem('user')
+    // mounted(){
+    //     const login =  localStorage.getItem('user')
         
-        if(login){
-          this.check = true
-        }
-        else{
-          this.check = false
-        }
-    }
+    //     if(login){
+    //       this.check = true
+    //     }
+    //     else{
+    //       this.check = false
+    //     }
+    // }
 
 }
 </script>

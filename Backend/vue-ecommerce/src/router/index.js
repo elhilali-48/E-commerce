@@ -19,7 +19,7 @@ const router = new VueRouter({
 
 router.beforeEach((to,from,next)=>{
   const requiresAuth =  to.matched.some(x=>x.meta.requiresAuth)
-  const local  = localStorage.getItem('user')
+  const local  = Vue.$cookies.get('token')
   // const login = store.state.isLogged
   if(requiresAuth && local == null){
     next("/signin")

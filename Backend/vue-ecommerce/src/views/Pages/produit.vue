@@ -163,20 +163,22 @@ export default {
             })
     },
     computed : {
-         filteredList() {
-      return this.produit.article.filter(post => {
-        return post.nom.toLowerCase().includes(this.search.toLowerCase())
-      })
-    }},
-    // filterSearch(){
-    //         if(this.search){
-    //         return this.produit.article.filter((item)=>{
-    //             return this.search.toLowerCase().split(' ').every(v => item.nom.toLowerCase().includes(v))
-    //         })
-    //         }else{
-    //             return this.produit.article;
-    //         }
-    //      }
+    //      filteredList() {
+    //   return this.produit.article.filter(post => {
+    //     return post.nom.toLowerCase().includes(this.search.toLowerCase())
+    //   })
+    // }
+    filteredList(){
+            if(this.search){
+            return this.produit.article.filter((item)=>{
+                return this.search.toLowerCase().split(' ').every(v => item.nom.toLowerCase().includes(v))
+            })
+            }else{
+                return this.produit.article;
+            }
+         }
+    },
+    
 
 }
 </script>
