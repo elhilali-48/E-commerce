@@ -3,10 +3,9 @@ const Panier = require("../../models/product/Panier");
 
 module.exports.ajouterPanier = async (req, res) => {
   try {
-  
     var panierarticle = await Article.findByIdAndUpdate( { _id: req.params.id }, { $set: { quantiteselectionne: req.body.quantiteselectionne } })
 
-    const panier = await Panier.findOne({ idcli: res.locals.client.id });
+    const panier = await Panier.findOne({ idcli: req.body.idcli});
 
 
         if(panierarticle.quantiteselectionne <= panierarticle.quantite)
@@ -14,13 +13,13 @@ module.exports.ajouterPanier = async (req, res) => {
           if (!panier) {
             const panier = await Panier.create({
               produitselectionner: req.params.id,
-              idcli: res.locals.client.id ,
+              idcli: req.body.idcli ,
             });
 
             res.status(201).json(panier);
           } else {
             await Panier.updateOne(
-              { idcli: res.locals.client.id },
+              { idcli: req.body.idcli },
               { $push: { produitselectionner: req.params.id } }
             );
             res.status(201).json(panier);

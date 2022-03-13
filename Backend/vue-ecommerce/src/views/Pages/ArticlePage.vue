@@ -39,10 +39,10 @@
         <div class="quantite">
          <h6 class="text-primary">  Quantité :</h6> 
          
-          <input v-if="article.quantite>0"  class="form-input w-25 rounded-1 text-center" type="number" min="1" :max="article.quantite"> {{article.quantite>0 ? `Stock : ${article.quantite}`: "Rupture"}}
+          <input v-if="article.quantite>0"  v-model="quatite" class="form-input w-25 rounded-1 text-center" type="number" min="1" :max="article.quantite"> {{article.quantite>0 ? `Stock : ${article.quantite}`: "Rupture"}}
         </div>
         <div class="panier">
-          <button @click.prevent="addCart(article._id)" class="btn btn-lg btn-success px-5 py-2" >{{article.quantite>0 ? 'Ajouter au panier': "Rupture du stock"}}</button>
+          <button @click.prevent="addCart(article)" class="btn btn-lg btn-success px-5 py-2" >{{article.quantite>0 ? 'Ajouter au panier': "Rupture du stock"}}</button>
         </div>
       </div>
       <div class="col-md-10 mx-auto mt-5 mb-5">
@@ -95,7 +95,7 @@
                   <form action="" @submit.prevent="addCommentaire">
                     <label for="commentaire" class="float-start fw-bolder my-3" >Ajouter un commentaire : </label>
                     <textarea class="form-control" id="commentaire" rows="3" v-model="commentaire"></textarea>
-                    <button type="submit" class="btn btn-outline-success mt-2 float-end text-white">Ajouter</button>
+                    <button type="submit" class="btn btn-success mt-2 float-end text-white">Ajouter</button>
                   </form>
               
                 </div>
@@ -122,12 +122,13 @@ export default {
         comments : [],
         activeItem : 'description',
         idClient : "",
-        commentaire : ''
+        commentaire : '',
+        quatite : 1
     }
   },
   created () {
         axios.get(`http://localhost:3500/responsable/article/voirArticle/${this.$route.params.id}`).then((res)=>{
-          console.log(res.data.personnecomment);
+          // console.log(res.data.personnecomment);
                 this.comments = res.data.personnecomment
                 this.article = res.data
                 
@@ -149,25 +150,54 @@ export default {
       // get token from localstorage
       let token = Vue.$cookies.get('token');
       
-      
-      try {
-      //decode token here and attach to the user object
-      let decoded = VueJwtDecode.decode(token);
-      this.idClient = decoded.id._id
-      // this.user = decoded;    
-      } catch (error) {
-        // return error in production env
-        console.log(error, 'error from decoding token')
+      if(token != null){
+         try {
+          //decode token here and attach to the user object
+          let decoded = VueJwtDecode.decode(token);
+          this.idClient = decoded.id._id
+          // this.user = decoded;    
+          } catch (error) {
+            // return error in production env
+            console.log(error, 'error from decoding token')
+          }
       }
+      
+     
     }, 
-      addCart(idd){
-        
-        axios.post('http://localhost:3500/achat/panier/ajouter/'+idd,{
-          id : idd ,
-          idcli : this.idClient
-        }).then((res)=>{
-        console.log(res);
-      })
+      addCart(article){
+        console.log(article);
+        if(this.idClient !== ""){
+          axios.post('http://localhost:3500/achat/panier/ajouter/'+article._id,{
+            id : article._id ,
+            idcli : this.idClient,
+            quantiteselectionne : this.quatite
+          }).then((res)=>{
+          console.log(res);
+        })
+        }
+        else{
+
+          this.$store.dispatch('addToCart',{
+            article : this.article,
+            quantity : this.quatite
+          })
+          // this.$swal.fire({
+          //     title: 'Voulez-vous ajouter ce article à votre panier ?',
+          //     text: "Connctez-vous!",
+          //     icon: 'primary',
+          //     showCancelButton: true,
+          //     confirmButtonColor: '#3085d6',
+          //     cancelButtonColor: '#d33',
+          //     confirmButtonText: 'Se connecter!',
+          //     cancelButtonText : 'Annuler'
+          //   }).then((result) => {
+          //     if (result.isConfirmed) {
+          //       this.$router.push('/signIn')
+          //     }
+          //   })
+          // 
+        }
+          
       },
       addCommentaire(){
         axios.post(`http://localhost:3500/client/commentaire/ajouter/${this.$route.params.id}`,{

@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
+import createPersistedState from 'vuex-persistedstate'
 import * as authModule from "@/store/modules/auth"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins : [createPersistedState()],
   state: {
     accessToken  : localStorage.getItem('user') || '',
     client :{},
@@ -21,7 +23,21 @@ export default new Vuex.Store({
     },
     getStatus(state){
       return state.isLogged
+    },
+
+    getPanierLength(state){
+      return state.panier.length
+    },
+
+    getTotal(state){
+      let total = 0
+
+      state.panier.forEach(item=>{
+        total += item.article.prix * item.quantity
+      })
+      return total
     }
+
   },
   mutations: {
     setToken (state,accessToken){
@@ -38,7 +54,33 @@ export default new Vuex.Store({
     setError(state){
       state.accessToken = "",
       state.isLogged = "Error"
+    },
+    addToCart(state,{article,quantity}){
+      let articleInPanier = state.panier.find(item =>{
+        return item.article._id === article._id
+      })
+
+      if(articleInPanier){
+        articleInPanier.quantity += quantity
+        return
+      }
+
+      state.panier.push({
+        article,
+        quantity
+      })
+    },
+
+    deleteArticle(state,ar){
+      state.panier = state.panier.filter(item=>{
+        return item.article._id != ar._id
+      })
+     
+      // state.panier.filter(item =>{
+       
+      // })
     }
+
     
   },
   actions: {
@@ -89,11 +131,12 @@ export default new Vuex.Store({
       await commit('setTokenAdmin', sessionStorage.getItem('tokenAdmin'))
     },
 
-    async addCart(article){
-      axios.post(`http://localhost:3500/achat/panier/ajouter/${article}`).then((res)=>{
-        console.log(res)
+    async addToCart({commit},{article,quantity}){
+      commit('addToCart',{article,quantity})
+    },
 
-      })
+    async deleteArticle({commit},article){
+      commit('deleteArticle',article)
     }
 
 

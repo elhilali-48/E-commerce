@@ -10,9 +10,9 @@ import ArticlePage from "../views/Pages/ArticlePage.vue"
         path : "/",
         name : "HomePage",
         component : HomePage,
-        meta:{
-          requiresAuth : true
-        },
+        // meta:{
+        //   requiresAuth : true
+        // },
         children :[
           {
             path : "produit/:id",

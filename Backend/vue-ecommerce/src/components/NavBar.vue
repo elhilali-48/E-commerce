@@ -30,21 +30,27 @@
                                     <i class='bx bxs-shopping-bag' style="width : 20px"></i>
                                 </button>
                                 <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton1" style="min-width : 390px ; right :0px; left : auto">
-                                    <div class="px-2 d-flex justify-content-between">
-                                        <div>
-                                            <img style="width : 50px" class="mx-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN9chxXkn662lNgJFcmva2sLk4OaYY-zQ5EQLi5h87YXvOHEE5hb7v2UN5FdX9nMcMYVg&usqp=CAU" alt="">
-                                        </div>
-                                        <div class="text-left">
-                                            <strong>Xiaomi</strong>
-                                            <br /> 1 x 23 €
-                                        </div>
-                                        <div>
-                                            <a class="badge bg-danger float-end nav-link">Supprimer</a>
-                                        </div>
+                                    <div v-if="lengthPanier>0">
+                                         <div v-for="item in panier" :key="item._id" >
+                                        <div class="px-2 d-flex justify-content-between">
+                                            <div>
+                                                <img style="width : 50px" class="mx-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN9chxXkn662lNgJFcmva2sLk4OaYY-zQ5EQLi5h87YXvOHEE5hb7v2UN5FdX9nMcMYVg&usqp=CAU" alt="">
+                                            </div>
+                                            <div class="text-left">
+                                                <strong>{{item.article.nom}}</strong>
+                                                <br /> {{item.quantity}} x {{item.article.prix}} €
+                                            </div>
+                                            <div>
+                                                <a class=" btn btn-danger" @click.prevent="deleteArticle(item.article)">Supprimer</a>
+                                            </div>
+                                         </div>
+                                   </div>
                                     </div>
+                                  
+                                 
                                     <hr />
                                     <div class="d-flex justify-content-between">
-                                        <span>Total : 40 €</span>
+                                        <span>Total : {{getTotal}} €</span>
                                         
                                     </div>
                                 </div>
@@ -54,7 +60,7 @@
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul> -->
                             </div>
-                        <div class="d-flex flex-column ms-2"> <span class="qty">1 Product</span> <span class="fw-bold">$27.90</span> </div>
+                        <div class="d-flex flex-column ms-2"> <span class="qty">{{lengthPanier}} Product</span> <span class="fw-bold">{{getTotal}} €</span> </div>
                     </div>
                 </div>
             </div>
@@ -119,7 +125,10 @@ export default {
     return {
         token :'',
         check : false,
-        categories : []
+        categories : [],
+        // panier : [],
+        // total : '',
+        // quantite : 1
     }
   },
     name: "NavBar",
@@ -137,7 +146,33 @@ export default {
             this.$router.push("/signin");
             
         },
+
+        viewCart(){
+            if(this.token == null){
+                this.panier = JSON.stringify(localStorage.getItem('panier'))
+                this.total = this.panier.reduce((total, article)=>{
+                    return total + this.quantite * article.prix
+                },0)
+
+            }
+        },
+
+        deleteArticle(article){
+            
+            this.$store.dispatch('deleteArticle',article)
+        }
       
+    },
+    computed : {
+        panier(){
+           return this.$store.state.panier
+        },
+        lengthPanier(){
+            return this.$store.getters.getPanierLength
+        },
+        getTotal(){
+            return this.$store.getters.getTotal
+        }
     },
     created(){
       const login =  localStorage.getItem('user')
