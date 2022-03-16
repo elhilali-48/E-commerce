@@ -12,6 +12,7 @@
 // @ is an alias to /src
 import VueJwtDecode from "vue-jwt-decode";
 import NavBar from "../../components/NavBar.vue"
+import Vue from 'vue'
 export default {
   components: { NavBar },
   data () {
@@ -27,17 +28,21 @@ export default {
   methods:{
      getUserDetails() {
       // get token from localstorage
-      let token = localStorage.getItem("user");
+      let token = Vue.$cookies.get('token');
       
-      try {
-      //decode token here and attach to the user object
-      let decoded = VueJwtDecode.decode(token);
-      
-      this.user = decoded;    
-      } catch (error) {
-        // return error in production env
-        console.log(error, 'error from decoding token')
+      if(token != null){
+          try {
+        //decode token here and attach to the user object
+        let decoded = VueJwtDecode.decode(token);
+        
+        this.user = decoded;    
+        } catch (error) {
+          // return error in production env
+          console.log(error, 'error from decoding token')
+        }
       }
+      
+     
   } 
   },
   created(){

@@ -5,9 +5,12 @@ const ObjectId = Schema.ObjectId
 const commentaireSchema = mongoose.Schema
 ({
     commentaire: { type:String , maxlength : 100 },
-    idclient: {type: String }
+    idclient: {type: String },
     
-})
+    
+},
+{timestamps: true }
+)
 
 
 module.exports = mongoose.model('Commentaire', commentaireSchema)

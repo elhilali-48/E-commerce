@@ -1,7 +1,20 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Client = require("../../models/authentifiaction/Client");
+<<<<<<< HEAD
 
+=======
+const Panier = require("../../models/product/Panier");
+const nodemailer = require('nodemailer')
+const transport = nodemailer.createTransport({
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "8108134db847cf",
+    pass: "93e8ad02d5a811"
+  }
+});
+>>>>>>> d1a86c9f529ea6c0662a68347842e83f58da4378
 const createToken = (id) => {
   return jwt.sign({ id }, "RANDOM_TOKEN_SECRET", { expiresIn: "2h" });
 };
@@ -12,6 +25,7 @@ module.exports.register_get = (req, res) => {
 
 module.exports.register_post = async (req, res) => {
   try {
+    
     //generate password
     const salt = await bcrypt.genSalt(10);
     const hashpassword = await bcrypt.hash(req.body.password, salt);
@@ -30,8 +44,32 @@ module.exports.register_post = async (req, res) => {
       sexe: req.body.sexe,
       confirmation: req.body.confirmation,
     });
-
+   
     res.status(201).json({ client, message: "le client a bien été créer" });
+
+    var mailOptions = {
+      from: '"BestTech Team" <bestteck@info.com>',
+      to: req.body.email,
+      subject: 'Création de votre compte ',
+      text: `Bonjour ${req.nom} ${res.prenom}`,
+      html: 
+      ` 
+        <h1>Bonjour ${client.nom} ${client.prenom}</h1>
+
+        <p>
+          Vous venez de créer votre compte sur le site BestTech
+          Veuillez cliquer sur ce lien pour valider votre compte <br> <button style="background-color : green">Activer mon compte</button> <br>
+
+          Attention, vous devez valider votre compte avant le 20/03/2022, après cela votre compte sera détruit.
+        </p>
+      `
+  };
+   transport.sendMail(mailOptions ,(err,info)=>{
+      if(err){
+          return console.log(err.message)
+      }
+      console.log('Message sent: %s', info.messageId)
+   })
   } catch (err) {
     res.status(400).json({ err });
   }
