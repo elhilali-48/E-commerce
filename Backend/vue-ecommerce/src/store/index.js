@@ -13,7 +13,8 @@ export default new Vuex.Store({
     client :{},
     isLogged : '',
     tokenAdmin : null,
-    panier : []
+    panier : [],
+    errorAdmin : ""
   },
   getters: {
     idAuthenticated :state => !!state.accessToken,
@@ -115,14 +116,14 @@ export default new Vuex.Store({
         email : form.email,
         password : form.password
       }).then((res)=>{
-        console.log(res)
-        sessionStorage.setItem('tokenAdmin', res.data.token)
-         document.cookie = res.data.token
+        
+         sessionStorage.setItem('tokenAdmin', res.data.token)
+         
         this.commit('setTokenAdmin',res.data.token)
         router.push('/admin')
         dispatch('fetchTokenAdmin')
-      }).catch((err)=>{
-        alert(err)
+      }).catch(()=>{
+        this.state.errorAdmin = "Il y a un erreur soit dans l'email ou le mot de passe "
 
         this.commit('setTokenAdmin',null)
       })

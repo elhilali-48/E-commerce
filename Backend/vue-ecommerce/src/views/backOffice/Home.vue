@@ -12,11 +12,11 @@
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                         </a>
                     </li>
-                    <li v-if='admin.id.role'>
+                    <li >
                         <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline"><router-link to="/admin/client">Client</router-link></span> </a>
                     </li>
-                    <li  v-if='admin.id.role'>
+                    <li >
                         <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 text-left">
                             <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">
                                 <router-link to="/admin/responsable">Responsable</router-link>
@@ -31,7 +31,7 @@
                         </ul> -->
                     </li>
                
-                    <li  v-if='!admin.id.role'>
+                    <li>
                         <router-link :to="{name :'produit-page'}" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Produit</span></router-link>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
@@ -43,12 +43,12 @@
                             </li>
                         </ul>
                     </li>
-                    <li v-if='!admin.id.role'>
+                    <li>
                         <router-link :to="{name : 'categorie-page'}" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Categorie</span> </router-link>
                            
                     </li>
-                    <li  v-if='!admin.id.role'>
+                    <li>
                         <router-link :to="{name :'article-page'}" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Article</span> </router-link>
                     </li>
@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="col py-3 h-100">
-            Welecome  {{admin.id.role}}
+            Welecome
             <router-view></router-view>
         </div>
         

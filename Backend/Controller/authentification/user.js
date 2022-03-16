@@ -1,5 +1,15 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
+
+const transport = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "8108134db847cf",
+      pass: "93e8ad02d5a811"
+    }
+  });
 
 const User = require('../../models/authentifiaction/User')
 
@@ -12,14 +22,13 @@ module.exports.login_get = (req,res)=>{
 }
 
 module.exports.login_post = async (req,res)=>{
-   console.log(req.body.email)
     try {
         const user = await User.findOne({email:req.body.email})
         if (user){
             const passwordValid = await bcrypt.compare(req.body.password, user.password)
             if(!passwordValid){
-               console.log("Password not valid");
-               res.send('pasword not valid')
+               
+               res.status(400).send('Password Non Trouvé')
             }
             else{
                 
@@ -27,6 +36,7 @@ module.exports.login_post = async (req,res)=>{
                     const token = createToken(user)
                     res.cookie('jwt', token, { httpOnly: true })
                     res.status(200).json({ user: user, token })
+                   
                 } catch (error) {
                     res.status(400).json({ errors })
                 }
@@ -35,7 +45,7 @@ module.exports.login_post = async (req,res)=>{
             }
         }
         else{
-            res.send('User non trouvé')
+            res.status(400).send('User Non Trouvé')
         }
         
     } catch (error) {

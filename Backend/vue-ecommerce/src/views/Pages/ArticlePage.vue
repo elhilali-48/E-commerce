@@ -79,7 +79,7 @@
                       </div>
                       <div class="col-md-3">
                         <div class="mt-4">
-                          25 March 2029
+                          {{comment.createdAt}}
                           <button class="btn btn-primary" v-if="idClient && (idClient == comment.idclient)">Edit</button>
                         </div>
                         
@@ -88,16 +88,20 @@
                     </div>
                   </div>
                 </div>
-                <div class="fw-bold text-warning" v-else>
+                <div class="fw-bold text-warning" v-else >
                   Aucun Commentaire pour ce Article
                 </div>
-                <div class="comment">
+                <div class="comment" v-if="idClient">
                   <form action="" @submit.prevent="addCommentaire">
                     <label for="commentaire" class="float-start fw-bolder my-3" >Ajouter un commentaire : </label>
                     <textarea class="form-control" id="commentaire" rows="3" v-model="commentaire"></textarea>
                     <button type="submit" class="btn btn-success mt-2 float-end text-white">Ajouter</button>
                   </form>
               
+                </div>
+                <div class="text-primary fw-bolder" v-else>
+                  <router-link :to='{name : "signin"}'>  Connectez-vous pour ajouter un commentaire </router-link>
+                 
                 </div>
               </div>
           </div>
@@ -131,7 +135,8 @@ export default {
           // console.log(res.data.personnecomment);
                 this.comments = res.data.personnecomment
                 this.article = res.data
-                
+
+               
           
         })
         this.getUserDetails();

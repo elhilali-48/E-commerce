@@ -4,6 +4,10 @@
       <div class="text-center text-primary py-3 text-shadow-3">
            <h1 class=''>Admin </h1>
         </div>
+        <div class="alert alert-danger" v-if="this.$store.state.erroAdmin == '' ">
+          {{this.$store.state.errorAdmin}}
+        </div>
+
       <div class="d-flex justify-content-center">
      
          

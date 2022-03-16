@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const cors =require('cors')
+const nodemailer = require('nodemailer')
 
 const routesauth = require('./routes/authentification/client')
 const routesAuthUser = require('./routes/authentification/user')
@@ -15,6 +16,17 @@ const routescommentaire = require('./routes/gestion_de_vente/commentaire')
 
 const cookieParser = require('cookie-parser')
 const { checkClient } = require('./midlleware/authentifiaction')
+
+// Configuration du node Mailer : 
+// const  transport = nodemailer.createTransport({
+//     host: "smtp.mailtrap.io",
+//     port: 2525,
+//     auth: {
+//       user: "8108134db847cf",
+//       pass: "93e8ad02d5a811"
+//     }
+//   });
+
 
 const app = express();
 app.use(cors({
@@ -36,6 +48,7 @@ mongoose.connect('mongodb+srv://admin:admin@cluster0.nctg3.mongodb.net/myFirstDa
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser())
+// app.use(nodemailer.createTransport)
 
 app.get('*', checkClient)
 app.get('/', (req, res) => res.render('register'))
