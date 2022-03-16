@@ -6,7 +6,7 @@ module.exports.show_client= async (req,res)=>
     try
     {
         const client =await Client.findById
-        ({_id: req.params.id }, {... req.body })
+        ({_id: req.params.id }, {... req.body }).populate('articleselectionner')
 
         res.status(201).json({ client })
     }

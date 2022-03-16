@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const {isEmail} = require('validator')
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 const clientSchema = mongoose.Schema
 ({
     nom:{ type: String, required: true, maxlength: 30, minlegth: 2 },
@@ -14,6 +16,11 @@ const clientSchema = mongoose.Schema
     telephone: { type: Number, maxlength: 10, minlegth: 10 },
     sexe: { type: Boolean, required: true }, 
     confirmation: { type: Boolean, default:false },
+    articleselectionner: 
+    [{
+      type: ObjectId,
+      ref: "Panier",
+    }],
 });
 
 module.exports = mongoose.model('Client', clientSchema);

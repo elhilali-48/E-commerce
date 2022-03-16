@@ -4,13 +4,10 @@ const ObjectId = Schema.ObjectId;
 
 const panierSchema = mongoose.Schema
 ({
-    produitselectionner: 
-    [{
-      type: ObjectId,
-      ref: "Article",
-    }],
-    idcli: { type: String,},
-   
+    produitselectionner: { type: String, default: ''},
+    quantiteselectionne: { type: Number},
+    idcli: { type: String,}
+    
 })
 
 

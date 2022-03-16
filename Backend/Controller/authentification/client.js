@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Client = require("../../models/authentifiaction/Client");
-const Panier = require("../../models/product/Panier");
 
 const createToken = (id) => {
   return jwt.sign({ id }, "RANDOM_TOKEN_SECRET", { expiresIn: "2h" });
@@ -63,7 +62,7 @@ module.exports.login_post = async (req, res) => {
         try {
           const token = createToken(client);
           res.cookie("jwt", token, { httpOnly: true }); // http only pour que le coockies ne sera pas visualiser en js
-          res.status(200).json({ client: client, token });
+          res.status(200).json({ client: client });
         } catch (err) {
           res.status(400).json({ err: err.message, message: "Error" });
         }
