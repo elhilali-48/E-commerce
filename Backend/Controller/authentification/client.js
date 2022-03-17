@@ -1,9 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Client = require("../../models/authentifiaction/Client");
-<<<<<<< HEAD
-
-=======
 const Panier = require("../../models/product/Panier");
 const nodemailer = require('nodemailer')
 const transport = nodemailer.createTransport({
@@ -14,7 +11,6 @@ const transport = nodemailer.createTransport({
     pass: "93e8ad02d5a811"
   }
 });
->>>>>>> d1a86c9f529ea6c0662a68347842e83f58da4378
 const createToken = (id) => {
   return jwt.sign({ id }, "RANDOM_TOKEN_SECRET", { expiresIn: "2h" });
 };
