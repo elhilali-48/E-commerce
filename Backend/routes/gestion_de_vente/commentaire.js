@@ -1,7 +1,7 @@
 const express =require('express')
 const commentaireCtrl = require("../../Controller/gestion_de_vente/commentaire");
 const router  = express.Router();
-const { requireClient, checkClient, } = require("../../midlleware/authentifiaction");
+const checkClient = require("../../midlleware/authentifiaction");
 
 
 router.post('/ajouter/:id', checkClient,commentaireCtrl.ajouter)
