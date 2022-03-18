@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const clientCtrl = require('../../Controller/authentification/client');
-const {  requireClient, checkClient } = require('../../midlleware/authentifiaction')
+const {  checkClient } = require('../../midlleware/authentification')
 
 
 
