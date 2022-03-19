@@ -91,7 +91,8 @@ module.exports.login_post = async (req, res) => {
       );
 
       if (!passwordValide) {
-        res.status(404).json("Password no matche");
+        res.status(400).json({error :"Password no match"})
+        
       } else {
         try {
           const token = createToken(client);

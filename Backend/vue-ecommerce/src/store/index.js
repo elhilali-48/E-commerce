@@ -98,7 +98,8 @@ export default new Vuex.Store({
         // commit('setClientData',res.data.client)
         router.push('/')
         // dispatch('fetchToken')
-      }).catch(()=>{
+      }).catch((err)=>{
+        console.log(err.response.data.error)
         commit('setError',null)
         localStorage.removeItem('user')
         Vue.$cookies.remove('token')

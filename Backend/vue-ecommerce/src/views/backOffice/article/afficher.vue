@@ -8,7 +8,7 @@
                             <td class="h-100">
                                 <strong>
                                     <span class="glyphicon glyphicon-asterisk text-primary"></span>
-                                    Titre                                                
+                                   Nom                                               
                                 </strong>
                             </td>
                             <td class="text-primary">
@@ -79,7 +79,7 @@
        </div>
      </div>
      <div class="col-md-5">
-        <img class="rounded float-right" src="https://gloimg.gbtcdn.com/soa/gb/item/6870745450383863808/16434/goods_img_big-v1/c4ea52da5c8e.jpg" />
+        <img class="w-50 rounded float-right" :src="require(`../../../../../images/${article.image}`)" :alt="article.image" />
      </div>
 
      <div class="col-md-10 mx-auto">
@@ -116,6 +116,7 @@ export default {
     },
     name : "afficher-article",
     methods: {
+       
         getArticle(){
             axios.get(`http://localhost:3500/responsable/article/voirarticle/${this.$route.params.id}`).then((res)=>{
              this.article = res.data
@@ -130,13 +131,7 @@ export default {
     },
 
     },
-    // computed:{
-    //   review(){
-    //     this.forEach(element => {
-          
-    //     });
-    //   }
-    // },
+   
     created(){
         this.getArticle();
     }

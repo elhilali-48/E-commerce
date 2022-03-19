@@ -31,6 +31,10 @@ const multer = require('multer')
 
 module.exports.ajouterArticle = /*upload.single('image'),*/ async (req, res) =>
 {
+    
+    // console.log(req.body)
+    // console.log(req.file)
+    
     try
     {  
         const article = await Article.create
