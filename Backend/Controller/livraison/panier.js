@@ -17,12 +17,16 @@ module.exports.ajouterPanier = async (req, res) => {
         
         let trouveid = chercheriddanspanier.produitselectionner
 
+
+
         if(trouveid == req.params.id)
         {
-          await Panier.findOneAndUpdate({_id: chercheriddanspanier}, { quantiteselectionne: req.body.quantiteselectionne }) 
+
+           let essaie = await Panier.findOneAndUpdate({_id: chercheriddanspanier}, { $inc: { quantiteselectionne: 1 } })  
+          console.log(essaie);
         }
       }
-      res.status(200).json("l'article a bien été modifier");
+      res.status(201).json("l'article a bien été modifier");
       
     }
     else
@@ -57,3 +61,40 @@ module.exports.voirpanier = async (req, res) => {
     res.status(400).json({ err: err.message });
   }
 };
+
+module.exports.modifierPanier = async (req, res) => {
+  try {
+    const article = await Client.findOne({ _id: res.locals.client.id }); // recuperer les information du l'article
+
+    try 
+    {
+      if(article.articleselectionner.length != 0 )
+      {
+        for (let i = 0; i < article.articleselectionner.length; i++) 
+        {
+          let element = article.articleselectionner[i];
+  
+         let chercheriddanspanier = await Panier.findOne({_id: element._id})
+          
+          let trouveid = chercheriddanspanier.produitselectionner
+  
+          if(trouveid == req.params.id)
+          {
+            await Panier.findOneAndUpdate({_id: chercheriddanspanier}, { quantiteselectionne: req.body.quantiteselectionne }) 
+          }
+        }
+        res.status(201).json("l'article a bien été modifier");  
+      }
+      
+    } catch (err) 
+    {
+
+      res.status(400).json({ err: err.message });
+      
+    }
+
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
