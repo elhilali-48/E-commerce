@@ -15,7 +15,7 @@ const routespanier = require('./routes/livraison/panier')
 const routescommentaire = require('./routes/gestion_de_vente/commentaire')
 
 const cookieParser = require('cookie-parser')
-const { checkClient } = require('./midlleware/authentifiaction')
+
 
 // Configuration du node Mailer : 
 // const  transport = nodemailer.createTransport({
@@ -50,7 +50,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 // app.use(nodemailer.createTransport)
 
-app.get('*', checkClient)
+
 app.get('/', (req, res) => res.render('register'))
 
 app.use("/client", routesauth)

@@ -1,9 +1,9 @@
 const express = require("express");
 const panierCtrl = require("../../Controller/livraison/panier");
 const router = express.Router();
+const checkClient  = require("../../midlleware/authentification");
 
-
-router.post("/ajouter/:id",  panierCtrl.ajouterPanier);
-router.get("/voirpanier/:id",  panierCtrl.voirpanier);
+router.post("/ajouter/:id", checkClient, panierCtrl.ajouterPanier);
+router.get("/voirpanier/:id", checkClient, panierCtrl.voirpanier);
 
 module.exports = router;

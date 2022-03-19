@@ -23,4 +23,4 @@ const checkClient = (req, res, next) => {
     }
 }
 
-module.exports =  checkClient 
+module.exports =  checkClient
