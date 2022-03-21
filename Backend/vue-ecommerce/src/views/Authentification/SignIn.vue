@@ -26,9 +26,6 @@
                     <span v-if="!$v.password.required  && $v.password.$dirty" class="text-danger">
                         Vous devez indiquer un mot de passe.
                     </span>
-                     <span v-if="!$v.password.minLength  && $v.password.$dirty" class="text-danger">
-                        Le mot de passe se compose minimum de 8 caractère.
-                    </span>
                 </div>
                 
                 <button  type="submit" class="btn btn-primary">Se connecter</button>
@@ -41,7 +38,7 @@
 </template>
 
 <script>
-import {required,email,minLength} from 'vuelidate/lib/validators'
+import {required,email} from 'vuelidate/lib/validators'
 import NavBar from '../../components/NavBar.vue'
 export default {
   methods: {
@@ -84,7 +81,7 @@ export default {
           email
       },
       password :{
-          minLength : minLength(8),
+          
           required
       }
   },

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors =require('cors')
 const nodemailer = require('nodemailer')
 
+
 const routesauth = require('./routes/authentification/client')
 const routesAuthUser = require('./routes/authentification/user')
 const routesres = require('./routes/gestion_utilisateur/responsable')
@@ -43,7 +44,7 @@ mongoose.connect('mongodb+srv://admin:admin@cluster0.nctg3.mongodb.net/myFirstDa
     useUnifiedTopology: true })
 
 .then(() => console.log("connextion reussi "))
-.catch(()=> console.log("connextion echoué "));
+.catch((err)=> console.log("connextion echoué "+err));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

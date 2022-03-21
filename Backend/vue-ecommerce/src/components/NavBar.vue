@@ -80,7 +80,6 @@
                     <a v-if="categorie.produit.length != 0" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{categorie.nom}}</a>
                     <div class="dropdown-menu"  >
                         <div v-for="(produit) in categorie.produit" :key="produit._id" >
-                            
                               <router-link replace class="dropdown-item" :to="{name :'produit-front',params : {id : produit._id}}" >{{produit.nom}}</router-link>
                         </div>
                     </div>
@@ -175,7 +174,7 @@ export default {
         }
     },
     created(){
-      const login =  localStorage.getItem('user')
+        const login =  localStorage.getItem('user')
         
         if(login){
           this.check = true
@@ -183,10 +182,15 @@ export default {
         else{
           this.check = false
         }
+        // Récupérer les categories
         axios.get('http://localhost:3500/responsable/categorie/voir').then((res)=>{
         
           this.categories = res.data
         }).catch((er)=>console.log(er))
+
+        //récuperer les données du client 
+
+        
     },
     // mounted(){
     //     const login =  localStorage.getItem('user')

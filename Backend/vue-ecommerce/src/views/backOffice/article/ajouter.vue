@@ -5,7 +5,7 @@
                 <div class="text-center text-bold h1 mb-5">
               Ajouter un article
           </div>
-           <form @submit.prevent="submitForm">
+           <form @submit.prevent="submitForm" enctype="multipart/form-data">
             <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row mb-4">
                 <div class="col">
@@ -42,7 +42,7 @@
             <div class="row mb-4">
                 <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="nom"  >{Produit </label>
+                    <label class="form-label" for="nom"  >Produit </label>
 
                     <select class="form-select" v-model="article.produit">
                         <option disabled value="">Selectionner un produit</option>
@@ -54,8 +54,10 @@
                  <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="nom"  >Image </label>
-                    <input type="file" class="form-control" @change="onImageSelected"/>
-                    <span class="text-danger"  v-if="!$v.article.produit.required && $v.article.produit.$dirty" >Vous devez choisir un produit, sinon <router-link :to="{name :'ajouter-produit'}"> Ajouter un produit </router-link> </span>
+                    <input accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" ref="file" @change="onImageSelected"/>
+                   
+                     <!-- <span class="text-danger"  v-if="!$v.article.image.required && $v.article.image.$dirty" >Vous devez choisir une image </span> -->
+                    <span class="text-danger"  v-if="errMessage" >{{ errMessage }}</span>
                 </div>
                 </div>
             </div>
@@ -66,6 +68,7 @@
                     <textarea class="form-control" rows="6" v-model="article.description"></textarea>
                    
                     <span class="text-danger"  v-if="!$v.article.description.required && $v.article.description.$dirty" >description est obligatoire</span>
+                    
                 </div>
                 </div>
             </div>
@@ -94,9 +97,10 @@ export default {
                 avis :"",
                 produit : "",
                 quantite : "",
-                image :""
+                file :null
             },
             produits : [],
+            errMessage :''
             
         }
     },
@@ -119,7 +123,10 @@ export default {
             },
             quantite : {
                 required
-            }
+            },
+            // image : {
+            //     required
+            // }
         }
        
     },
@@ -132,18 +139,28 @@ export default {
             }
         },
         onImageSelected(e){
-            // console.log(e.target.files[0])
-            this.article.image = e.target.files[0].name
+             const typePossible = ["image/jpeg", "image/jpg", "image/png"]
+            this.article.file = e.target.files[0]
+            const file = e.target.files[0]
+
+            if(!typePossible.includes(file.type)){
+                this.errMessage = "Selectionner une image"
+            }
+            if(file.size>900000){
+                this.errMessage  = "La taille maximale du fichier est  : 500kb"
+            }
         },
-        ajouterArticle(){
-            axios.post('http://localhost:3500/responsable/article/ajouter',{
-                nom : this.article.nom,
-                prix : this.article.prix,
-                description: this.article.description,
-                avis :this.article.avis,
-                produit : this.article.produit,
-                quantite : this.article.quantite
-               }).then(()=>{
+       async ajouterArticle(){
+           const formData = new FormData()
+           formData.append('nom',this.article.nom)
+           formData.append('prix',this.article.prix)
+           formData.append('description',this.article.description)
+           formData.append('avis',this.article.avis)
+           formData.append('produit',this.article.produit)
+           formData.append('quantite',this.article.quantite)
+           formData.append('file',this.article.file)
+          
+          await axios.post('http://localhost:3500/responsable/article/ajouter',formData).then(()=>{
                 this.$swal.fire(
                     'Success!',
                     'Article Ajouté!',

@@ -91,12 +91,13 @@ module.exports.login_post = async (req, res) => {
       );
 
       if (!passwordValide) {
-        res.status(404).json("Password no matche");
+        res.status(400).json({error :"Password no match"})
+        
       } else {
         try {
           const token = createToken(client);
           res.cookie("jwt", token, { httpOnly: true }); // http only pour que le coockies ne sera pas visualiser en js
-          res.status(200).json({ client: client }).populate('articleselectionner')
+          res.status(200).json({ client: client, token });
         } catch (err) {
           res.status(400).json({ err: err.message, message: "Error" });
         }

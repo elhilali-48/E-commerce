@@ -4,6 +4,10 @@ const Produit = require('../../models/product/Produit')
 
 module.exports.ajouterArticle = async (req, res) =>
 {
+    
+    // console.log(req.body)
+    // console.log(req.file)
+    
     try
     {  
         const article = await Article.create

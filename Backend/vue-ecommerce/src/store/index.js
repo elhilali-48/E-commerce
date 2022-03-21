@@ -56,19 +56,21 @@ export default new Vuex.Store({
       state.accessToken = "",
       state.isLogged = "Error"
     },
-    addToCart(state,{article,quantity}){
+    addToCart(state,{article,quantiteselectionne}){
+      console.log(article)
+      console.log(quantiteselectionne)
       let articleInPanier = state.panier.find(item =>{
         return item.article._id === article._id
       })
 
       if(articleInPanier){
-        articleInPanier.quantity += quantity
+        articleInPanier.quantiteselectionne += quantiteselectionne
         return
       }
 
       state.panier.push({
         article,
-        quantity
+        quantiteselectionne
       })
     },
 
@@ -85,23 +87,27 @@ export default new Vuex.Store({
     
   },
   actions: {
-    async login({commit},form){
+    async login({dispatch,commit},form){
       await axios.post('http://localhost:3500/client/login',{
         email : form.email,
         password : form.password
       }).then((res)=>{
+        // console.log(res)
         localStorage.setItem('user',res.data.token) // enregistrer Token dans LocalStorage
         Vue.$cookies.set('token',res.data.token,60 * 60 * 12)
         axios.defaults.headers.common['Authorization'] = res.data.token
         // localStorage.setItem('client',JSON.stringify(res.data.client))
         commit('setToken',res.data.token)
         // commit('setClientData',res.data.client)
+        dispatch('getClient',res.data.client._id)
         router.push('/')
         // dispatch('fetchToken')
-      }).catch(()=>{
+      }).catch((err)=>{
+        console.log(err.response.data.error)
         commit('setError',null)
         localStorage.removeItem('user')
         Vue.$cookies.remove('token')
+        
       })
     },
     
@@ -122,6 +128,7 @@ export default new Vuex.Store({
         this.commit('setTokenAdmin',res.data.token)
         router.push('/admin')
         dispatch('fetchTokenAdmin')
+        
       }).catch(()=>{
         this.state.errorAdmin = "Il y a un erreur soit dans l'email ou le mot de passe "
 
@@ -132,12 +139,28 @@ export default new Vuex.Store({
       await commit('setTokenAdmin', sessionStorage.getItem('tokenAdmin'))
     },
 
-    async addToCart({commit},{article,quantity}){
-      commit('addToCart',{article,quantity})
+    async addToCart({commit},{id,idcli,quantiteselectionne,article}){
+      axios.post('http://localhost:3500/achat/panier/ajouter/'+article._id,{
+        id : id ,
+        idcli : idcli,
+        quantiteselectionne : quantiteselectionne})
+        .then(()=>{
+          console.log(quantiteselectionne);
+          commit('addToCart',{article,quantiteselectionne})
+        })
+     
     },
 
     async deleteArticle({commit},article){
       commit('deleteArticle',article)
+    },
+
+    async getClient({commit},id){
+      
+      axios.get(`http://localhost:3500/client/gestion/afficher/${id}`).then((res)=>{
+        console.log(res)
+      })
+      commit('getchToken')
     }
 
 

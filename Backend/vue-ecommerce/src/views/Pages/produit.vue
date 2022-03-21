@@ -5,7 +5,7 @@
     
     <div class="d-md-flex align-items-md-center">
         <div class="h3">{{produit.nom}}</div>
-        <div class="ml-auto d-flex align-items-center views"> <span class="btn text-success"> <span class="fas fa-th px-md-2 px-1"></span><span>Grid view</span> </span> <span class="btn"> <span class="fas fa-list-ul"></span><span class="px-md-2 px-1">List view</span> </span> <span class="green-label px-md-2 px-1">3</span> <span class="text-muted">Article</span> </div>
+        <div class="ml-auto d-flex align-items-center views"> <span class="btn text-success"> <span class="fas fa-th px-md-2 px-1"></span><span>Grid view</span> </span> <span class="btn"> <span class="fas fa-list-ul"></span><span class="px-md-2 px-1">List view</span> </span> <span class="green-label px-md-2 px-1">{{filteredList.length}}</span> <span class="text-muted">Article</span> </div>
     </div>
     <div class="d-lg-flex align-items-lg-center pt-2">
         <div class="form-inline d-flex align-items-center my-2 mr-lg-2 radio bg-light border"> <label class="options">Most Popular <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">Cheapest <input type="radio" name="radio" checked> <span class="checkmark"></span> </label> </div>
@@ -28,7 +28,7 @@
     </div>
     <div class="filters"> <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="true" aria-controls="mobile-filter">Filter<span class="px-1 fas fa-filter"></span></button> </div>
     <div id="mobile-filter">
-        <div class="py-3">
+        <!-- <div class="py-3">
             <h5 class="font-weight-bold">Categories</h5>
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> vegetables <span class="badge badge-primary badge-pill">328</span> </li>
@@ -36,8 +36,9 @@
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Kitchen Accessories <span class="badge badge-primary badge-pill">32</span> </li>
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Chefs Tips <span class="badge badge-primary badge-pill">48</span> </li>
             </ul>
-        </div>
-        <div class="py-3">
+        </div> -->
+       
+        <!-- <div class="py-3">
             <h5 class="font-weight-bold">Brands</h5>
             <form class="brand">
                 <div class="form-inline d-flex align-items-center py-1"> <label class="tick">Royal Fields <input type="checkbox"> <span class="check"></span> </label> </div>
@@ -46,8 +47,8 @@
                 <div class="form-inline d-flex align-items-center py-1"> <label class="tick">Farmar Field Eve <input type="checkbox"> <span class="check"></span> </label> </div>
                 <div class="form-inline d-flex align-items-center py-1"> <label class="tick">True Farmar Steve <input type="checkbox"> <span class="check"></span> </label> </div>
             </form>
-        </div>
-        <div class="py-3">
+        </div> -->
+        <!-- <div class="py-3">
             <h5 class="font-weight-bold">Rating</h5>
             <form class="rating">
                 <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
@@ -56,7 +57,7 @@
                 <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
                 <div class="form-inline d-flex align-items-center py-2"> <label class="tick"> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
             </form>
-        </div>
+        </div> -->
     </div>
     <div class="content py-md-0 py-3">
         <section id="sidebar">
@@ -68,6 +69,12 @@
                     <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Kitchen Accessories <span class="badge badge-primary badge-pill">32</span> </li>
                     <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Chefs Tips <span class="badge badge-primary badge-pill">48</span> </li>
                 </ul>
+            </div>
+            <div class="py-3">
+                 <h5 class="font-weight-bold">Prix : {{ range }}</h5>
+                <div class="form-inline d-flex align-items-center py-1">
+                    <input v-model="range" class="form-range" type="range" max="2000" min="0" step="100">
+                </div> 
             </div>
             <div class="py-3">
                 <h5 class="font-weight-bold">Brands</h5>
@@ -82,19 +89,31 @@
             <div class="py-3">
                 <h5 class="font-weight-bold">Rating</h5>
                 <form class="rating">
-                    <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-2"> <label class="tick"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-2"> <label class="tick"> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-2">
+                         <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-2">
+                         <label class="tick"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-2"> 
+                        <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-2">
+                         <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-2">
+                         <label class="tick"> 
+                             <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> 
+                             <input type="checkbox"> <span class="check"></span> </label> 
+                    </div>
                 </form>
             </div>
         </section> <!-- Products Section -->
         <section id="products">
             <div class="container py-3">
-                <div class="row">
-                    <div  class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1" v-for="article in filteredList" :key="article._id">
-                        <div @click="showArticle(article._id)" class="card"> <img class="card-img-top" src="https://www.bouyguestelecom.fr/media/catalog/product//g/a/galaxy-s20-fe-navy-face_1.png">
+                <div class="row" v-if="filteredList.length>0">
+                    <div  class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 mb-4 " v-for="article in filteredList" :key="article._id">
+                        
+                        <div @click="showArticle(article._id)" class="card d-flex justify-content-center" v-if="article"> 
+                            
+                            <img class="w-50 rounded-3 mx-5" v-if="article.image" :src="require('../../../../images/'+article.image)">
+                            <img class="card-img-top" v-else alt="image Non disponible" >
                             <div class="card-body mt-2">
                                 <h6 class="font-weight-bold pt-1">{{article.nom}}</h6>
                                 <div class="text-muted description">{{article.description}}</div>
@@ -117,8 +136,16 @@
                                 </div>
                             </div>
                         </div>
+                    <div v-else class="text-danger fw-bolder h-50">
+                        Aucun Article disponible
+                    </div>
                     </div>
                 </div>
+
+                <div v-else class="text-danger fw-bolder h-100">
+                    Aucun Article disponible
+                </div>
+           
             </div>
         </section>
     </div>
@@ -134,7 +161,8 @@ export default {
   data () {
     return {
       produit : {},
-      search : ''
+      search : '',
+      range :''
     }
   },
   // components :{
@@ -170,12 +198,17 @@ export default {
     // }
     filteredList(){
             if(this.search){
-            return this.produit.article.filter((item)=>{
-                return this.search.toLowerCase().split(' ').every(v => item.nom.toLowerCase().includes(v))
-            })
-            }else{
-                return this.produit.article;
+                return this.produit.article.filter((item)=>{
+                    return this.search.toLowerCase().split(' ').every(v => item.nom.toLowerCase().includes(v))
+                })
             }
+            if(this.range){
+                return this.produit.article.filter(item => (item.prix<=this.range && item.prix>0))
+            }
+            else{
+                return this.produit.article
+            }
+            
          }
     },
     

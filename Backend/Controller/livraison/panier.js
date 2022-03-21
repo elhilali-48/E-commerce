@@ -3,9 +3,10 @@ const Panier = require("../../models/product/Panier");
 const Article = require("../../models/product/Article");
 
 module.exports.ajouterPanier = async (req, res) => {
+   console.log(req.body)
   try {
-    const article = await Client.findOne({ _id: res.locals.client.id }); // recuperer les information du l'article
-
+    const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
+    console.log(article)
     if (article.articleselectionner.length != 0) {
       for (let i = 0; i < article.articleselectionner.length; i++) {
         let element = article.articleselectionner[i];
@@ -24,10 +25,10 @@ module.exports.ajouterPanier = async (req, res) => {
             const panier = await Panier.create({
               produitselectionner: req.body.produitselectionner,
               quantiteselectionne: req.body.quantiteselectionne,
-              idcli: res.locals.client.id,
+              idcli: req.body.idcli,
             });
             await Client.updateOne(
-              { _id: res.locals.client.id },
+              { _id: req.body.idcli },
               { $push: { articleselectionner: panier } }
             );
             res.status(200).json(panier).populate("produitselectionner");
@@ -37,14 +38,15 @@ module.exports.ajouterPanier = async (req, res) => {
         }
       }
       res.status(201).json("l'article a bien été modifier");
-    } else {
+    } 
+    else {
       const panier = await Panier.create({
         produitselectionner: req.body.produitselectionner,
         quantiteselectionne: req.body.quantiteselectionne,
-        idcli: res.locals.client.id,
+        idcli: req.body.idcli,
       });
       await Client.updateOne(
-        { _id: res.locals.client.id },
+        { _id: req.body.idcli },
         { $push: { articleselectionner: panier } }
       );
 
