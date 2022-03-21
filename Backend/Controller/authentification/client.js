@@ -96,7 +96,7 @@ module.exports.login_post = async (req, res) => {
         try {
           const token = createToken(client);
           res.cookie("jwt", token, { httpOnly: true }); // http only pour que le coockies ne sera pas visualiser en js
-          res.status(200).json({ client: client });
+          res.status(200).json({ client: client }).populate('articleselectionner')
         } catch (err) {
           res.status(400).json({ err: err.message, message: "Error" });
         }
