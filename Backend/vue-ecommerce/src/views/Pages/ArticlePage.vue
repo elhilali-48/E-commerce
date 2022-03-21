@@ -3,7 +3,8 @@
     <div class="row d-flex mt-5">
       <div class="col-md-7">
         <div class="image">
-          <img src="https://www.cdiscount.com/pdt2/7/n/f/1/550x550/hp15en1037nf/rw/pc-portable-gamer-hp-omen-15-en1037nf-15-6-fh.jpg"/>
+          <img v-if="article.image" :src="require('../../../../images/'+article.image)" class="w-50 rounded-3 mt-5"/>
+          <img src="" alt="Image Non disponible" v-else>
         </div>
       </div>
       <div class="col-md-4">
@@ -80,7 +81,7 @@
                       <div class="col-md-3">
                         <div class="mt-4">
                           {{comment.createdAt}}
-                          <button class="btn btn-primary" v-if="idClient && (idClient == comment.idclient)">Edit</button>
+                          <button class="btn btn-primary" v-if="idClient && (idClient == comment.idclient)" @click="editComment(comment)">Edit</button>
                         </div>
                         
                       </div>
@@ -135,9 +136,6 @@ export default {
           // console.log(res.data.personnecomment);
                 this.comments = res.data.personnecomment
                 this.article = res.data
-
-               
-          
         })
         this.getUserDetails();
       //  let client =  localStorage.getItem('client')
@@ -159,6 +157,7 @@ export default {
          try {
           //decode token here and attach to the user object
           let decoded = VueJwtDecode.decode(token);
+          console.log(decoded);
           this.idClient = decoded.id._id
           // this.user = decoded;    
           } catch (error) {
@@ -170,37 +169,43 @@ export default {
      
     }, 
       addCart(article){
-        console.log(article);
+       
         if(this.idClient !== ""){
-          axios.post('http://localhost:3500/achat/panier/ajouter/'+article._id,{
+          this.$store.dispatch('addToCart',{
             id : article._id ,
             idcli : this.idClient,
-            quantiteselectionne : this.quatite
-          }).then((res)=>{
-          console.log(res);
-        })
+            quantiteselectionne : this.quatite,
+            article : this.article
+          })
+          // axios.post('http://localhost:3500/achat/panier/ajouter/'+article._id,{
+          //   id : article._id ,
+          //   idcli : this.idClient,
+          //   quantiteselectionne : this.quatite
+          // }).then((res)=>{
+          // console.log(res);
+          //  })
         }
         else{
 
-          this.$store.dispatch('addToCart',{
-            article : this.article,
-            quantity : this.quatite
-          })
-          // this.$swal.fire({
-          //     title: 'Voulez-vous ajouter ce article à votre panier ?',
-          //     text: "Connctez-vous!",
-          //     icon: 'primary',
-          //     showCancelButton: true,
-          //     confirmButtonColor: '#3085d6',
-          //     cancelButtonColor: '#d33',
-          //     confirmButtonText: 'Se connecter!',
-          //     cancelButtonText : 'Annuler'
-          //   }).then((result) => {
-          //     if (result.isConfirmed) {
-          //       this.$router.push('/signIn')
-          //     }
-          //   })
-          // 
+          // this.$store.dispatch('addToCart',{
+          //   article : this.article,
+          //   quantity : this.quatite
+          // })
+          this.$swal.fire({
+              title: 'Voulez-vous ajouter ce article à votre panier ?',
+              text: "Connctez-vous!",
+              icon: 'primary',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Se connecter!',
+              cancelButtonText : 'Annuler'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.$router.push('/signIn')
+              }
+            })
+          
         }
           
       },
@@ -211,6 +216,9 @@ export default {
         }).then(()=>{
           this.$router.go()
         })
+      },
+      editComment(comment){
+        this.commentaire = comment.commentaire
       }
     },
     

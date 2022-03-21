@@ -14,7 +14,7 @@ const storage = multer({
             cb(null, fileName)
         },
         limits: {
-            fileSize: 500000,
+            fileSize: 900000,
         }
     }),
     fileFilter : (req,file,cb)=>{

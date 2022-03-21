@@ -56,7 +56,7 @@
                     <label class="form-label" for="nom"  >Image </label>
                     <input accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" ref="file" @change="onImageSelected"/>
                    
-                    <span class="text-danger"  v-if="!$v.article.image.required && $v.article.image.$dirty" >Vous devez choisir une image </span>
+                     <!-- <span class="text-danger"  v-if="!$v.article.image.required && $v.article.image.$dirty" >Vous devez choisir une image </span> -->
                     <span class="text-danger"  v-if="errMessage" >{{ errMessage }}</span>
                 </div>
                 </div>
@@ -124,9 +124,9 @@ export default {
             quantite : {
                 required
             },
-            image : {
-                required
-            }
+            // image : {
+            //     required
+            // }
         }
        
     },
@@ -139,14 +139,14 @@ export default {
             }
         },
         onImageSelected(e){
-            const typePossible = ["image/jpeg", "image/jpg", "image/png"]
+             const typePossible = ["image/jpeg", "image/jpg", "image/png"]
             this.article.file = e.target.files[0]
             const file = e.target.files[0]
 
             if(!typePossible.includes(file.type)){
                 this.errMessage = "Selectionner une image"
             }
-            if(file.size>500000){
+            if(file.size>900000){
                 this.errMessage  = "La taille maximale du fichier est  : 500kb"
             }
         },

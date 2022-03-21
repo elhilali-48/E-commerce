@@ -2,9 +2,10 @@ const Client = require("../../models/authentifiaction/Client");
 const Panier = require("../../models/product/Panier");
 
 module.exports.ajouterPanier = async (req, res) => {
+   console.log(req.body)
   try {
-    const article = await Client.findOne({ _id: res.locals.client.id }); // recuperer les information du l'article
-
+    const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
+    console.log(article)
     if (article.articleselectionner.length != 0) {
       for (let i = 0; i < article.articleselectionner.length; i++) {
         let element = article.articleselectionner[i];
@@ -12,11 +13,11 @@ module.exports.ajouterPanier = async (req, res) => {
         let chercheriddanspanier = await Panier.findOne({ _id: element._id });
 
         let trouveid = chercheriddanspanier.produitselectionner;
-
+        console.log("id "+trouveid)
         if (trouveid == req.params.id) {
           await Panier.findOneAndUpdate(
             { _id: chercheriddanspanier },
-            { $inc: { quantiteselectionne: 1 } }
+            { $inc: { quantiteselectionne: req.body.quantiteselectionne } }
           );
         }
         else
@@ -26,10 +27,10 @@ module.exports.ajouterPanier = async (req, res) => {
             const panier = await Panier.create({
               produitselectionner: req.params.id,
               quantiteselectionne: req.body.quantiteselectionne,
-              idcli: res.locals.client.id,
+              idcli: req.body.idcli,
             });
             await Client.updateOne(
-              { _id: res.locals.client.id },
+              { _id: req.body.idcli },
               { $push: { articleselectionner: panier } }
             );
             res.status(200).json(panier);
@@ -42,14 +43,15 @@ module.exports.ajouterPanier = async (req, res) => {
         }
       }
       res.status(201).json("l'article a bien été modifier");
-    } else {
+    } 
+    else {
       const panier = await Panier.create({
         produitselectionner: req.params.id,
         quantiteselectionne: req.body.quantiteselectionne,
-        idcli: res.locals.client.id,
+        idcli: req.body.idcli,
       });
       await Client.updateOne(
-        { _id: res.locals.client.id },
+        { _id: req.body.idcli },
         { $push: { articleselectionner: panier } }
       );
 
