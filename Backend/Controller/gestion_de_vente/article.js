@@ -46,9 +46,10 @@ module.exports.ajouterArticle = /*upload.single('image'),*/ async (req, res) =>
             prix: req.body.prix,
             avis: req.body.avis,
             produit: req.body.produit,
-            image: req.file.filename
+            image: req.file.filename,
+            livraison : req.body.livraison
 
-        }) 
+        })
         await Produit.updateOne
         (
             { _id: req.body.produit }, { $push: { article: article }}

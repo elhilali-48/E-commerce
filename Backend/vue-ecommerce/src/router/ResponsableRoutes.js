@@ -25,6 +25,11 @@ import AddArticle from "../views/backOffice/article/ajouter.vue"
 import UpdateArticle from "../views/backOffice/article/modifier.vue"
 import showArticle from "../views/backOffice/article/afficher.vue"
 
+import Livraison from "../views/backOffice/livraison/livraison.vue"
+import AddLivraison from "../views/backOffice/livraison/ajouter.vue"
+import UpdateLivraison from "../views/backOffice/livraison/modifier.vue"
+import showLivraison from "../views/backOffice/livraison/afficher.vue"
+
 const routes = [
     {
         path:'/admin/',
@@ -137,6 +142,28 @@ const routes = [
                 path : "afficher/article/:id",
                 name :"afficher-article",
                 component : showArticle
+            },
+
+            //route pour Livraison
+            {
+                path : "livraison",
+                name : 'livraison-page',
+                component : Livraison
+            },
+            {
+                path : "ajouter/livraison",
+                name : "ajouter-livraison",
+                component : AddLivraison
+            },
+            {
+                path : "modifier/livraison/:id",
+                name : "modifier-livraison",
+                component : UpdateLivraison
+            },
+            {
+                path : "afficher/livraison/:id",
+                name :"afficher-livraison",
+                component : showLivraison
             },
         ]
     
