@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     
-   <!-- <h1>{{user.id.nom}}</h1> -->
+   <!-- <h1>{{user.id._id}}</h1> -->
   <nav-bar></nav-bar>
   
   <router-view :key="$route.fullPath"></router-view>
@@ -13,6 +13,7 @@
 import VueJwtDecode from "vue-jwt-decode";
 import NavBar from "../../components/NavBar.vue"
 import Vue from 'vue'
+import axios from 'axios'
 export default {
   components: { NavBar },
   data () {
@@ -40,14 +41,23 @@ export default {
           // return error in production env
           console.log(error, 'error from decoding token')
         }
+      }  
+      },  
+     getPanier(){
+       const id = this.user.id._id
+         axios.post('http://localhost:3500/achat/panier/voirarticle',{idCli : id}).then((res)=>{
+            console.log(res)
+        }).catch((err)=>{
+          console.log(err.message)
+        })
       }
-      
-     
-  } 
   },
   created(){
    
     this.getUserDetails();
+       //récuperer le panier du client 
+    this.getPanier()
+       
   },
   
 }

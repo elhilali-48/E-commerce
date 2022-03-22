@@ -119,6 +119,7 @@ export default {
        
         getArticle(){
             axios.get(`http://localhost:3500/responsable/article/voirarticle/${this.$route.params.id}`).then((res)=>{
+            console.log(res.data)
              this.article = res.data
         })
        

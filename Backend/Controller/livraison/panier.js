@@ -3,10 +3,10 @@ const Panier = require("../../models/product/Panier");
 const Article = require("../../models/product/Article");
 
 module.exports.ajouterPanier = async (req, res) => {
-   console.log(req.body)
+  //  console.log(req.body)
   try {
     const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
-    console.log(article)
+    // console.log(article)
     if (article.articleselectionner.length != 0) {
       for (let i = 0; i < article.articleselectionner.length; i++) {
         let element = article.articleselectionner[i];
@@ -131,9 +131,10 @@ module.exports.supprimerPanier = async (req, res) => {
 };
 
 module.exports.afficherProduit = async (req, res) => {
+  
   try {
     const tab = [];
-    const essaie = await Client.findOne({ _id: res.locals.client.id });
+    const essaie = await Client.findOne({ _id: req.body.idCli });
 
     if (essaie.articleselectionner.length != 0) {
       for (let i = 0; i < essaie.articleselectionner.length; i++) {
