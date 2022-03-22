@@ -1,35 +1,8 @@
 const Article = require('../../models/product/Article')
 const Panier = require('../../models/product/Panier')
 const Produit = require('../../models/product/Produit')
-const multer = require('multer')
 
-// define storage 
-
-// const storage = multer.storage(
-//     {
-//         destination: function(req, File, next)
-//         {
-//             next(null, './public/uploads/images')
-//         },
-
-
-//         // add back extension
-
-
-//         filename:function(req, File, next)
-//         {
-//             next(null, file.originalname)
-//         }
-//     })
-
-//     //upload parametre
-
-//     const upload = multer({
-
-//         storage:storage,
-//     })
-
-module.exports.ajouterArticle = /*upload.single('image'),*/ async (req, res) =>
+module.exports.ajouterArticle = async (req, res) =>
 {
     
     // console.log(req.body)
@@ -53,7 +26,7 @@ module.exports.ajouterArticle = /*upload.single('image'),*/ async (req, res) =>
         await Produit.updateOne
         (
             { _id: req.body.produit }, { $push: { article: article }}
-        )     
+        ).populate('article')   
         res.status(201).json({ message: "l\'article a bien été creée"})
     }
     catch(err)
