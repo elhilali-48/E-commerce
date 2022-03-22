@@ -4,17 +4,10 @@ const ObjectId = Schema.ObjectId
 
 const livraisonSchema = mongoose.Schema
 ({
-    articles: 
-    [{
-        type : ObjectId,
-        ref : 'Article',
 
-    }],
-    livraison: 
-    {
-        type: ObjectId,
-        ref: 'Livraison',
-    },
+    idcli: { type: String },
+    articles: {type: Array},
+    livraison: {type: String},
     totale: { type: Number },
     
 

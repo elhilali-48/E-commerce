@@ -142,11 +142,16 @@ module.exports.afficherProduit = async (req, res) => {
         const a = await Panier.findOne({ _id: element._id });
 
         let b = a.produitselectionner;
+        let quanttite = a.quantiteselectionne
 
-        const c = await Article.findOne({ _id: b });
+ 
+//console.log(b); /// id de l'article de produit selectionner
+        const article = await Article.findOne({ _id: b });
 
-        console.log(c);
-        tab.push(c);
+      //  console.log(c);
+
+      // console.log(b);
+        tab.push({article, quanttite});
       }
     }
 
