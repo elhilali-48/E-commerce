@@ -61,13 +61,26 @@
                 </div>
                 </div>
             </div>
-             <div class="row mb-4">
+            <div class="row mb-4">
                 <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="nom"  >Desciption </label>
                     <textarea class="form-control" rows="6" v-model="article.description"></textarea>
                    
                     <span class="text-danger"  v-if="!$v.article.description.required && $v.article.description.$dirty" >description est obligatoire</span>
+                    
+                </div>
+                </div>
+            </div>
+             <div class="row mb-4">
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="nom"  >Livraison </label>
+                    <select class="form-select" v-model="article.livraison">
+                        <option disabled value="">Selectionner un Mode de livraison</option>
+                        <option v-for="livraison in livraisons" :key="livraison._id" :value="livraison._id">{{livraison.company}} || {{livraison.type}}</option>
+                    </select>
+                    <span class="text-danger"  v-if="!$v.article.livraison.required && $v.article.livraison.$dirty" >Mode de livraison est obligatoire</span>
                     
                 </div>
                 </div>
@@ -97,8 +110,10 @@ export default {
                 avis :"",
                 produit : "",
                 quantite : "",
-                file :null
+                file :null,
+                livraison : null,
             },
+            livraisons : [],
             produits : [],
             errMessage :''
             
@@ -124,9 +139,9 @@ export default {
             quantite : {
                 required
             },
-            // image : {
-            //     required
-            // }
+            livraison : {
+                required
+            }
         }
        
     },
@@ -151,6 +166,7 @@ export default {
             }
         },
        async ajouterArticle(){
+           
            const formData = new FormData()
            formData.append('nom',this.article.nom)
            formData.append('prix',this.article.prix)
@@ -159,6 +175,7 @@ export default {
            formData.append('produit',this.article.produit)
            formData.append('quantite',this.article.quantite)
            formData.append('file',this.article.file)
+           formData.append('livraison',this.article.livraison)
           
           await axios.post('http://localhost:3500/responsable/article/ajouter',formData).then(()=>{
                 this.$swal.fire(
@@ -175,6 +192,9 @@ export default {
     created(){
             axios.get('http://localhost:3500/responsable/produit/voir').then((res)=>{
                 this.produits = res.data
+            })
+            axios.get('http://localhost:3500/gestion/livraison/afficherAll').then((res)=>{
+                this.livraisons = res.data
             })
     }
 

@@ -19,6 +19,12 @@ const articleSchema = mongoose.Schema({
       type: ObjectId,
       ref: "Commentaire",
     }],
+  livraison : [
+    {
+      type : ObjectId,
+      ref : "Livraison"
+    }
+  ]
 
 });
 

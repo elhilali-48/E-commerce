@@ -52,6 +52,10 @@
                         <router-link :to="{name :'article-page'}" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Article</span> </router-link>
                     </li>
+                       <li>
+                        <router-link :to="{name :'livraison-page'}" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Livraison</span> </router-link>
+                    </li>
                 </ul>
                 <hr >
                 <div class="dropdown pb-4">
