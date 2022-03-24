@@ -56,8 +56,11 @@ export default new Vuex.Store({
       state.accessToken = "",
       state.isLogged = "Error"
     },
+    IniPanier(data){
+      console.log(data)
+      // console.log(articles)
+    },
     addToCart(state,{article,quantiteselectionne}){
-      console.log("article")
       console.log(quantiteselectionne)
       let articleInPanier = state.panier.find(item =>{
         return item.article._id === article._id
@@ -156,12 +159,13 @@ export default new Vuex.Store({
       commit('deleteArticle',article)
     },
 
-    async getClient({commit},id){
+    async IniPanier({commit},id){
+      await axios.post('http://localhost:3500/achat/panier/voirarticle',{idCli : id}).then((res)=>{
+           commit('IniPanier',res.data)
+        }).catch((err)=>{
+          console.log(err.message)
+        })
       
-      axios.get(`http://localhost:3500/client/gestion/afficher/${id}`).then((res)=>{
-        console.log(res)
-      })
-      commit('getchToken')
     }
 
 

@@ -13,7 +13,7 @@
 import VueJwtDecode from "vue-jwt-decode";
 import NavBar from "../../components/NavBar.vue"
 import Vue from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   components: { NavBar },
   data () {
@@ -45,11 +45,12 @@ export default {
       },  
      getPanier(){
        const id = this.user.id._id
-         axios.post('http://localhost:3500/achat/panier/voirarticle',{idCli : id}).then((res)=>{
-            console.log(res)
-        }).catch((err)=>{
-          console.log(err.message)
-        })
+       this.$store.dispatch('IniPanier',id)
+        //  axios.post('http://localhost:3500/achat/panier/voirarticle',{idCli : id}).then((res)=>{
+        //     this.$store.dispatch('IniPanier',res.data)
+        // }).catch((err)=>{
+        //   console.log(err.message)
+        // })
       }
   },
   created(){
