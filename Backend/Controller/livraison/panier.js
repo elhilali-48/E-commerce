@@ -5,8 +5,8 @@ const Article = require("../../models/product/Article");
 module.exports.ajouterPanier = async (req, res) => {
   //  console.log(req.body)
   try {
-    const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
-    // console.log(article)
+    const article = await Client.findOne({ _id: res.locals.client.id }); // recuperer les information du l'article
+    console.log(article)
     if (article.articleselectionner.length != 0) {
       for (let i = 0; i < article.articleselectionner.length; i++) {
         let element = article.articleselectionner[i];
@@ -25,10 +25,10 @@ module.exports.ajouterPanier = async (req, res) => {
             const panier = await Panier.create({
               produitselectionner: req.body.produitselectionner,
               quantiteselectionne: req.body.quantiteselectionne,
-              idcli: req.body.idcli,
+              idcli: res.locals.client.id,
             });
             await Client.updateOne(
-              { _id: req.body.idcli },
+              { _id: res.locals.client.id },
               { $push: { articleselectionner: panier } }
             );
             res.status(200).json(panier).populate("produitselectionner");
@@ -43,10 +43,10 @@ module.exports.ajouterPanier = async (req, res) => {
       const panier = await Panier.create({
         produitselectionner: req.body.produitselectionner,
         quantiteselectionne: req.body.quantiteselectionne,
-        idcli: req.body.idcli,
+        idcli: res.locals.client.id,
       });
       await Client.updateOne(
-        { _id: req.body.idcli },
+        { _id: res.locals.client.id },
         { $push: { articleselectionner: panier } }
       );
 
@@ -146,12 +146,10 @@ module.exports.afficherProduit = async (req, res) => {
         let quanttite = a.quantiteselectionne
 
  
-//console.log(b); /// id de l'article de produit selectionner
+
         const article = await Article.findOne({ _id: b });
 
-      //  console.log(c);
 
-      // console.log(b);
         tab.push({article, quanttite});
       }
     }

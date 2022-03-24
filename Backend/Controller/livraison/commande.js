@@ -30,9 +30,9 @@ module.exports.afficherCommande = async (req, res) =>
 {
     try 
     {
-        const commande = await Commande.create({...req.body})
+        const commande = await Commande.findOne({...req.body}).populate('idcli')
 
-        res.status(201).json(commande) 
+        res.status(201).json(commande)
         
     } catch (err) 
     {
