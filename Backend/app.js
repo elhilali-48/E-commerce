@@ -15,7 +15,7 @@ const routescategorie = require('./routes/gestion_de_vente/categorie')
 const routespanier = require('./routes/livraison/panier')
 const routescommentaire = require('./routes/gestion_de_vente/commentaire')
 const routecommande = require('./routes/livraison/commande')
-const routeslivraison = require('./routes/livraison/livraison')
+const routespaiment = require('./routes/livraison/paiment')
 
 const cookieParser = require('cookie-parser')
 
@@ -66,7 +66,7 @@ app.use("/responsable/categorie", routescategorie)
 app.use("/achat/panier", routespanier)
 app.use("/client/commentaire", routescommentaire)
 app.use("/achat/commande",routecommande)
-// app.use("/gestion/livraison",routeslivraison)
+ app.use("/gestion/paiment",routespaiment)
 
 
 
