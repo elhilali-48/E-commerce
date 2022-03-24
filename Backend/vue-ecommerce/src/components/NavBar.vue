@@ -188,8 +188,7 @@ export default {
           this.categories = res.data
         }).catch((er)=>console.log(er))
 
-        //récuperer les données du client 
-
+     
         
     },
     // mounted(){

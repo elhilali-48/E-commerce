@@ -57,7 +57,7 @@ export default new Vuex.Store({
       state.isLogged = "Error"
     },
     addToCart(state,{article,quantiteselectionne}){
-      console.log(article)
+      console.log("article")
       console.log(quantiteselectionne)
       let articleInPanier = state.panier.find(item =>{
         return item.article._id === article._id
@@ -92,7 +92,7 @@ export default new Vuex.Store({
         email : form.email,
         password : form.password
       }).then((res)=>{
-        // console.log(res)
+         console.log(res.data)
         localStorage.setItem('user',res.data.token) // enregistrer Token dans LocalStorage
         Vue.$cookies.set('token',res.data.token,60 * 60 * 12)
         axios.defaults.headers.common['Authorization'] = res.data.token
@@ -140,8 +140,9 @@ export default new Vuex.Store({
     },
 
     async addToCart({commit},{id,idcli,quantiteselectionne,article}){
-      axios.post('http://localhost:3500/achat/panier/ajouter/'+article._id,{
-        id : id ,
+     
+      axios.post('http://localhost:3500/achat/panier/ajouter/',{
+        produitselectionner : id ,
         idcli : idcli,
         quantiteselectionne : quantiteselectionne})
         .then(()=>{

@@ -92,7 +92,7 @@ module.exports.voirArticle = async (req, res) =>
         const data = await Article.findOne
         (
             {_id: req.params.id}
-        ).populate('produit').populate('personnecomment')
+        ).populate('produit').populate('personnecomment').populate("livraison")
         res.status(200).json(data)
     } 
     catch (err) 

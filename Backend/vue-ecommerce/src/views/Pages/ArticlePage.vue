@@ -157,7 +157,7 @@ export default {
          try {
           //decode token here and attach to the user object
           let decoded = VueJwtDecode.decode(token);
-          console.log(decoded);
+          // console.log(decoded);
           this.idClient = decoded.id._id
           // this.user = decoded;    
           } catch (error) {
