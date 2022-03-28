@@ -28,7 +28,7 @@ module.exports.login_post = async (req,res)=>{
             const passwordValid = await bcrypt.compare(req.body.password, user.password)
             if(!passwordValid){
                
-               res.status(400).send('Password Non Trouvé')
+                res.status(400).json({error :"Mot de passe incorrect"})
             }
             else{
                 
@@ -45,7 +45,7 @@ module.exports.login_post = async (req,res)=>{
             }
         }
         else{
-            res.status(400).send('User Non Trouvé')
+            res.status(400).json({error :"Aucun client enregistrer avec ce email"})
         }
         
     } catch (error) {

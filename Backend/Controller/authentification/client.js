@@ -91,7 +91,7 @@ module.exports.login_post = async (req, res) => {
       );
 
       if (!passwordValide) {
-        res.status(400).json({error :"Password no match"})
+        res.status(400).json({error :"Mot de passe incorrect"})
         
       } else {
         try {
@@ -103,11 +103,7 @@ module.exports.login_post = async (req, res) => {
         }
       }
     } else {
-      res
-        .status(404)
-        .json({
-          message: "Aucun client est enregistrer avec cette adresse email",
-        });
+      res.status(400).json({error :"Aucun client est enregistrer avec cette adresse email"})
     }
   } catch (err) {
     console.log(err);

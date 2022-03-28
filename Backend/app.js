@@ -66,7 +66,7 @@ app.use("/responsable/categorie", routescategorie)
 app.use("/achat/panier", routespanier)
 app.use("/client/commentaire", routescommentaire)
 app.use("/achat/commande",routecommande)
-// app.use("/gestion/livraison",routeslivraison)
+app.use("/gestion/livraison",routeslivraison)
 
 
 

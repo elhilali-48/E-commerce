@@ -26,25 +26,30 @@
 
                     <div class="d-flex d-none d-md-flex flex-row align-items-center">    
                              <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle shop-bag" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <router-link :to="{name : 'panier-front'}" class="btn btn-secondary dropdown-toggle shop-bag" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class='bx bxs-shopping-bag' style="width : 20px"></i>
-                                </button>
+                                </router-link>
                                 <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton1" style="min-width : 390px ; right :0px; left : auto">
                                     <div v-if="lengthPanier>0">
-                                         <div v-for="item in panier" :key="item._id" >
-                                        <div class="px-2 d-flex justify-content-between">
-                                            <div>
-                                                <img style="width : 50px" class="mx-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN9chxXkn662lNgJFcmva2sLk4OaYY-zQ5EQLi5h87YXvOHEE5hb7v2UN5FdX9nMcMYVg&usqp=CAU" alt="">
+                                        <div v-for="article in panier" :key="article._id" >
+                                            <div class="px-2 d-flex justify-content-between">
+                                                <div>
+                                                    <img style="width : 50px" class="mx-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN9chxXkn662lNgJFcmva2sLk4OaYY-zQ5EQLi5h87YXvOHEE5hb7v2UN5FdX9nMcMYVg&usqp=CAU" alt="">
+                                                </div>
+                                                <div class="text-left">
+                                                    <strong>{{article.article.nom}}</strong>
+                                                    <br /> {{article.quanttite}} x {{article.article.prix}} €
+                                                </div>
+                                                <div>
+                                                    
+                                                    <i class='btn btn-danger btn-sm bx bxs-trash bx-tada bx-rotate-90 bx-xs' @click.prevent="deleteArticle(article.a._id,article.article)"></i>
+                                            
+                                                </div>
                                             </div>
-                                            <div class="text-left">
-                                                <strong>{{item.article.nom}}</strong>
-                                                <br /> {{item.quantity}} x {{item.article.prix}} €
-                                            </div>
-                                            <div>
-                                                <a class=" btn btn-danger" @click.prevent="deleteArticle(item.article)">Supprimer</a>
-                                            </div>
-                                         </div>
-                                   </div>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                       <h5 class="text-center text-danger fw-bold">Panier vide</h5>
                                     </div>
                                   
                                  
@@ -55,7 +60,7 @@
                                     </div>
                                 </div>
                                 <!-- <ul class="dropdown-menu" >
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-article" href="#">Action</a></li>
                                     <li><a class="dropdown-item" href="#">Another action</a></li>
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul> -->
@@ -119,12 +124,15 @@
 </style>
 <script>
 import axios from 'axios'
+import VueJwtDecode from "vue-jwt-decode";
+import Vue from "vue"
 export default {
   data () { // data les element de html pour recuperer les valuer des champs
     return {
         token :'',
         check : false,
         categories : [],
+        idClient :""
         // panier : [],
         // total : '',
         // quantite : 1
@@ -134,8 +142,25 @@ export default {
     methods: {
         getUserDetails() {
       // get token from localstorage
-        this.token =  this.$store.state.accessToken
+        // this.token =  this.$store.state.accessToken
+        let token = Vue.$cookies.get('token');
+      
+        if(token != null){
+         try {
+          //decode token here and attach to the user object
+          let decoded = VueJwtDecode.decode(token);
+          // console.log(decoded);
+          this.idClient = decoded.id._id
+          // this.user = decoded;    
+          } catch (error) {
+            // return error in production env
+            console.log(error, 'error from decoding token')
+          }
+        }
      } ,
+      getPanier(){
+      this.$store.dispatch('IniPanier',this.idClient)
+    },
         logout(){
             localStorage.removeItem("user");
             this.$cookies.remove('token')
@@ -143,6 +168,7 @@ export default {
             this.token = ""
             this.check = false
             this.$router.push("/signin");
+            this.$store.dispatch('clearPanier')
             
         },
 
@@ -156,10 +182,10 @@ export default {
             }
         },
 
-        deleteArticle(article){
-            
-            this.$store.dispatch('deleteArticle',article)
-        }
+        deleteArticle(id,article){
+          const idCli = this.idClient
+          this.$store.dispatch('deleteArticle',{id,idCli,article})
+        },
       
     },
     computed : {
@@ -174,6 +200,8 @@ export default {
         }
     },
     created(){
+        this.getUserDetails();
+        this.getPanier();
         const login =  localStorage.getItem('user')
         
         if(login){
@@ -187,6 +215,8 @@ export default {
         
           this.categories = res.data
         }).catch((er)=>console.log(er))
+
+
 
      
         

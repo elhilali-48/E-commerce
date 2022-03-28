@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
-import createPersistedState from 'vuex-persistedstate'
+import Swal from  'sweetalert2'
+ import createPersistedState from 'vuex-persistedstate'
 import * as authModule from "@/store/modules/auth"
 Vue.use(Vuex)
 
@@ -13,7 +14,7 @@ export default new Vuex.Store({
     client :{},
     isLogged : '',
     tokenAdmin : null,
-    panier : [],
+    panier :[],
     errorAdmin : ""
   },
   getters: {
@@ -32,9 +33,9 @@ export default new Vuex.Store({
 
     getTotal(state){
       let total = 0
-
+      
       state.panier.forEach(item=>{
-        total += item.article.prix * item.quantity
+        total += item.article.prix * item.quanttite
       })
       return total
     }
@@ -56,28 +57,29 @@ export default new Vuex.Store({
       state.accessToken = "",
       state.isLogged = "Error"
     },
-    IniPanier(data){
-      console.log(data)
+    IniPanier(state,data){
+      state.panier = data
       // console.log(articles)
+      
     },
     addToCart(state,{article,quantiteselectionne}){
-      console.log(quantiteselectionne)
+      
       let articleInPanier = state.panier.find(item =>{
         return item.article._id === article._id
       })
 
       if(articleInPanier){
-        articleInPanier.quantiteselectionne += quantiteselectionne
-        return
+        return  articleInPanier.quanttite += quantiteselectionne
       }
 
       state.panier.push({
-        article,
-        quantiteselectionne
+        article : article,
+        quanttite:quantiteselectionne
       })
     },
 
     deleteArticle(state,ar){
+      
       state.panier = state.panier.filter(item=>{
         return item.article._id != ar._id
       })
@@ -85,6 +87,9 @@ export default new Vuex.Store({
       // state.panier.filter(item =>{
        
       // })
+    },
+    clearPanier(state){
+      state.panier = []
     }
 
     
@@ -102,11 +107,17 @@ export default new Vuex.Store({
         // localStorage.setItem('client',JSON.stringify(res.data.client))
         commit('setToken',res.data.token)
         // commit('setClientData',res.data.client)
-        dispatch('getClient',res.data.client._id)
+        dispatch('IniPanier',res.data.client._id)
         router.push('/')
         // dispatch('fetchToken')
       }).catch((err)=>{
-        console.log(err.response.data.error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data.error,
+          footer: '<a href="">Mot de passe oublié</a>'
+        })
+        // alert(err.response.data.error)
         commit('setError',null)
         localStorage.removeItem('user')
         Vue.$cookies.remove('token')
@@ -132,9 +143,14 @@ export default new Vuex.Store({
         router.push('/admin')
         dispatch('fetchTokenAdmin')
         
-      }).catch(()=>{
+      }).catch((err)=>{
         this.state.errorAdmin = "Il y a un erreur soit dans l'email ou le mot de passe "
-
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data.error,
+          footer: '<a href="">Mot de passe oublié</a>'
+        })
         this.commit('setTokenAdmin',null)
       })
     },
@@ -143,20 +159,25 @@ export default new Vuex.Store({
     },
 
     async addToCart({commit},{id,idcli,quantiteselectionne,article}){
-     
-      axios.post('http://localhost:3500/achat/panier/ajouter/',{
+      
+     await axios.post('http://localhost:3500/achat/panier/ajouter/',{
         produitselectionner : id ,
         idcli : idcli,
         quantiteselectionne : quantiteselectionne})
         .then(()=>{
-          console.log(quantiteselectionne);
           commit('addToCart',{article,quantiteselectionne})
         })
      
     },
 
-    async deleteArticle({commit},article){
-      commit('deleteArticle',article)
+    async deleteArticle({commit},{id,idCli,article}){
+      
+      // console.log(id)
+      // console.log(idCli)
+      //  console.log(article)
+      axios.delete(`http://localhost:3500/achat/panier/supprimer/${id}`,{data:{idcli : idCli}}).then(()=>{
+        commit('deleteArticle',article)
+      })
     },
 
     async IniPanier({commit},id){
@@ -166,6 +187,9 @@ export default new Vuex.Store({
           console.log(err.message)
         })
       
+    },
+    async clearPanier({commit}){
+      commit("clearPanier")
     }
 
 

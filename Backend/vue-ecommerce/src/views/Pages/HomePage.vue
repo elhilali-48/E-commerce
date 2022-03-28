@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    
+  
    <!-- <h1>{{user.id._id}}</h1> -->
   <nav-bar></nav-bar>
   
@@ -43,21 +43,21 @@ export default {
         }
       }  
       },  
-     getPanier(){
-       const id = this.user.id._id
-       this.$store.dispatch('IniPanier',id)
-        //  axios.post('http://localhost:3500/achat/panier/voirarticle',{idCli : id}).then((res)=>{
-        //     this.$store.dispatch('IniPanier',res.data)
-        // }).catch((err)=>{
-        //   console.log(err.message)
-        // })
-      }
+    //  getPanier(){
+    //    const id = this.user.id._id
+    //    this.$store.dispatch('IniPanier',id)
+    //     //  axios.post('http://localhost:3500/achat/panier/voirarticle',{idCli : id}).then((res)=>{
+    //     //     this.$store.dispatch('IniPanier',res.data)
+    //     // }).catch((err)=>{
+    //     //   console.log(err.message)
+    //     // })
+    //   }
   },
   created(){
    
     this.getUserDetails();
        //récuperer le panier du client 
-    this.getPanier()
+   
        
   },
   

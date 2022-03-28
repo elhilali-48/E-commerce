@@ -87,12 +87,14 @@ module.exports.supprimerArticle = async (req, res) =>
 
 module.exports.voirArticle = async (req, res) =>
 {
+    
     try 
     {
         const data = await Article.findOne
         (
             {_id: req.params.id}
-        ).populate('produit').populate('personnecomment').populate("livraison")
+        ).populate('produit').populate('personnecomment')
+        //ajouter populate("livraison")
         res.status(200).json(data)
     } 
     catch (err) 

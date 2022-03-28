@@ -3,10 +3,10 @@ const Panier = require("../../models/product/Panier");
 const Article = require("../../models/product/Article");
 
 module.exports.ajouterPanier = async (req, res) => {
-  //  console.log(req.body)
+    console.log(req.body)
   try {
-    const article = await Client.findOne({ _id: res.locals.client.id }); // recuperer les information du l'article
-    console.log(article)
+    const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
+
     if (article.articleselectionner.length != 0) {
       for (let i = 0; i < article.articleselectionner.length; i++) {
         let element = article.articleselectionner[i];
@@ -25,10 +25,10 @@ module.exports.ajouterPanier = async (req, res) => {
             const panier = await Panier.create({
               produitselectionner: req.body.produitselectionner,
               quantiteselectionne: req.body.quantiteselectionne,
-              idcli: res.locals.client.id,
+              idcli: req.body.idcli,
             });
             await Client.updateOne(
-              { _id: res.locals.client.id },
+              { _id: req.body.idcli },
               { $push: { articleselectionner: panier } }
             );
             res.status(200).json(panier).populate("produitselectionner");
@@ -43,10 +43,10 @@ module.exports.ajouterPanier = async (req, res) => {
       const panier = await Panier.create({
         produitselectionner: req.body.produitselectionner,
         quantiteselectionne: req.body.quantiteselectionne,
-        idcli: res.locals.client.id,
+        idcli: req.body.idcli,
       });
       await Client.updateOne(
-        { _id: res.locals.client.id },
+        { _id: req.body.idcli },
         { $push: { articleselectionner: panier } }
       );
 
@@ -100,8 +100,9 @@ module.exports.modifierPanier = async (req, res) => {
 };
 
 module.exports.supprimerPanier = async (req, res) => {
+  // console.log(req.body)
   try {
-    const article = await Client.findOne({ _id: res.locals.client.id }); // recuperer les information du l'article
+    const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
 
     try {
       if (article.articleselectionner.length != 0) {
@@ -113,7 +114,7 @@ module.exports.supprimerPanier = async (req, res) => {
           if (element == req.params.id) {
             await Panier.findByIdAndDelete({ _id: req.params.id }); // j'envoie le id du panier
             await Client.updateOne(
-              { _id: res.locals.client.id },
+              { _id: req.body.idcli },
               { $pull: { articleselectionner: element } }
             );
           }
@@ -150,7 +151,7 @@ module.exports.afficherProduit = async (req, res) => {
         const article = await Article.findOne({ _id: b });
 
 
-        tab.push({article, quanttite});
+        tab.push({article, quanttite,a});
       }
     }
 

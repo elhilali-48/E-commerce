@@ -1,5 +1,6 @@
 <template>
   <div class="container-fluid">
+    
     <div class="row d-flex mt-5">
       <div class="col-md-7">
         <div class="image">
@@ -40,7 +41,7 @@
         <div class="quantite">
          <h6 class="text-primary">  Quantité :</h6> 
          
-          <input v-if="article.quantite>0"  v-model="quatite" class="form-input w-25 rounded-1 text-center" type="number" min="1" :max="article.quantite"> {{article.quantite>0 ? `Stock : ${article.quantite}`: "Rupture"}}
+          <input v-if="article.quantite>0"  v-model.number="quatite" class="form-input w-25 rounded-1 text-center" type="number" min="1" :max="article.quantite"> {{article.quantite>0 ? `Stock : ${article.quantite}`: "Rupture"}}
         </div>
         <div class="panier">
           <button @click.prevent="addCart(article)" class="btn btn-lg btn-success px-5 py-2" >{{article.quantite>0 ? 'Ajouter au panier': "Rupture du stock"}}</button>
@@ -94,7 +95,7 @@
                 </div>
                 <div class="comment" v-if="idClient">
                   <form action="" @submit.prevent="addCommentaire">
-                    <label for="commentaire" class="float-start fw-bolder my-3" >Ajouter un commentaire : </label>
+                    <label for="commentaire" class="float-start fw-bolder my-3" >{{ comments }} un commentaire : </label>
                     <textarea class="form-control" id="commentaire" rows="3" v-model="commentaire"></textarea>
                     <button type="submit" class="btn btn-success mt-2 float-end text-white">Ajouter</button>
                   </form>
