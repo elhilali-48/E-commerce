@@ -81,7 +81,7 @@
                       </div>
                       <div class="col-md-3">
                         <div class="mt-4">
-                          {{comment.createdAt}}
+                          {{moment(comment.createdAt).startOf('minut').fromNow()}}
                           <button class="btn btn-primary" v-if="idClient && (idClient == comment.idclient)" @click="editComment(comment)">Edit</button>
                         </div>
                         
@@ -115,6 +115,8 @@
 
 
 <script>
+var moment = require('moment')
+moment.locale('fr');
 import VueJwtDecode from "vue-jwt-decode";
 import axios from 'axios'
 import Vue from "vue"
@@ -122,6 +124,7 @@ export default {
   name: 'article-front',
     data () {
     return {
+      moment:moment,
         article : {
             
         },

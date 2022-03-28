@@ -21,6 +21,11 @@ const clientSchema = mongoose.Schema
       type: ObjectId,
       ref: "Panier",
     }],
+    commande: 
+    [{
+      type: ObjectId,
+      ref: "Commande",
+    }],
 });
 
 module.exports = mongoose.model('Client', clientSchema);

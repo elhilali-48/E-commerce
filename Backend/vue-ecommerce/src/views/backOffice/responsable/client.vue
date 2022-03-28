@@ -23,7 +23,7 @@
                 <th scope="row">#</th>
                 <td>{{client.nom}}</td>
                 <td>{{client.prenom}}</td>
-                <td>{{client.dateDeNaissance}}</td>
+                <td>{{moment(client.dateDeNaissance).calendar()}}</td>
                 <td>{{client.email}}</td>
                 <td>{{client.telephone}}</td>
                 <td>{{client.pays}}</td>
@@ -39,6 +39,7 @@
   </div>
 </template>
 <script>
+var moment = require('moment')
 import axios from "axios"
 export default {
   name : "client-page ",
@@ -62,6 +63,7 @@ export default {
   },
 data () {
     return {
+      moment: moment,
         clients : {}
     }
   },

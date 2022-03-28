@@ -1,4 +1,4 @@
-const stripe = ("stripe")(process.env.STRIPE_KEY);
+const stripe = require ("stripe")(process.env.STRIPE_KEY);
 
 module.exports.ajouterpaiment = (req, res) => {
   stripe.charges.create(

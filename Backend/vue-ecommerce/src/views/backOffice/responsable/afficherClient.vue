@@ -63,7 +63,8 @@
                                 </strong>
                             </td>
                             <td class="text-primary">
-                                {{client.dateDeNaissance}}
+                                {{moment(client.dateDeNaissance).calendar()}}
+                                
                             </td>
                         </tr>
 
@@ -144,11 +145,13 @@
 </template>
 
 <script>
+var moment = require('moment')
 import axios from "axios"
 export default {
     name : "afficher-client",
     data(){
         return{
+            moment: moment,
             client : {}
         }
     },
