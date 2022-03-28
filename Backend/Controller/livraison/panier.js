@@ -132,7 +132,7 @@ module.exports.supprimerPanier = async (req, res) => {
 };
 
 module.exports.afficherProduit = async (req, res) => {
-  
+  console.log("HHH")
   try {
     const tab = [];
     const essaie = await Client.findOne({ _id: req.body.idCli });

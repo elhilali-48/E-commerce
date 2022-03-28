@@ -16,6 +16,7 @@ const routespanier = require('./routes/livraison/panier')
 const routescommentaire = require('./routes/gestion_de_vente/commentaire')
 const routecommande = require('./routes/livraison/commande')
 const routespaiment = require('./routes/livraison/paiment')
+const routeslivraison = require('./routes/livraison/livraison')
 
 const cookieParser = require('cookie-parser')
 

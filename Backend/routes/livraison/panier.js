@@ -7,7 +7,7 @@ router.post("/ajouter", checkClient, panierCtrl.ajouterPanier);
 router.get("/voirpanier/:id", checkClient, panierCtrl.voirpanier);
 router.put("/modifier/:id", checkClient, panierCtrl.modifierPanier);
 router.delete("/supprimer/:id", checkClient, panierCtrl.supprimerPanier)
-router.get("/voirarticle", panierCtrl.afficherProduit)
+router.post("/voirarticle", panierCtrl.afficherProduit)
 
 
 
