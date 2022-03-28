@@ -14,9 +14,9 @@ module.exports.ajouterCommande = async (req, res) =>
             [
                   req.body.articles
             ],
-            livraison: req.body.livraison,
             totale: req.body.totale
         })
+
         res.status(201).json(commande)    
         
     } catch (err) 

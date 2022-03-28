@@ -5,10 +5,14 @@ const ObjectId = Schema.ObjectId
 const commandechema = mongoose.Schema
 ({
 
-    idcli: { type: String },
-    articles: {type: Array},
-    livraison: {type: String},
-    totale: { type: Number },
+    idcli: { type: String,  },
+    articles: 
+    [{
+      type: ObjectId,
+      ref: "Article",
+    }],
+    totale: { type: Number, required: true },
+    
     
 
 },

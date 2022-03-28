@@ -24,7 +24,16 @@ const articleSchema = mongoose.Schema({
       type : ObjectId,
       ref : "Livraison"
     }
-  ]
+  ],
+
+  description_technique:
+  [{
+    RAM: {type: Number},
+    stockage: {type: Number},
+    generation: {type: String},
+    pouces: {type: Number}
+  }]
+ 
 
 });
 
