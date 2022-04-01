@@ -12,20 +12,19 @@ module.exports.ajouterArticle = async (req, res) =>
     {  
         const article = await Article.create
         ({
+            ...req.body
 
-            nom: req.body.nom,
-            quantite: req.body.quantite,
-            description: req.body.description,
-            prix: req.body.prix,
-            avis: req.body.avis,
-            produit: req.body.produit,
-            image: req.file.filename,
-            description_technique :{
-                ram : req.body.ram,
-                stockage : req.body.stockage,
-                processeur : req.body.processeur,
-                pouces : req.body.pouces,
-            }
+            // nom: req.body.nom,
+            // quantite: req.body.quantite,
+            // description: req.body.description,
+            // prix: req.body.prix,
+            // avis: req.body.avis,
+            // produit: req.body.produit,
+            // image: req.file.filename,
+            // ram : req.body.ram,
+            // stockage : req.body.stockage,
+            // pouces : req.body.pouces,
+            // processeur : req.body.processeur
 
         })
         await Produit.updateOne
@@ -59,13 +58,20 @@ module.exports.voirall = async (req, res) =>
 
 module.exports.modifierArticle = async (req, res) =>
 {
+    console.log(req.body)
     try 
     {
         const data = await Article.findOneAndUpdate
         (
             {_id: req.params.id},
-            { ...req.body}
+            { 
+                ...req.body
+            }
         )
+        // await Produit.updateOne
+        // (
+        //     { _id: req.body.produit }, { $push: { article: article }}
+        // ).populate('article') 
         res.status(201).json(data)
     } 
     catch (err) 

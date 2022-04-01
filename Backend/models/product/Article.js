@@ -25,14 +25,11 @@ const articleSchema = mongoose.Schema({
       ref : "Livraison"
     }
   ],
-
-  description_technique:
-  {
-    ram: {type: Number},
-    stockage: {type: Number},
-    generation: {type: String},
-    pouces: {type: Number}
-  }
+  ram: {type: Number},
+  stockage: {type: Number},
+  processeur: {type: String},
+  pouces: {type: Number}
+  
  
 
 });

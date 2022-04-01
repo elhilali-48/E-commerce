@@ -30,7 +30,7 @@ const storage = multer({
 
 
 router.post('/ajouter',storage.single('file'), articleCtrl.ajouterArticle);
-router.put('/modifier/:id', articleCtrl.modifierArticle);
+router.put('/modifier/:id',storage.single('file'), articleCtrl.modifierArticle);
 router.delete('/supprimer/:id', articleCtrl.supprimerArticle);
 router.get('/voirarticle/:id', articleCtrl.voirArticle);
 router.get('/voir', articleCtrl.voirall);

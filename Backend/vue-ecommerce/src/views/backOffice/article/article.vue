@@ -24,9 +24,9 @@
                 <td>{{article.avis}}</td>
                 <td>{{article.prix}}</td>
                 <td>
-                  <button class="btn btn-sm btn-outline-danger" @click.prevent="deleteArticle(article._id)" >Supprimer</button>
-                  <router-link :to="{name : 'modifier-article', params:{id: article._id}}" class="btn btn-sm btn-outline-primary">Modifier</router-link>
-                  <router-link :to="{name : 'afficher-article' , params:{id : article._id}}"  class="btn btn-sm btn-outline-success">Afficher</router-link>
+                  <button class="btn btn-sm btn-outline-danger m-2" @click.prevent="deleteArticle(article._id)" ><i class='bx bxs-trash'></i></button>
+                  <router-link :to="{name : 'modifier-article', params:{id: article._id}}" class="btn btn-sm btn-outline-primary m-2"><i class='bx bxs-edit'></i></router-link>
+                  <router-link :to="{name : 'afficher-article' , params:{id : article._id}}"  class="btn btn-sm btn-outline-success"><i class='bx bx-show' ></i></router-link>
                 </td>
               </tr>
             </tbody>
