@@ -13,6 +13,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueCookies from 'vue-cookies';
+import VueCountryCode from "vue-country-code";
+import vueCountryRegionSelect from 'vue-country-region-select'
+
+Vue.use(vueCountryRegionSelect)
+Vue.use(VueCountryCode);
 
 
 library.add(faHatWizard)

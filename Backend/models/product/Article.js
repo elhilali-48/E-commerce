@@ -27,12 +27,12 @@ const articleSchema = mongoose.Schema({
   ],
 
   description_technique:
-  [{
-    RAM: {type: Number},
+  {
+    ram: {type: Number},
     stockage: {type: Number},
     generation: {type: String},
     pouces: {type: Number}
-  }]
+  }
  
 
 });

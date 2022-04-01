@@ -21,51 +21,60 @@ module.exports.register_get = (req, res) => {
 
 module.exports.register_post = async (req, res) => {
   try {
+    const client =await Client.findOne
+        ({email: req.body.email });
+    if(!client){
+          //generate password
+        const salt = await bcrypt.genSalt(10);
+        const hashpassword = await bcrypt.hash(req.body.password, salt);
+
+        const client = await Client.create({
+          nom: req.body.nom,
+          prenom: req.body.prenom,
+          adresse: req.body.adresse,
+          codePostale: req.body.codePostale,
+          ville: req.body.ville,
+          pays: req.body.pays,
+          dateDeNaissance: req.body.dateDeNaissance,
+          email: req.body.email,
+          password: hashpassword,
+          telephone: req.body.telephone,
+          sexe: req.body.sexe,
+          confirmation: req.body.confirmation,
+        });
+      
+        res.status(201).json({ client, message: "le client a bien été créer" });
+
+        var mailOptions = {
+          from: '"BestTech Team" <bestteck@info.com>',
+          to: req.body.email,
+          subject: 'Création de votre compte ',
+          text: `Bonjour ${req.nom} ${res.prenom}`,
+          html: 
+          ` 
+            <h1>Bonjour ${client.nom} ${client.prenom}</h1>
+
+            <p>
+              Vous venez de créer votre compte sur le site BestTech
+              Veuillez cliquer sur ce lien pour valider votre compte <br> <button style="background-color : green">Activer mon compte</button> <br>
+
+              Attention, vous devez valider votre compte avant le 20/03/2022, après cela votre compte sera détruit.
+            </p>
+            
+          `,
+        
+      };
+      transport.sendMail(mailOptions ,(err,info)=>{
+          if(err){
+              return console.log(err.message)
+          }
+          console.log('Message sent: %s', info.messageId)
+      })
+    }
+    else {
+      res.status(400).json({error :"Un utilisateur a déjà créer un compte avec ce email"})
+    }
     
-    //generate password
-    const salt = await bcrypt.genSalt(10);
-    const hashpassword = await bcrypt.hash(req.body.password, salt);
-
-    const client = await Client.create({
-      nom: req.body.nom,
-      prenom: req.body.prenom,
-      adresse: req.body.adresse,
-      codePostale: req.body.codePostale,
-      ville: req.body.ville,
-      pays: req.body.pays,
-      dateDeNaissance: req.body.dateDeNaissance,
-      email: req.body.email,
-      password: hashpassword,
-      telephone: req.body.telephone,
-      sexe: req.body.sexe,
-      confirmation: req.body.confirmation,
-    });
-   
-    res.status(201).json({ client, message: "le client a bien été créer" });
-
-    var mailOptions = {
-      from: '"BestTech Team" <bestteck@info.com>',
-      to: req.body.email,
-      subject: 'Création de votre compte ',
-      text: `Bonjour ${req.nom} ${res.prenom}`,
-      html: 
-      ` 
-        <h1>Bonjour ${client.nom} ${client.prenom}</h1>
-
-        <p>
-          Vous venez de créer votre compte sur le site BestTech
-          Veuillez cliquer sur ce lien pour valider votre compte <br> <button style="background-color : green">Activer mon compte</button> <br>
-
-          Attention, vous devez valider votre compte avant le 20/03/2022, après cela votre compte sera détruit.
-        </p>
-      `
-  };
-   transport.sendMail(mailOptions ,(err,info)=>{
-      if(err){
-          return console.log(err.message)
-      }
-      console.log('Message sent: %s', info.messageId)
-   })
   } catch (err) {
     res.status(400).json({ err });
   }
@@ -109,3 +118,15 @@ module.exports.login_post = async (req, res) => {
     console.log(err);
   }
 };
+
+//Validation du compte 
+
+module.exports.validerCompte = async (req,res) => {
+  try {
+    const data = await Client.updateOne({ _id: req.params.id }, { ...req.body })
+    res.status(201).json({data})
+  } catch (error) {
+      res.status(404).json({error})
+  }
+}
+

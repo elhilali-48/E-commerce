@@ -20,7 +20,12 @@ module.exports.ajouterArticle = async (req, res) =>
             avis: req.body.avis,
             produit: req.body.produit,
             image: req.file.filename,
-            livraison : req.body.livraison
+            description_technique :{
+                ram : req.body.ram,
+                stockage : req.body.stockage,
+                processeur : req.body.processeur,
+                pouces : req.body.pouces,
+            }
 
         })
         await Produit.updateOne
