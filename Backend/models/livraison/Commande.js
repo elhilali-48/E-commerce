@@ -6,11 +6,7 @@ const commandechema = mongoose.Schema
 ({
 
     idcli: { type: String,  },
-    articles: 
-    [{
-      type: ObjectId,
-      ref: "Article",
-    }],
+    articles: {type: Array},
     totale: { type: Number, required: true },
     
     

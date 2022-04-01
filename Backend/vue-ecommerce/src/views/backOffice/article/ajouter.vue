@@ -72,40 +72,16 @@
                 </div>
                 </div>
             </div>
-             <div class="row mb-4">  
+             <div class="row mb-4">
                 <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="nom" >RAM</label>
-                    <input type="number" id="nom" class="form-control" v-model="article.ram" />
-                    <span class="text-danger"  v-if="!$v.article.ram.required && $v.article.ram.$dirty" > Ram est obligatoire</span>
-                                        <span class="text-danger"  v-if="!$v.article.ram.minValue && $v.article.ram.$dirty" > RAM ne peut pas étre négatif</span>
-
-                </div>
-                </div>
-                <div class="col">
-                <div class="form-outline">
-                    <label class="form-label" for="quantite" >Stockage (GO)</label>
-                    <input type="number" id="quantite" class="form-control" v-model="article.stockage" />
-                    <span class="text-danger"  v-if="!$v.article.stockage.required && $v.article.stockage.$dirty" > Stockage est obligatoire</span>
-                                        <span class="text-danger"  v-if="!$v.article.stockage.minValue && $v.article.stockage.$dirty" > Stockage ne peut pas étre négatif</span>
-
-                </div>
-                </div>
-            </div>
-            <div class="row mb-4">  
-                <div class="col">
-                <div class="form-outline">
-                    <label class="form-label" for="nom" >Pouces</label>
-                    <input type="number" id="nom" class="form-control" v-model="article.pouces" />
-                    <span class="text-danger"  v-if="!$v.article.pouces.required && $v.article.pouces.$dirty" > Pouce est obligatoire</span>
-                    <span class="text-danger"  v-if="!$v.article.pouces.minValue && $v.article.pouces.$dirty" > Pouce ne peut pas étre négatif</span>
-                </div>
-                </div>
-                <div class="col">
-                <div class="form-outline">
-                    <label class="form-label" for="quantite" >Processeur</label>
-                    <input type="text"  id="quantite" class="form-control" v-model="article.processeur" />
-                    <span class="text-danger"  v-if="!$v.article.processeur.required && $v.article.processeur.$dirty" > Processeur est obligatoire</span>
+                    <label class="form-label" for="nom"  >Livraison </label>
+                    <select class="form-select" v-model="article.livraison">
+                        <option disabled value="">Selectionner un Mode de livraison</option>
+                        <option v-for="livraison in livraisons" :key="livraison._id" :value="livraison._id">{{livraison.company}} || {{livraison.type}}</option>
+                    </select>
+                    <span class="text-danger"  v-if="!$v.article.livraison.required && $v.article.livraison.$dirty" >Mode de livraison est obligatoire</span>
+                    
                 </div>
                 </div>
             </div>
@@ -122,7 +98,7 @@
 
 <script>
 import axios from "axios"
-import {required,minValue} from "vuelidate/lib/validators"
+import {required} from "vuelidate/lib/validators"
 export default {
     name: "ajouter-produit",
     data(){
@@ -134,13 +110,10 @@ export default {
                 avis :"",
                 produit : "",
                 quantite : "",
-                ram :"",
-                stockage :"",
-                pouces : "",
-                processeur :"",
                 file :null,
+                livraison : null,
             },
-            
+            livraisons : [],
             produits : [],
             errMessage :''
             
@@ -166,19 +139,7 @@ export default {
             quantite : {
                 required
             },
-            stockage : {
-                required,
-                minValue : minValue(1)
-            },
-             ram : {
-                required,
-                minValue: minValue(1),
-            },
-             pouces : {
-                required,
-                minValue : minValue(1)
-            },
-            processeur : {
+            livraison : {
                 required
             }
         }
@@ -214,10 +175,7 @@ export default {
            formData.append('produit',this.article.produit)
            formData.append('quantite',this.article.quantite)
            formData.append('file',this.article.file)
-           formData.append('pouces',this.article.pouces)
-           formData.append('stockage',this.article.stockage)
-           formData.append('ram',this.article.ram)
-           formData.append('processeur',this.article.processeur)
+           formData.append('livraison',this.article.livraison)
           
           await axios.post('http://localhost:3500/responsable/article/ajouter',formData).then(()=>{
                 this.$swal.fire(
@@ -235,9 +193,9 @@ export default {
             axios.get('http://localhost:3500/responsable/produit/voir').then((res)=>{
                 this.produits = res.data
             })
-            // axios.get('http://localhost:3500/gestion/livraison/afficherAll').then((res)=>{
-            //     this.livraisons = res.data
-            // })
+            axios.get('http://localhost:3500/gestion/livraison/afficherAll').then((res)=>{
+                this.livraisons = res.data
+            })
     }
 
 }

@@ -57,9 +57,7 @@
                                    
                                     <div class="form-group">
                                         <label for="pays">Pays</label>
-                                       <country-select class="form-control" id="pays" v-model="client.pays" topCountry="FR" autocomplete />
-                                        <!-- <region-select class="form-control" v-model="region" :country="country" :region="region" /> -->
-                                        <!-- <input type="text" class="form-control" id="pays" aria-describedby="emailHelp" placeholder="pays" v-model="client.pays"> -->
+                                        <input type="text" class="form-control" id="pays" aria-describedby="emailHelp" placeholder="pays" v-model="client.pays">
                                          <span v-if="!$v.client.pays.required && $v.client.pays.$dirty" class="text-danger" >
                                             Le code postal  est obligatoire ! 
                                         </span>
@@ -151,9 +149,7 @@ export default {
             codePostale :"",
             pays: "",
 
-        },
-         country: '',
-         region: ''
+        }
     }
   },
   validations :{
@@ -206,9 +202,6 @@ export default {
               this.creerCompte()
           }
       },
-       onSelect({name, iso2, dialCode}) {
-       alert(name, iso2, dialCode);
-     },
       creerCompte(){
           axios.post('http://localhost:3500/client/register',{
               nom : this.client.nom,
@@ -222,8 +215,8 @@ export default {
               ville : this.client.ville,
               pays : this.client.pays,
               dateDeNaissance : this.client.dateDeNaissance,
-          }).then(()=>{
-            //   console.log(res.response.data)
+          }).then((res)=>{
+              console.log(res)
                 this.$swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -234,12 +227,7 @@ export default {
                 
                 this.$router.push('/signIn')
           }).catch((err)=>{
-               this.$swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err.response.data.error,
-                footer: '<a href="">Mot de passe oublié</a>'
-                })
+              alert(err)
           })
       }
   },
