@@ -30,8 +30,9 @@ const articleSchema = mongoose.Schema({
   [{
     RAM: {type: Number},
     stockage: {type: Number},
-    generation: {type: String},
+    processeur: {type: String},
     pouces: {type: Number}
+    
   }]
  
 

@@ -4,7 +4,8 @@ const router = express.Router();
 const checkClient  = require("../../midlleware/authentification");
 
 router.post("/ajouter", checkClient, commandeCtrl.ajouterCommande);
-router.get("/afficher/:id", checkClient, commandeCtrl.afficherCommande);
+router.post("/ajouterd", checkClient, commandeCtrl.inserer);
+
 
 
 

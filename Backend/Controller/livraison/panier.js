@@ -1,9 +1,10 @@
 const Client = require("../../models/authentifiaction/Client");
 const Panier = require("../../models/product/Panier");
 const Article = require("../../models/product/Article");
+const Commande = require("../../models/livraison/Commande");
 
 module.exports.ajouterPanier = async (req, res) => {
-    console.log(req.body)
+  console.log(req.body);
   try {
     const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
 
@@ -38,8 +39,7 @@ module.exports.ajouterPanier = async (req, res) => {
         }
       }
       res.status(201).json("l'article a bien été modifier");
-    } 
-    else {
+    } else {
       const panier = await Panier.create({
         produitselectionner: req.body.produitselectionner,
         quantiteselectionne: req.body.quantiteselectionne,
@@ -131,8 +131,7 @@ module.exports.supprimerPanier = async (req, res) => {
   }
 };
 
-module.exports.afficherProduit = async (req, res) => {
-  console.log("HHH")
+module.exports.afficherProduit = async (req, res ) => {
   try {
     const tab = [];
     const essaie = await Client.findOne({ _id: req.body.idCli });
@@ -144,14 +143,11 @@ module.exports.afficherProduit = async (req, res) => {
         const a = await Panier.findOne({ _id: element._id });
 
         let b = a.produitselectionner;
-        let quanttite = a.quantiteselectionne
-
- 
+        let quanttite = a.quantiteselectionne;
 
         const article = await Article.findOne({ _id: b });
 
-
-        tab.push({article, quanttite,a});
+        tab.push({ article, quanttite, a });
       }
     }
 
@@ -159,4 +155,5 @@ module.exports.afficherProduit = async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+
 };

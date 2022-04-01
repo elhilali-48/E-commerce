@@ -20,28 +20,16 @@ const routeslivraison = require('./routes/livraison/livraison')
 
 const cookieParser = require('cookie-parser')
 
+const stripesecret = process.env.STRIPE_KEY_SECRET
+const stripepublic = process.env.STRIPE_KEY_PUBLIC
 
-// Configuration du node Mailer : 
-// const  transport = nodemailer.createTransport({
-//     host: "smtp.mailtrap.io",
-//     port: 2525,
-//     auth: {
-//       user: "8108134db847cf",
-//       pass: "93e8ad02d5a811"
-//     }
-//   });
 
 
 const app = express();
 app.use(cors({
     origin : "http://localhost:8080",
 }))
-// app.use((req,res,next)=>{
-//     res.setHeader("Access-Control-Allow-Origin","*")
-//     res.setHeader("Access-Control-Allow-Methods","*")
-//     res.setHeader("Access-Control-Allow-Headers","Authorization")
-//     next()
-// })
+
 mongoose.connect('mongodb+srv://admin:admin@cluster0.nctg3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -55,7 +43,10 @@ app.use(cookieParser())
 // app.use(nodemailer.createTransport)
 
 
-app.get('/', (req, res) => res.render('register'))
+app.get('/', (req, res) => res.render('register',{
+
+    key: stripepublic
+}))
 
 app.use("/client", routesauth)
 app.use("/responsable/gestion",routesres)
