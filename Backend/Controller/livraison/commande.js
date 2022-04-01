@@ -8,7 +8,7 @@ module.exports.ajouterCommande = async (req, res, next) => {
  
 
     const commande = await Commande.create({
-      idcli: res.locals.client.id,
+      idcli: req.body.idcli,
       totale: req.body.totale,
     });
 
@@ -24,7 +24,7 @@ module.exports.inserer = async (req, res) =>
 {
     try {
 
-        const essaie = await Client.findOne({ _id: res.locals.client.id });
+        const essaie = await Client.findOne({ _id: req.body.idcli });
 
             for (let i = 0; i < essaie.articleselectionner.length; i++) {
               let element = essaie.articleselectionner[i];
@@ -37,7 +37,7 @@ module.exports.inserer = async (req, res) =>
               const article = await Article.findOne({ _id: b });
 
               const commande = await Commande.updateOne(
-                   { idcli: res.locals.client.id }, { $push: { articles: {quanttite, article} }}
+                   { idcli: req.body.idcli }, { $push: { articles: {quanttite, article} }}
               )
 
               res.status(201).json(commande);

@@ -44,7 +44,7 @@
                     <p class="fw-bold text-start">Nombre des articles : {{ lengthPanier }}</p>
                     <hr class="bg-dark border-3 border-top border-dark">
                     <h4 class="fw-bolder text-start">Total commande : <span class="text-end">{{ getTotal }} €</span></h4>
-                    <router-link :to="{name : 'commande-front'}" class="btn btn-primary btn-lg mt-3" style="border-radius : 20px">Valider Commande</router-link> <br>
+                    <router-link  :to="{name : 'commande-front'}" class="btn btn-primary btn-lg mt-3" style="border-radius : 20px">Valider Commande</router-link> <br>
                     <button class="btn btn-outline-danger btn-lg mt-3" style="border-radius : 20px">Supprimer Commande</button>
                 </div>
                 
