@@ -7,35 +7,35 @@ const articleSchema = mongoose.Schema({
   quantite: { type: Number, required: true, min: 0 },
   description: { type: String, required: true },
   prix: { type: Number, required: true, min: 0 },
-  avis: { type: Number, max: 5, min: 0, default: 0 },
-  image: {type: String},
+  avis: { type: Number },
+  promotion: { type: Number, min: 0, max: 100 },
+
+  image: { type: String },
   produit: {
     type: ObjectId,
     ref: "Produit",
     required: true,
   },
-  personnecomment: 
-    [{
+  personnecomment: [
+    {
       type: ObjectId,
       ref: "Commentaire",
-    }],
-  livraison : [
+    },
+  ],
+  livraison: [
     {
-      type : ObjectId,
-      ref : "Livraison"
-    }
+      type: ObjectId,
+      ref: "Livraison",
+    },
   ],
 
-  description_technique:
-  [{
-    RAM: {type: Number},
-    stockage: {type: Number},
-    processeur: {type: String},
-    pouces: {type: Number}
-    
-  }]
- 
-
+  description_technique: {
+    ram: { type: Number },
+    stockage: { type: Number },
+    processeur: { type: String },
+    pouces: { type: Number },
+  },
+  personneavis: { type: Array },
 });
 
 module.exports = mongoose.model("Article", articleSchema);
