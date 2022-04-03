@@ -9,8 +9,8 @@ const articleSchema = mongoose.Schema({
   prix: { type: Number, required: true, min: 0 },
   avis: { type: Number },
   promotion: { type: Number, min: 0, max: 100 },
-
   image: { type: String },
+  personneavis: {type: Array},
   produit: {
     type: ObjectId,
     ref: "Produit",

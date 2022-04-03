@@ -3,8 +3,14 @@ const stripe = require("stripe")(
 );
 
 module.exports.ajouterpaiment = async (req, res) => {
+
+
+  let a = req.body.client.nom
+  let b = req.body.client.prenom
+  console.log(tab);
   try {
-    const product = await stripe.products.create({ name: "pc portable DELL " });
+    
+    const product = await stripe.products.create({ name: a+" "+b , tab : tab });
     const price = await stripe.prices.create({
       product: product.id,
       unit_amount: 0.5 * 100,

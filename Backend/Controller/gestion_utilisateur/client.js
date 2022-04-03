@@ -1,12 +1,9 @@
 const Client = require("../../models/authentifiaction/Client");
 const bcrypt = require("bcrypt");
-const { populate } = require("../../models/authentifiaction/Client");
 
 module.exports.show_client = async (req, res) => {
   try {
-    const client = await Client.findOne({ _id: req.params.id }).populate(
-      "articleselectionner"
-    );
+    const client = await Client.findOne({ _id: req.params.id }).populate("commande")
 
     res.status(201).json({ client });
   } catch (err) {
