@@ -3,7 +3,7 @@
       <div class="row d-flex justify-content-around mt-5 mx-3">
           <div class="col-md-6">
               <div class="card bg-light rounded-3 py-3 px-4">
-                  <h4 class="text-start">Information {{ panier }}: </h4>
+                  <h4 class="text-start">Information : </h4>
                     <div class="form">
                         <div class="row">
                             <div class="col-md-6">
@@ -104,6 +104,7 @@
                           <p class="text-end fw-bold ">{{ livraisonPrix }} €</p>
                           <h3 class="mt-5 text-end text-success fw-bolder">{{ getTotal }} €</h3>
                       </div>
+                      <button class="btn btn-outline-success rounded-3 btn-lg" @click="addCommande">Payer</button>
                   </div>
               </div>
           </div>
@@ -164,6 +165,26 @@ export default {
                 this.livraisons = res.data
         })
     },
+    addCommande(){
+        axios.post('http://localhost:3500/achat/commande/ajouter',{
+            idcli : this.idClient,
+            totale : this.getTotal
+        }).then(()=>{
+               axios.post('http://localhost:3500/achat/commande/ajouterd',{
+                   idcli : this.idClient,
+               }).then(()=>{
+                    this.$swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Votre Commande a été bien créer, Il vous reste le paiement',
+                    showConfirmButton: false,
+                    timer: 2500
+                    })
+               })
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
   
   },
   computed :{

@@ -28,14 +28,13 @@ const articleSchema = mongoose.Schema({
       ref: "Livraison",
     },
   ],
+  ram: {type: Number},
+  stockage: {type: Number},
+  processeur: {type: String},
+  pouces: {type: Number}
+  
+ 
 
-  description_technique: {
-    ram: { type: Number },
-    stockage: { type: Number },
-    processeur: { type: String },
-    pouces: { type: Number },
-  },
-  personneavis: { type: Array },
 });
 
 module.exports = mongoose.model("Article", articleSchema);

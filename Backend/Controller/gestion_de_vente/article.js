@@ -8,30 +8,24 @@ module.exports.ajouterArticle = async (req, res) => {
 
   try {
     const article = await Article.create({
-      nom: req.body.nom,
-      quantite: req.body.quantite,
-      description: req.body.description,
-      prix: req.body.prix,
-      avis: req.body.avis,
-      produit: req.body.produit,
-      image: req.file.filename,
-      description_technique: {
-        ram: req.body.ram,
-        stockage: req.body.stockage,
-        processeur: req.body.processeur,
-        pouces: req.body.pouces,
-      },
+      ...req.body,
+
+      // nom: req.body.nom,
+      // quantite: req.body.quantite,
+      // description: req.body.description,
+      // prix: req.body.prix,
+      // avis: req.body.avis,
+      // produit: req.body.produit,
+      // image: req.file.filename,
+      // ram : req.body.ram,
+      // stockage : req.body.stockage,
+      // pouces : req.body.pouces,
+      // processeur : req.body.processeur
     });
-    await Produit.updateOne(
-      { _id: req.body.produit },
-      { $push: { article: article } }
-    ).populate("article");
-    res.status(201).json({ message: "l'article a bien été creée" });
   } catch (err) {
-    res.status(400).json({ err: err.message });
+    res.status(400).json(err);
   }
 };
-
 module.exports.voirall = async (req, res) => {
   try {
     const data = await Article.find().populate("produit");
