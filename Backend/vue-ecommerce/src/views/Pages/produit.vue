@@ -87,7 +87,7 @@
                 </form>
             </div>
             <div class="py-3">
-                <h5 class="font-weight-bold">Rating</h5>
+                <h5 class="font-weight-bold">Rating :</h5>
                 <form class="rating">
                     <div class="form-inline d-flex align-items-center py-2">
                         <label class="tick">

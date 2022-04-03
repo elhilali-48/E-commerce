@@ -131,7 +131,7 @@ module.exports.supprimerPanier = async (req, res) => {
   }
 };
 
-module.exports.afficherProduit = async (req, res ) => {
+module.exports.afficherProduit = async (req, res) => {
   try {
     const tab = [];
     const essaie = await Client.findOne({ _id: req.body.idCli });
@@ -155,5 +155,4 @@ module.exports.afficherProduit = async (req, res ) => {
   } catch (err) {
     res.status(400).json(err);
   }
-
 };

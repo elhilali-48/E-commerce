@@ -5,8 +5,6 @@ const Panier = require("../../models/product/Panier");
 
 module.exports.ajouterCommande = async (req, res, next) => {
   try {
- 
-
     const commande = await Commande.create({
       idcli: req.body.idcli,
       totale: req.body.totale,
@@ -17,34 +15,31 @@ module.exports.ajouterCommande = async (req, res, next) => {
     res.status(400).json(err.message);
   }
 
-  next()
+  next();
 };
 
-module.exports.inserer = async (req, res) =>
-{
-    try {
+module.exports.inserer = async (req, res) => {
+  try {
+    const essaie = await Client.findOne({ _id: res.locals.client.id });
 
-        const essaie = await Client.findOne({ _id: req.body.idcli });
+    for (let i = 0; i < essaie.articleselectionner.length; i++) {
+      let element = essaie.articleselectionner[i];
 
-            for (let i = 0; i < essaie.articleselectionner.length; i++) {
-              let element = essaie.articleselectionner[i];
-      
-              const a = await Panier.findOne({ _id: element._id });
-      
-              let b = a.produitselectionner;
-              let quanttite = a.quantiteselectionne;
-      
-              const article = await Article.findOne({ _id: b });
+      const a = await Panier.findOne({ _id: element._id });
 
-              const commande = await Commande.updateOne(
-                   { idcli: req.body.idcli }, { $push: { articles: {quanttite, article} }}
-              )
+      let b = a.produitselectionner;
+      let quanttite = a.quantiteselectionne;
+            
 
-              res.status(201).json(commande);
-            }
+      const article = await Article.findOne({ _id: b });
 
-        
-    } catch (err) {
-        res.status(400).json(err.message);
+      const commande = await Commande.updateOne(
+        { idcli: req.body.idcli }, { $push: { articles: {quanttite, article} }}
+     )
+
+      res.status(201).json(commande);
     }
-}
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
+};

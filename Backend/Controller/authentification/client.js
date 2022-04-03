@@ -2,14 +2,14 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Client = require("../../models/authentifiaction/Client");
 const Panier = require("../../models/product/Panier");
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 const transport = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
   auth: {
     user: "8108134db847cf",
-    pass: "93e8ad02d5a811"
-  }
+    pass: "93e8ad02d5a811",
+  },
 });
 const createToken = (id) => {
   return jwt.sign({ id }, "RANDOM_TOKEN_SECRET", { expiresIn: "2h" });
@@ -261,8 +261,7 @@ module.exports.login_post = async (req, res) => {
       );
 
       if (!passwordValide) {
-        res.status(400).json({error :"Mot de passe incorrect"})
-        
+        res.status(400).json({ error: "Mot de passe incorrect" });
       } else {
         try {
           const token = createToken(client);
@@ -273,9 +272,27 @@ module.exports.login_post = async (req, res) => {
         }
       }
     } else {
-      res.status(400).json({error :"Aucun client est enregistrer avec cette adresse email"})
+      res
+        .status(400)
+        .json({
+          error: "Aucun client est enregistrer avec cette adresse email",
+        });
     }
   } catch (err) {
     console.log(err);
+  }
+};
+
+//Validation du compte
+
+module.exports.validerCompte = async (req, res) => {
+  try {
+    const data = await Client.updateOne(
+      { _id: req.params.id },
+      { ...req.body }
+    );
+    res.status(201).json({ data });
+  } catch (error) {
+    res.status(404).json({ error });
   }
 };

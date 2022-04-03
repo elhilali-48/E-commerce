@@ -150,7 +150,9 @@ export default {
             codePostale :"",
             pays: "",
 
-        }
+        },
+         country: '',
+         region: ''
     }
   },
   validations :{
@@ -203,6 +205,9 @@ export default {
               this.creerCompte()
           }
       },
+       onSelect({name, iso2, dialCode}) {
+       alert(name, iso2, dialCode);
+     },
       creerCompte(){
           axios.post('http://localhost:3500/client/register',{
               nom : this.client.nom,
@@ -216,8 +221,8 @@ export default {
               ville : this.client.ville,
               pays : this.client.pays,
               dateDeNaissance : this.client.dateDeNaissance,
-          }).then((res)=>{
-              console.log(res)
+          }).then(()=>{
+            //   console.log(res.response.data)
                 this.$swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -228,11 +233,19 @@ export default {
                 
                 this.$router.push('/signIn')
           }).catch((err)=>{
+<<<<<<< HEAD
               this.$swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: err.response.data.error,
                 footer: '<a href="">Why do I have this issue?</a>'
+=======
+               this.$swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.response.data.error,
+                footer: '<a href="">Mot de passe oublié</a>'
+>>>>>>> def93bb2acc4b3e70ecae5abf6becd624610b05a
                 })
           })
       }

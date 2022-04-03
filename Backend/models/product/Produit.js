@@ -1,20 +1,20 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const ObjectId = Schema.ObjectId
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
-const produitSchema = mongoose.Schema(
+const produitSchema = mongoose.Schema({
+  nom: { type: String },
+  categorie: {
+    type: ObjectId,
+    ref: "Categorie",
+    required: true,
+  },
+  article: [
     {
-        nom: { type :String },
-        categorie: {
-            type : ObjectId,
-            ref : 'Categorie',
-            required: true
-        },
-        article: [{
-            type : ObjectId,
-            ref : 'Article',
-        }]
-    }
-)
+      type: ObjectId,
+      ref: "Article",
+    },
+  ],
+});
 
-module.exports = mongoose.model('Produit', produitSchema)
+module.exports = mongoose.model("Produit", produitSchema);
