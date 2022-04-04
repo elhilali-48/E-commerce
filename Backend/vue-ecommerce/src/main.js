@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueCookies from 'vue-cookies';
 import vueCountryRegionSelect from 'vue-country-region-select'
 import VueCarousel from 'vue-carousel';
+import VueAgile from 'vue-agile'
 
 
 
@@ -24,6 +25,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueCarousel);
 Vue.use(vueCountryRegionSelect)
+Vue.use(VueAgile)
 Vue.use(Vuex)
 Vue.use(Vuelidate)
 Vue.use(VueSweetalert2)

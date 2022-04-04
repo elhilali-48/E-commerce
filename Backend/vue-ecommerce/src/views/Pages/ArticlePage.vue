@@ -29,7 +29,11 @@
                     </h4>
         </div>
         <div class="mt-4 prix"> 
-          <h2>{{article.prix}} €</h2>
+          <h2 v-if="article.promotion>0">{{article.prix * (1- article.promotion/100)}} €</h2>
+          
+          <h5 v-if="article.promotion>0" class="text-muted"><del>{{article.prix}} €</del></h5> 
+          <h2 v-else>{{article.prix}} €</h2>
+          
         </div>
         <div class="livraison mt-5">
             <h4>Livraison :</h4>
@@ -41,10 +45,11 @@
         <div class="quantite">
          <h6 class="text-primary">  Quantité :</h6> 
          
-          <input v-if="article.quantite>0"  v-model.number="quatite" class="form-input w-25 rounded-1 text-center" type="number" min="1" :max="article.quantite"> {{article.quantite>0 ? `Stock : ${article.quantite}`: "Rupture"}}
+          <input v-model.number="quatite" class="form-input w-25 rounded-1 text-center" type="number" min="1" :max="quantite"> <span class="text-muted">Stock : {{quantite}}</span>
         </div>
         <div class="panier">
-          <button @click.prevent="addCart(article)" class="btn btn-lg btn-success px-5 py-2" >{{article.quantite>0 ? 'Ajouter au panier': "Rupture du stock"}}</button>
+          <button class="btn btn-lg btn-secondary" disabled v-if="quantite == 0">Rupture de stock</button>
+          <button v-else @click.prevent="addCart(article)" class="btn btn-lg btn-success px-5 py-2" >Ajouter au panier</button>
         </div>
       </div>
       <div class="col-md-10 mx-auto mt-5 mb-5">
@@ -95,15 +100,13 @@
                 </div>
                 <div class="comment" v-if="idClient">
                   <form action="" @submit.prevent="addCommentaire">
-                    <label for="commentaire" class="float-start fw-bolder my-3" >{{ comments }} un commentaire : </label>
+                    <label for="commentaire" class="float-start fw-bolder my-3" >Ajouter un commentaire :  </label><span class="btn btn-success" @click="swal">Laisser un avis</span>
                     <textarea class="form-control" id="commentaire" rows="3" v-model="commentaire"></textarea>
                     <button type="submit" class="btn btn-success mt-2 float-end text-white">Ajouter</button>
                   </form>
-              
                 </div>
                 <div class="text-primary fw-bolder" v-else>
                   <router-link :to='{name : "signin"}'>  Connectez-vous pour ajouter un commentaire </router-link>
-                 
                 </div>
               </div>
           </div>
@@ -125,21 +128,22 @@ export default {
     data () {
     return {
       moment:moment,
-        article : {
-            
-        },
+        article : null,
         comments : [],
         activeItem : 'description',
         idClient : "",
         commentaire : '',
-        quatite : 1
+        quatite : 1,
+        quantite : null
     }
   },
-  created () {
+  mounted () {
         axios.get(`http://localhost:3500/responsable/article/voirArticle/${this.$route.params.id}`).then((res)=>{
-          // console.log(res.data.personnecomment);
-                this.comments = res.data.personnecomment
+                
                 this.article = res.data
+                this.quantite = res.data.quantite
+                this.comments = res.data.personnecomment
+                
         })
         this.getUserDetails();
       //  let client =  localStorage.getItem('client')
@@ -147,6 +151,26 @@ export default {
 
   },
     methods:{
+     async swal(){
+        
+      const { value: text } = await this.$swal.fire({
+        input: 'range',
+        inputLabel: 'Comment trouvez-vous cet Article ?',
+        inputPlaceholder: 'Noter sur 5',
+        inputAttributes: {
+          min: 1,
+          max: 5,
+          step: 1
+        },
+        inputValue : 3,
+        showCancelButton: true
+      })
+
+      if (text) {
+        this.$swal.fire(text)
+      }  
+      
+      },
        isActive (menuItem) {
       return this.activeItem === menuItem
       },

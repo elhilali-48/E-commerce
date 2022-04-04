@@ -9,7 +9,7 @@
     </div>
     <div class="d-lg-flex align-items-lg-center pt-2">
         <div class="form-inline d-flex align-items-center my-2 mr-lg-2 radio bg-light border"> <label class="options">Most Popular <input type="radio" value="desc" v-model="sort" name="radio"> <span class="checkmark"></span> </label> <label class="options">Cheapest <input type="radio" value="asc" name="radio" v-model="sort" checked> <span class="checkmark"></span> </label> </div>
-        <div class="form-inline d-flex align-items-center my-2 checkbox bg-light border mx-lg-2"> <label class="tick">Farm <input type="checkbox" checked="checked"> <span class="check"></span> </label> <span class="text-success px-2 count"> 328</span> </div>
+        <div class="form-inline d-flex align-items-center my-2 checkbox bg-light border mx-lg-2"> <label class="tick">Promo <input type="checkbox" v-model="promotion" value="promo"> <span class="check"></span> </label> <span class="text-success px-2 count"> 328</span> </div>
         <div class="form-inline d-flex align-items-center my-2 checkbox bg-light border mx-lg-2"> <label class="tick">Bio <input type="checkbox"> <span class="check"></span> </label> <span class="text-success px-2 count"> 72</span> </div>
         <div class="form-inline d-flex align-items-center my-2 checkbox bg-light border mx-lg-2"> <label class="tick">Czech republic <input type="checkbox"> <span class="check"></span> </label> <span class="border px-1 mx-2 mr-3 font-weight-bold count"> 12</span> <select name="country" id="country" class="bg-light">
                 <option value="" hidden>Country</option>
@@ -23,7 +23,7 @@
     </div>
     <div class="d-sm-flex align-items-sm-center pt-2 clear">
         <div class="text-muted filter-label">Applied Filters:</div>
-        <div class="green-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2">Selected Filtre <span class=" px-1 close">&times;</span> </div>
+        <div class="green-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2" @click.prevent="clearFiltre">Effacer filter <span class=" px-1 close">&times;</span> </div>
         <div class="green-label font-weight-bold p-0 px-1 mx-sm-1 mx-0">Selected Filtre <span class=" px-1 close">&times;</span> </div>
     </div>
     <div class="filters"> <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="true" aria-controls="mobile-filter">Filter<span class="px-1 fas fa-filter"></span></button> </div>
@@ -77,13 +77,27 @@
                 </div> 
             </div>
             <div class="py-3">
-                <h5 class="font-weight-bold">Brands</h5>
+                <h5 class="font-weight-bold">Filter : </h5>
+                <h6 class="text-start my-2">RAM : </h6>
                 <form class="brand">
-                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">Royal Fields <input type="checkbox"> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">Crasmas Fields <input type="checkbox" checked> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">Vegetarisma Farm <input type="checkbox" checked> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">Farmar Field Eve <input type="checkbox"> <span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">True Farmar Steve <input type="checkbox"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">4 GO <input value="4" type="radio" v-model="ram"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">8 GO <input value="8" type="radio" v-model="ram" > <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">12 GO <input value="12" type="radio" v-model="ram" > <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">32 GO <input value="32" type="radio" v-model="ram"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">64 GO <input value="64" type="radio" v-model="ram"> <span class="check"></span> </label> </div>
+                </form>
+                 <h6 class="text-start my-2">Stockage : </h6>
+                <form class="brand">
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">256 GO <input value="256" type="radio" v-model="stockage"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">512 GO <input value="512" type="radio" v-model="stockage" > <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick">1000 GO <input value="1000" type="radio" v-model="stockage" > <span class="check"></span> </label> </div>
+                </form>
+                 <h6 class="text-start my-2">Pouces : </h6>
+                <form class="brand">
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick"> 5" <input value="5" type="radio" v-model="pouces"> <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick"> 10" <input value="10" type="radio" v-model="pouces" > <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick"> 20"<input value="20" type="radio" v-model="pouces" > <span class="check"></span> </label> </div>
+                    <div class="form-inline d-flex align-items-center py-1"> <label class="tick"> 30"<input value="30" type="radio" v-model="pouces" > <span class="check"></span> </label> </div>
                 </form>
             </div>
             <div class="py-3">
@@ -165,7 +179,7 @@
                                 <div class="d-flex align-items-center justify-content-between pt-3">
                                     <div class="d-flex flex-column ">
                                         <div class="h6 font-weight-bold">{{article.prix}} €</div>
-                                        <div class="text-muted rebate">48.56</div>
+                                        <div class=" rebate text-danger fw-bold">{{ promo(article.promotion,article.prix) }} </div>
                                     </div>
                                     <div>
                                         <div class="btn btn-primary">Acheter</div>
@@ -204,7 +218,11 @@ export default {
       search : '',
       range :'',
       rating : "",
-      sort :""
+      sort :"",
+      promotion :"",
+      ram : "",
+      stockage : "",
+      pouces : "",
     }
   },
   // components :{
@@ -213,16 +231,33 @@ export default {
     name : "produit-front",
    
     methods :{
-      getProducts(){
+    getProducts(){
          axios.get(`http://localhost:3500/responsable/produit/voirProduit/${this.$route.params.id}`).then((res)=>{
                 console.log(res.data)
                 this.produit = res.data[0]
                 
             })
       },
-      showArticle(id){
+ 
+    promo(promo){
+        if(promo>1){
+            return "Économiser : "+promo+"%"
+        }
+         else{
+             return ""
+         }
+    },
+    showArticle(id){
           this.$router.push({name:'article-front',params: {id :id}});
-      }
+    },
+    clearFiltre(){
+        this.promotion = "",
+        this.ram = "",
+        this.stockage = "",
+        this.pouces = "",
+        this.range = '',
+        this.rating = ""   
+    },
     },
     
     created(){
@@ -234,8 +269,9 @@ export default {
     },
   
     computed : {
-
+   
     filteredList(){
+            
             if(this.search){
                 return this.produit.article.filter((item)=>{
                     return this.search.toLowerCase().split(' ').every(v => item.nom.toLowerCase().includes(v))
@@ -247,7 +283,27 @@ export default {
             if(this.rating){
                 return this.produit.article.filter(item=>item.avis == this.rating)
             }
-          
+            if(this.promotion){
+                return this.produit.article.filter(item=> item.promotion > 0)
+            }
+            if(this.ram){
+                return this.produit.article.filter(item=> item.ram == this.ram)
+            }
+            if(this.stockage){
+                if(this.stockage == 1000){
+                    return this.produit.article.filter(item=> item.stockage == this.stockage)
+                }
+                if(this.stockage == 512){
+                    return this.produit.article.filter(item=> item.stockage > 256 &&  item.stockage == 512)
+                }
+                if(this.stockage == 256){
+                    return this.produit.article.filter(item=> item.stockage <= 256)
+                }
+                // return this.produit.article.filter(item=> item.stockage <= this.stockage)
+            }
+            if(this.pouces){
+                return this.produit.article.filter(item=> item.pouces == this.pouces)
+            }
             // if(this.sort){
             //         return this.produit.article.sort((a,b)=>{
             //             if(this.sort === "desc"){

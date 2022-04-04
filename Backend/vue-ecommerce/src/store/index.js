@@ -32,7 +32,7 @@ export default new Vuex.Store({
       let total = 0
       
       state.panier.forEach(item=>{
-        total += item.article.prix * item.quanttite
+        total += (item.article.prix * (1-item.article.promotion/100) )* item.quanttite
       })
       return total
     }

@@ -109,6 +109,17 @@
                 </div>
                 </div>
             </div>
+            <div class="row mb-4">  
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="promo" >Promotion % :</label>
+                    <input type="number"  id="promo" class="form-control" v-model="article.promotion" />
+                    <span class="text-danger"  v-if="!$v.article.promotion.required && $v.article.promotion.$dirty" > ce champs est obligatiore est obligatoire</span>
+                    <span class="text-danger"  v-if="!$v.article.promotion.minValue && $v.article.promotion.$dirty" > la valeur minimum est 0</span>
+                    <span class="text-danger"  v-if="!$v.article.promotion.maxValue && $v.article.promotion.$dirty" > la valeur maximum est 100</span>
+                </div>
+                </div>
+            </div>
             
             <button type="submit" class="btn btn-lg btn-success">Ajouter</button>
         
@@ -122,7 +133,7 @@
 
 <script>
 import axios from "axios"
-import {required,minValue} from "vuelidate/lib/validators"
+import {required,minValue,maxValue} from "vuelidate/lib/validators"
 export default {
     name: "ajouter-produit",
     data(){
@@ -138,6 +149,7 @@ export default {
                 stockage :"",
                 pouces : "",
                 processeur :"",
+                promotion : "",
                 file :null,
             },
             
@@ -180,6 +192,11 @@ export default {
             },
             processeur : {
                 required
+            },
+            promotion : {
+                required,
+                minValue : minValue(0),
+                maxValue : maxValue(100)
             }
         }
        
@@ -204,22 +221,23 @@ export default {
                 this.errMessage  = "La taille maximale du fichier est  : 500kb"
             }
         },
-       async ajouterArticle(){
-           
-           const formData = new FormData()
-           formData.append('nom',this.article.nom)
-           formData.append('prix',this.article.prix)
-           formData.append('description',this.article.description)
-           formData.append('avis',this.article.avis)
-           formData.append('produit',this.article.produit)
-           formData.append('quantite',this.article.quantite)
-           formData.append('file',this.article.file)
-           formData.append('pouces',this.article.pouces)
-           formData.append('stockage',this.article.stockage)
-           formData.append('ram',this.article.ram)
-           formData.append('processeur',this.article.processeur)
-          
-          await axios.post('http://localhost:3500/responsable/article/ajouter',formData).then(()=>{
+        async ajouterArticle(){
+            const formData = new FormData()
+            formData.append('nom',this.article.nom)
+            formData.append('prix',this.article.prix)
+            formData.append('description',this.article.description)
+            formData.append('avis',this.article.avis)
+            formData.append('produit',this.article.produit)
+            formData.append('quantite',this.article.quantite)
+            formData.append('file',this.article.file)
+            formData.append('pouces',this.article.pouces)
+            formData.append('stockage',this.article.stockage)
+            formData.append('ram',this.article.ram)
+            formData.append('processeur',this.article.processeur)
+            formData.append('promotion',this.article.promotion)
+
+           await axios.post(`http://localhost:3500/responsable/article/ajouter`,formData).then((res)=>{
+                console.log(res.data)
                 this.$swal.fire(
                     'Success!',
                     'Article Ajouté!',
@@ -234,6 +252,8 @@ export default {
     created(){
             axios.get('http://localhost:3500/responsable/produit/voir').then((res)=>{
                 this.produits = res.data
+            }).catch((err)=>{
+                console.log(err)
             })
             // axios.get('http://localhost:3500/gestion/livraison/afficherAll').then((res)=>{
             //     this.livraisons = res.data
