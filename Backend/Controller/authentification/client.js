@@ -224,7 +224,7 @@ module.exports.register_post = async (req, res) => {
       </html>
         `
     };
-    transport.sendMail(mailOptions ,(err,info)=>{
+    transport.sendMail(mailOptions ,(err,info)=>{ 
         if(err){
             return console.log(err.message)
         }
@@ -296,3 +296,5 @@ module.exports.validerCompte = async (req, res) => {
     res.status(404).json({ error });
   }
 };
+
+

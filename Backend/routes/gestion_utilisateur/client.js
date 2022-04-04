@@ -9,5 +9,6 @@ router.post("/ajouter", clientCtrl.ajouterClient);
 router.put("/modifier/:id", clientCtrl.modifierClient);
 router.delete("/supprimer/:id", clientCtrl.supprimerClient);
 router.get("/informationall", clientCtrl.informationall);
-
+router.put("/modifieremail/:id", clientCtrl.modifieremail);
+router.put("/modifiermdp/:id", clientCtrl.modifiermdp);
 module.exports = router;

@@ -19,8 +19,9 @@ module.exports.ajouterCommande = async (req, res, next) => {
 };
 
 module.exports.inserer = async (req, res) => {
+  // console.log(req.body)
   try {
-    const essaie = await Client.findOne({ _id: res.locals.client.id });
+    const essaie = await Client.findOne({ _id: req.body.idcli });
 
     for (let i = 0; i < essaie.articleselectionner.length; i++) {
       let element = essaie.articleselectionner[i];
