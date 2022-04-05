@@ -234,19 +234,11 @@ export default {
                 
                 this.$router.push('/signIn')
           }).catch((err)=>{
-<<<<<<< HEAD
-              this.$swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err.response.data.error,
-                footer: '<a href="">Why do I have this issue?</a>'
-=======
                this.$swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: err.response.data.error,
                 footer: '<a href="">Mot de passe oublié</a>'
->>>>>>> 7f47957291fc4bc201335f5778fc1cf17684eb36
                 })
           })
       }

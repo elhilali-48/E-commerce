@@ -84,11 +84,7 @@
                                 <span class="fas fa-star product d-felx justify-content-center" ></span> 
                             </div>
                         </div>
-                            <!-- <h6 class="text-success fw-bolder mt-2">{{ article.article.prix }} €</h6> -->
-                            <h3 class="text-success fw-bolder mt-2" v-if="article.article.promotion>0">{{article.article.prix * (1- article.article.promotion/100)}} €</h3>
-          
-                            <h6 v-if="article.article.promotion>0" class="text-muted"><del>{{article.article.prix}} €</del></h6> 
-                            <h2 class="text-success fw-bolder mt-2" v-else>{{article.article.prix}} €</h2>
+                          <h6 class="text-success fw-bolder mt-2">{{ article.article.prix }} €</h6>
                       </div>
                       <div class="col-md-3">
                           <label class="form-label">Quantité</label>
@@ -114,7 +110,7 @@
           </div>
 
       </div>
-      
+        
   </div>
 </template>
 
@@ -129,7 +125,7 @@ export default {
       user :{},
       idClient: "",
       livraisons : [],
-      livraisonPrix : "",
+      livraisonPrix : null,
       livraisonDuree : null
     }
   },
@@ -188,10 +184,20 @@ export default {
                             })
                             this.$router.push({name :'pay-front',params : {id: this.getTotal}})
                     })
-               })
-       .catch((err)=>{
-            console.log(err)
-        })
+                }).catch((err)=>{
+                    console.log(err)
+                })
+        }
+        else{
+            this.$swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Vous devez choisir un mode de livraison',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    
     }
   
   },

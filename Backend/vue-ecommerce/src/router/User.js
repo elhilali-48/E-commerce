@@ -1,3 +1,4 @@
+import Vue from "vue"
 import HomePage from "../views/Pages/HomePage.vue"
 import ProduitPage from "../views/Pages/produit.vue"
 import ArticlePage from "../views/Pages/ArticlePage.vue"
