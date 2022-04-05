@@ -62,21 +62,27 @@ module.exports.commandeterminer = async (req, res) => {
       _id: recuperer_dernier_element,
     });
 
-    for (let i = 0; i < commande_table.articles.length; i++) {
-      // console.log(commande_table.articles[i].article.quantite); // quantite de artcile
-      // console.log(commande_table.articles[i].article.quantite); // quantite de article dans la commande
-      let resultat =
-        commande_table.articles[i].article.quantite -
-        commande_table.articles[i].quanttite;
-      console.log(resultat);
+    if(commande_table.statut == true)
+    {
+      for (let i = 0; i < commande_table.articles.length; i++) {
+        // console.log(commande_table.articles[i].article.quantite); // quantite de artcile
+        // console.log(commande_table.articles[i].article.quantite); // quantite de article dans la commande
+        let resultat =
+          commande_table.articles[i].article.quantite -
+          commande_table.articles[i].quanttite;
+        console.log(resultat);
+  
+        await Article.updateOne(
+          { _id: commande_table.articles[i].article._id },
+          { $set: { quantite: resultat } }
+        );
+        await Client.updateOne({_id: res.locals.client.id}, { $pull: { articleselectionner: essaie.articleselectionner[i] } })
+      }
 
-      await Article.updateOne(
-        { _id: commande_table.articles[i].article._id },
-        { $set: { quantite: resultat } }
-      );
+  
+      res.status(201).json("ay");
     }
 
-    res.status(201).json("ay");
   } catch (err) {
     res.status(400).json(err.message);
   }
@@ -91,5 +97,18 @@ module.exports.commandeall = async (req, res) =>
     res.status(200).json(commande);
   } catch (err) {
     res.status(400).json(err.message);
+  }
+}
+
+module.exports.statut = async( req, res) =>
+{
+  try {
+
+    await Commande.updateOne({_id: req.params.id}, {$set: {statut: req.body.statut}})
+
+    res.status(201).json("statur modifier")
+    
+  } catch (err) {
+    
   }
 }

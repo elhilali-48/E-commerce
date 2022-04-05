@@ -104,7 +104,7 @@
                 <h5 class="font-weight-bold">Rating :</h5>
                 <form class="rating">
                     <div class="form-inline d-flex align-items-center py-2">
-                         <label class="tick">
+                        <label class="tick">
                              <span class="fas fa-star"></span> 
                              <span class="fas fa-star"></span> 
                              <span class="fas fa-star"></span> 
@@ -112,17 +112,15 @@
                              <span class="fas fa-star"></span> 
                              <input type="radio" value="5" v-model="rating"> 
                              <span class="check"></span> 
-                             </label> 
-                    </div>
+                        </label> </div>
                     <div class="form-inline d-flex align-items-center py-2">
                          <label class="tick"> 
-                             <span class="fas fa-star"></span> 
-                             <span class="fas fa-star"></span> 
-                             <span class="fas fa-star"></span> 
-                             <span class="fas fa-star"></span> 
-                             <span class="far fa-star px-1 text-muted"></span> 
-                             <input type="radio" value="4" v-model="rating"> 
-                             <span class="check"></span> 
+                            <span class="fas fa-star"></span> 
+                            <span class="fas fa-star"></span>
+                            <span class="fas fa-star"></span> 
+                            <span class="fas fa-star"></span> 
+                            <span class="far fa-star px-1 text-muted"></span> 
+                            <input type="radio" value="4" v-model="rating"> <span class="check"></span> 
                         </label> 
                     </div>
                     <div class="form-inline d-flex align-items-center py-2"> 
@@ -130,8 +128,8 @@
                             <span class="fas fa-star"></span> 
                             <span class="fas fa-star"></span> 
                             <span class="fas fa-star"></span> 
-                            <span class="far fa-star px-1 text-muted"></span>
-                            <span class="far fa-star px-1 text-muted"></span>
+                            <span class="far fa-star px-1 text-muted"></span> 
+                            <span class="far fa-star px-1 text-muted"></span> 
                             <input type="radio" value="3" v-model="rating"> 
                             <span class="check"></span> 
                         </label> 
@@ -144,19 +142,19 @@
                              <span class="far fa-star px-1 text-muted"></span> 
                              <span class="far fa-star px-1 text-muted"></span> 
                              <input type="radio" value="2" v-model="rating"> 
-                             <span class="check"></span>
+                             <span class="check"></span> 
                         </label> 
                     </div>
                     <div class="form-inline d-flex align-items-center py-2">
                          <label class="tick"> 
-                            <span class="fas fa-star"></span>
-                            <span class="far fa-star px-1 text-muted"></span> 
-                            <span class="far fa-star px-1 text-muted"></span> 
-                            <span class="far fa-star px-1 text-muted"></span> 
-                            <span class="far fa-star px-1 text-muted"></span> 
-                            <input type="radio" value="1" v-model="rating"> 
-                            <span class="check"></span>
-                         </label> 
+                             <span class="fas fa-star"></span> 
+                             <span class="far fa-star px-1 text-muted"></span> 
+                             <span class="far fa-star px-1 text-muted"></span> 
+                             <span class="far fa-star px-1 text-muted"></span> 
+                             <span class="far fa-star px-1 text-muted"></span> 
+                             <input type="radio" value="1" v-model="rating"> 
+                             <span class="check"></span> 
+                        </label> 
                     </div>
                 </form>
             </div>
@@ -269,6 +267,7 @@ export default {
                 
             })
     },
+  
     computed : {
    
     filteredList(){
@@ -282,7 +281,7 @@ export default {
                 return this.produit.article.filter(item => (item.prix<=this.range && item.prix>0))
             }
             if(this.rating){
-                return this.produit.article.filter(item => (item.avis == this.rating))
+                return this.produit.article.filter(item=>item.avis == this.rating)
             }
             if(this.promotion){
                 return this.produit.article.filter(item=> item.promotion > 0)

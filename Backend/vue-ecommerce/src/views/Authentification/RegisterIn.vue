@@ -57,11 +57,10 @@
                                    
                                     <div class="form-group">
                                         <label for="pays">Pays</label>
-                                       <country-select class="form-control" id="pays" v-model="client.pays" topCountry="FR" autocomplete />
-                                        <!-- <region-select class="form-control" v-model="region" :country="country" :region="region" /> -->
+                                        <country-select v-model="client.pays" placeholder="Choisir un pays" autocomplete className="form-control" :country="country" topCountry="FR" />
                                         <!-- <input type="text" class="form-control" id="pays" aria-describedby="emailHelp" placeholder="pays" v-model="client.pays"> -->
-                                         <span v-if="!$v.client.pays.required && $v.client.pays.$dirty" class="text-danger" >
-                                            Le code postal  est obligatoire ! 
+                                        <span v-if="!$v.client.pays.required && $v.client.pays.$dirty" class="text-danger" >
+                                            Le pays est obligatiore 
                                         </span>
                                     </div>
                                     <div class="form-group">

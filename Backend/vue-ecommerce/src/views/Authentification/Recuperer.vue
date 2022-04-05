@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="container rounded bg-light rounded-3 mt-5 mb-5">
     <div class="row">
         <div class="col-md-5 border-right">
@@ -29,6 +30,16 @@
     </div>
     </div>
 </div>
+=======
+  <div>
+      <form @submit.prevent="envoyer" class="mt-5">
+          <label for="email">email</label>
+          <input type="email" v-model="email">
+
+          <button class="btn btn-success" type="submit">Envoyer</button>
+      </form>
+  </div>
+>>>>>>> 71236b30ae31538cca91c55326d23c457cf9e17a
 </template>
 
 <script>
@@ -44,6 +55,7 @@ export default {
     methods :{
         envoyer(){
 
+<<<<<<< HEAD
             axios.post(`http://localhost:3500/client/chercher`, { email : this.email}).then(()=>{
                 this.$swal.fire(
                     'Récupérer votre mot de passe!',
@@ -56,6 +68,12 @@ export default {
                     err.response.data.err,
                     'error'
                 )
+=======
+             axios.post(`http://localhost:3500/client/chercher`, { email : this.email}).then((res)=>{
+                console.log(res)
+       }).catch((err)=>{
+      console.log(err)
+>>>>>>> 71236b30ae31538cca91c55326d23c457cf9e17a
     })
             
         }

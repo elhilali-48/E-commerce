@@ -10,6 +10,8 @@ router.get("/login", checkClient, clientCtrl.login_get);
 router.post("/login", checkClient, clientCtrl.login_post);
 router.get("/logout", clientCtrl.logout);
 router.post("/valider", clientCtrl.validerCompte);
+router.put("/modifiermdp/:id", clientCtrl.modifiermdp);
+router.post("/chercher", clientCtrl.chercherclient);
 
 router.put("/modifiermdp/:id", clientCtrl.modifiermdp);
 router.post("/chercher", clientCtrl.chercherclient);

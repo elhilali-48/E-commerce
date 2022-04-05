@@ -1,16 +1,25 @@
 <template>
   <div class="home">
-    <nav-bar></nav-bar>
-      
-    <router-view :key="$route.fullPath"></router-view>
-    <!-- <agile :initial-slide="3">
-      <img class="slide" src="https://images.pexels.com/photos/5861324/pexels-photo-5861324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
-      <img class="slide" src="https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
-      <img class="slide" src="https://images.pexels.com/photos/38568/apple-imac-ipad-workplace-38568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
-      <img class="slide" src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
-      <template slot="prevButton"><i class="fas fa-chevron-left"></i></template>
-      <template slot="nextButton"><i class="fas fa-chevron-right"></i></template>
-    </agile> -->
+  
+  <nav-bar></nav-bar>
+    <carousel autocomplete ease="0.2" perPage="1" class="mt-1">
+    <slide>
+       <img src="https://media.ldlc.com/encart/p/17086_b.jpg" alt="">
+    </slide>
+    <slide>
+      Slide 2 Content
+    </slide>
+    <slide>
+      Slide 2 Content
+    </slide>
+    <slide>
+      <img src="https://media.ldlc.com/encart/p/17086_b.jpg" alt="">
+    </slide>
+     <slide>
+      Slide 2 Content
+    </slide>
+  </carousel>
+  <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 

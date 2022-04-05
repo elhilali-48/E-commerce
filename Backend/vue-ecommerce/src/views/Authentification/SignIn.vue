@@ -27,6 +27,7 @@
                         Vous devez indiquer un mot de passe.
                     </span>
                 </div>
+                <router-link :to="{name:'recuperer-compte'}">mot de passe oublié</router-link>
                 
                 <button  type="submit" class="btn btn-primary mt-2">Se connecter</button>
             </form>
@@ -43,8 +44,9 @@ import {required,email} from 'vuelidate/lib/validators'
 import NavBar from '../../components/NavBar.vue'
 export default {
   methods: {
+      
       connecter(){
-          this.$store.dispatch('login',{
+          this.$store.dispatch('auth/login',{
               email : this.email,
               password : this.password
           })

@@ -5,8 +5,11 @@ const checkClient = require("../../midlleware/authentification");
 
 router.post("/ajouter", checkClient, commandeCtrl.ajouterCommande);
 router.post("/ajouterd", checkClient, commandeCtrl.inserer);
-router.get("/dernier", checkClient, commandeCtrl.commandeterminer);
+router.post("/dernier", checkClient, commandeCtrl.commandeterminer);
 router.get("/voirall", checkClient, commandeCtrl.commandeall);
+router.put("/modifierStatus", checkClient, commandeCtrl.statut);
+
+
 
 
 

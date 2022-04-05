@@ -9,5 +9,4 @@ router.post("/ajouter", responsabletCtrl.ajouterResponsable_post);
 router.get("/information/:id", responsabletCtrl.afficherInformation);
 router.get("/informationall", responsabletCtrl.afficherInformationall);
 router.put("/modifiermdp/:id", responsabletCtrl.modifiermdp);
-
 module.exports = router;
