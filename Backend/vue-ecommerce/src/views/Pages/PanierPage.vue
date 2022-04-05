@@ -19,6 +19,8 @@
                             </div>
                             <div class="col-md-2">
                                 <h4 class="text-center fw-bolder">{{ article.article.prix }} €</h4>
+                                <p class="text-danger fw-bold" v-if="article.article.promotion>0"> -{{article.article.promotion}} %</p>
+                                
                             </div>
                              <div class="col-md-2">
                                 <p class="form-label">Quantité : </p>

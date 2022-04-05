@@ -7,11 +7,11 @@ const Panier = require("../../models/product/Panier");
 module.exports.ajouterCommande = async (req, res, next) => {
   try {
     const commande = await Commande.create({
-      idcli: res.locals.client.id,
+      idcli: req.body.idcli,
       totale: req.body.totale,
     });
     await Client.updateOne(
-      { _id: res.locals.client.id },
+      { _id: req.body.idcli },
       { $push: { commande: commande } }
     );
 
@@ -25,8 +25,9 @@ module.exports.ajouterCommande = async (req, res, next) => {
 
 //inserer article
 module.exports.inserer = async (req, res) => {
+  // console.log(req.body)
   try {
-    const essaie = await Client.findOne({ _id: res.locals.client.id });
+    const essaie = await Client.findOne({ _id: req.body.idcli });
 
     for (let i = 0; i < essaie.articleselectionner.length; i++) {
       let element = essaie.articleselectionner[i];
@@ -52,7 +53,7 @@ module.exports.inserer = async (req, res) => {
 // diminuer article
 module.exports.commandeterminer = async (req, res) => {
   try {
-    const essaie = await Client.findOne({ _id: res.locals.client.id });
+    const essaie = await Client.findOne({ _id: res.req.body.idcli });
 
     const recuperer_dernier_element =
       essaie.commande[essaie.commande.length - 1];

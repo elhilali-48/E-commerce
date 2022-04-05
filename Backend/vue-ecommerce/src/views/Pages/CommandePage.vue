@@ -110,7 +110,7 @@
           </div>
 
       </div>
-        
+
   </div>
 </template>
 
@@ -182,6 +182,7 @@ export default {
                             showConfirmButton: false,
                             timer: 2500
                             })
+                            this.$router.push({name :'pay-front',params : {id: this.getTotal}})
                     })
                 }).catch((err)=>{
                     console.log(err)

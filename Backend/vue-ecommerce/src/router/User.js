@@ -9,6 +9,11 @@ import CommandePage from "../views/Pages/CommandePage.vue"
 import ValidationCompte from "../views/ValidationCompte.vue"
 import RecupererCompte from "../views/Authentification/Recuperer.vue"
 import RecupererMdp from "../views/Authentification/modifiermdp.vue"
+// import ValidationCompte from "../views/ValidationCompte.vue"
+import EditerProfile from "../views/Pages/EditerProfile.vue"
+import EditerPassword from "../views/Pages/EditerPasswrod.vue"
+import EditerEmail from "../views/Pages/EditerEmail.vue"
+
   const routes =  [
     {
         path : "/",
@@ -46,7 +51,7 @@ import RecupererMdp from "../views/Authentification/modifiermdp.vue"
           
           },
           {
-            path : "pay",
+            path : "pay/:id",
             name : 'pay-front',
             component : PayPage,
           
@@ -63,6 +68,48 @@ import RecupererMdp from "../views/Authentification/modifiermdp.vue"
             component : CommandePage,
           
           },
+          {
+            path : "profile",
+            name : "editer-profile",
+            component : EditerProfile,
+            beforeEnter: (to, from, next) => {
+              const isloggin = Vue.$cookies.get('token')
+              if(isloggin != null){
+                next()
+              }
+              else{
+                next("/signin")
+              }
+           },
+          },
+          {
+            path : "password",
+            name : "editer-password",
+            component : EditerPassword,
+            beforeEnter: (to, from, next) => {
+              const isloggin = Vue.$cookies.get('token')
+              if(isloggin != null){
+                next()
+              }
+              else{
+                next("/signin")
+              }
+           },
+          },
+          {
+            path : "email",
+            name : "editer-email",
+            component : EditerEmail,
+            beforeEnter: (to, from, next) => {
+              const isloggin = Vue.$cookies.get('token')
+              if(isloggin != null){
+                next()
+              }
+              else{
+                next("/signin")
+              }
+           },
+          }
 
         ]
    },

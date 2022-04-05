@@ -8,20 +8,22 @@ module.exports.ajouterArticle = async (req, res) => {
 
   try {
     const article = await Article.create({
-      ...req.body,
+      // ...req.body,
 
-      // nom: req.body.nom,
-      // quantite: req.body.quantite,
-      // description: req.body.description,
-      // prix: req.body.prix,
-      // avis: req.body.avis,
-      // produit: req.body.produit,
-      // image: req.file.filename,
-      // ram : req.body.ram,
-      // stockage : req.body.stockage,
-      // pouces : req.body.pouces,
-      // processeur : req.body.processeur
+      nom: req.body.nom,
+      quantite: req.body.quantite,
+      description: req.body.description,
+      prix: req.body.prix,
+      avis: req.body.avis,
+      produit: req.body.produit,
+      image: req.file.filename,
+      ram : req.body.ram,
+      stockage : req.body.stockage,
+      pouces : req.body.pouces,
+      processeur : req.body.processeur,
+      promotion : req.body.promotion
     });
+    res.status(200).json("Article crééer");
   } catch (err) {
     res.status(400).json(err);
   }
@@ -62,6 +64,7 @@ module.exports.voirArticle = async (req, res) => {
       .populate("produit")
       .populate("personnecomment");
     //ajouter populate("livraison")
+    
     res.status(200).json(data);
   } catch (err) {
     res.status(400).json({ err: err.message });

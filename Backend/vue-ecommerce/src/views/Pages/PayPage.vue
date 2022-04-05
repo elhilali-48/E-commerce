@@ -66,7 +66,7 @@ export default {
       },
   },
   mounted(){
-    axios.post(`http://localhost:3500/gestion/paiment/add/${this.idClient._id}`,{client :this.idClient}).then((res)=>{
+    axios.post(`http://localhost:3500/gestion/paiment/add/${this.idClient._id}`,{client :this.idClient, totale : this.$route.params.id}).then((res)=>{
       alert(this.idClient)
       this.lineItems[0].price = res.data.id
     }).catch((err)=>{

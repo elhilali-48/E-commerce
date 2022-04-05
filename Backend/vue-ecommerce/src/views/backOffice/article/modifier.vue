@@ -109,7 +109,17 @@
                 </div>
                 </div>
             </div>
-            
+             <div class="row mb-4">  
+                <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="promo" >Promotion % :</label>
+                    <input type="number"  id="promo" class="form-control" v-model="article.promotion" />
+                    <span class="text-danger"  v-if="!$v.article.promotion.required && $v.article.promotion.$dirty" > ce champs est obligatiore est obligatoire</span>
+                    <span class="text-danger"  v-if="!$v.article.promotion.minValue && $v.article.promotion.$dirty" > la valeur minimum est 0</span>
+                    <span class="text-danger"  v-if="!$v.article.promotion.maxValue && $v.article.promotion.$dirty" > la valeur maximum est 100</span>
+                </div>
+                </div>
+            </div>
             <button type="submit" class="btn btn-lg btn-success">Modifier</button>
         
             </form>
@@ -122,7 +132,7 @@
 
 <script>
 import axios from "axios"
-import {required,minValue} from "vuelidate/lib/validators"
+import {required,minValue,maxValue} from "vuelidate/lib/validators"
 export default {
     name: "ajouter-produit",
     data(){
@@ -138,6 +148,7 @@ export default {
                 stockage :"",
                 pouces : "",
                 processeur :"",
+                promotion : "",
                 file :null,
             },
             produits : [],
@@ -179,6 +190,11 @@ export default {
             },
             processeur : {
                 required
+            },
+             promotion : {
+                required,
+                minValue : minValue(0),
+                maxValue : maxValue(100)
             }
         }
        
@@ -216,6 +232,7 @@ export default {
             formData.append('stockage',this.article.stockage)
             formData.append('ram',this.article.ram)
             formData.append('processeur',this.article.processeur)
+            formData.append('promotion',this.article.promotion)
 
            await axios.put(`http://localhost:3500/responsable/article/modifier/${this.$route.params.id}`,formData).then((res)=>{
                 console.log(res.data)

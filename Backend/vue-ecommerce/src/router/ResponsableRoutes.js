@@ -9,6 +9,7 @@ import showClient from "../views/backOffice/responsable/afficherClient.vue"
 
 import UpdateResponsable from "../views/backOffice/responsable/modifier.vue"
 import showResponsable from "../views/backOffice/responsable/afficher.vue"
+import ModifierProfile from "../views/backOffice/responsable/modifierProfile.vue"
 
 import Categorie from "../views/backOffice/categorie/categorie.vue"
 import AddCategorie from "../views/backOffice/categorie/ajouter.vue"
@@ -167,7 +168,11 @@ const routes = [
                 name :"afficher-livraison",
                 component : showLivraison
             },
-           
+            {
+                path : "profile",
+                name : "gerer-profile",
+                component : ModifierProfile,
+            }
         ]
     
     },
