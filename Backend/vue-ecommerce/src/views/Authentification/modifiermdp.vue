@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div class="container rounded bg-light rounded-3 mt-5 mb-5">
     <div class="row">
         <div class="col-md-5 border-right">
@@ -40,32 +39,6 @@
     </div>
     </div>
 </div>
-=======
-  <div>
-    <form @submit.prevent="modifier">
-      <div>
-        <label for="password">nouveau mot de passe</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="password"
-          v-model="password"
-        />
-      </div>
-
-      <div>
-        <label for="password-confim">confirmer mot de passe</label>
-        <input
-          type="password"
-          id="password-confirm0"
-          placeholder="password"
-          v-model="confirm"
-        />
-      </div>
-      <button type="submit">{{ password }}</button>
-    </form>
-  </div>
->>>>>>> 71236b30ae31538cca91c55326d23c457cf9e17a
 </template>
 
 <script>
@@ -88,7 +61,6 @@ export default {
             password: this.password,
           }
         )
-<<<<<<< HEAD
         .then(() => {
            this.$swal.fire(
                     'Good job!',
@@ -96,10 +68,6 @@ export default {
                     'success'
                 )
                 this.$router.push('/signIn')
-=======
-        .then((res) => {
-          console.log(res);
->>>>>>> 71236b30ae31538cca91c55326d23c457cf9e17a
         })
         .catch((err) => {
           console.log(err);
@@ -109,8 +77,4 @@ export default {
 };
 </script>
 
-<<<<<<< HEAD
 <style></style>
-=======
-<style></style>
->>>>>>> 71236b30ae31538cca91c55326d23c457cf9e17a
