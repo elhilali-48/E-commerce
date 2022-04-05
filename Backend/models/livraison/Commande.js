@@ -7,6 +7,7 @@ const commandechema = mongoose.Schema(
     idcli: { type: String },
     articles: { type: Array },
     totale: { type: Number, required: true },
+    statut: { type: Boolean, default: true}
   },
   { timestamps: true }
 );

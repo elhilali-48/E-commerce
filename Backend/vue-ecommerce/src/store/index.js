@@ -3,26 +3,29 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
 import Swal from  'sweetalert2'
-import createPersistedState from 'vuex-persistedstate'
-import auth from '@/store/modules/auth'
-
+ import createPersistedState from 'vuex-persistedstate'
+import * as authModule from "@/store/modules/auth"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   plugins : [createPersistedState()],
   state: {
-   
+    accessToken  : localStorage.getItem('user') || '',
     client :{},
+    isLogged : '',
     tokenAdmin : null,
     panier :[],
     errorAdmin : ""
   },
   getters: {
-    
+    idAuthenticated :state => !!state.accessToken,
+    authStatus : state => state.isLogged,
     getToken(state){
       return state.token
     },
-   
+    getStatus(state){
+      return state.isLogged
+    },
 
     getPanierLength(state){
       return state.panier.length
@@ -39,7 +42,10 @@ export default new Vuex.Store({
 
   },
   mutations: {
-  
+    setToken (state,accessToken){
+      state.accessToken = accessToken
+      state.isLogged = "success"
+    },
 
     setTokenAdmin(state,tokenAdmin){
       state.tokenAdmin = tokenAdmin
@@ -89,6 +95,36 @@ export default new Vuex.Store({
     
   },
   actions: {
+    async login({dispatch,commit},form){
+      await axios.post('http://localhost:3500/client/login',{
+        email : form.email,
+        password : form.password
+      }).then((res)=>{
+         console.log(res.data)
+        localStorage.setItem('user',res.data.token) // enregistrer Token dans LocalStorage
+        Vue.$cookies.set('token',res.data.token,60 * 60 * 12)
+        axios.defaults.headers.common['Authorization'] = res.data.token
+        // localStorage.setItem('client',JSON.stringify(res.data.client))
+        commit('setToken',res.data.token)
+        // commit('setClientData',res.data.client)
+        dispatch('IniPanier',res.data.client._id)
+        router.push('/')
+        // dispatch('fetchToken')
+      }).catch((err)=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data.error,
+          footer: '<a href="">Mot de passe oublié</a>'
+        })
+        // alert(err.response.data.error)
+        commit('setError',null)
+        localStorage.removeItem('user')
+        Vue.$cookies.remove('token')
+        
+      })
+    },
+    
 
     async fetchTokenAdmin({commit}){
       await commit('setToken', localStorage.getItem('tokenAdmin'))
@@ -159,7 +195,7 @@ export default new Vuex.Store({
 
   },
   modules: {
-    auth : auth
+    auth : authModule
   }
 })
 

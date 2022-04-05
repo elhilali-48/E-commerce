@@ -129,7 +129,7 @@ export default {
       user :{},
       idClient: "",
       livraisons : [],
-      livraisonPrix : null,
+      livraisonPrix : "",
       livraisonDuree : null
     }
   },
@@ -188,20 +188,10 @@ export default {
                             })
                             this.$router.push({name :'pay-front',params : {id: this.getTotal}})
                     })
-                }).catch((err)=>{
-                    console.log(err)
-                })
-        }
-        else{
-            this.$swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Vous devez choisir un mode de livraison',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
-    
+               })
+       .catch((err)=>{
+            console.log(err)
+        })
     }
   
   },

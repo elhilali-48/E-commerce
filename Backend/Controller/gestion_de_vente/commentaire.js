@@ -65,7 +65,7 @@ module.exports.voiravis = async (req, res) => {
     let sum = 0;
     let result;
     const avis = await Article.findOne({ _id: req.params.id });
-
+console.log(avis.personneavis);
     for (let i = 0; i < avis.personneavis.length; i++) {
       sum = sum + avis.personneavis[i];
     }

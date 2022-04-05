@@ -57,10 +57,11 @@
                                    
                                     <div class="form-group">
                                         <label for="pays">Pays</label>
-                                        <country-select v-model="client.pays" placeholder="Choisir un pays" autocomplete className="form-control" :country="country" topCountry="FR" />
+                                       <country-select class="form-control" id="pays" v-model="client.pays" topCountry="FR" autocomplete />
+                                        <!-- <region-select class="form-control" v-model="region" :country="country" :region="region" /> -->
                                         <!-- <input type="text" class="form-control" id="pays" aria-describedby="emailHelp" placeholder="pays" v-model="client.pays"> -->
-                                        <span v-if="!$v.client.pays.required && $v.client.pays.$dirty" class="text-danger" >
-                                            Le pays est obligatiore 
+                                         <span v-if="!$v.client.pays.required && $v.client.pays.$dirty" class="text-danger" >
+                                            Le code postal  est obligatoire ! 
                                         </span>
                                     </div>
                                     <div class="form-group">
@@ -233,11 +234,19 @@ export default {
                 
                 this.$router.push('/signIn')
           }).catch((err)=>{
+<<<<<<< HEAD
               this.$swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: err.response.data.error,
                 footer: '<a href="">Why do I have this issue?</a>'
+=======
+               this.$swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.response.data.error,
+                footer: '<a href="">Mot de passe oublié</a>'
+>>>>>>> 7f47957291fc4bc201335f5778fc1cf17684eb36
                 })
           })
       }

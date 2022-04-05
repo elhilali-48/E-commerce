@@ -16,16 +16,14 @@ const createToken = (id) => {
 };
 
 module.exports.register_get = (req, res) => {
-  
   res.render("register");
 };
 
 module.exports.register_post = async (req, res) => {
   try {
-    const client =await Client.findOne
-        ({email: req.body.email });
-    if(!client){
-         //generate password
+    const client = await Client.findOne({ email: req.body.email });
+    if (!client) {
+      //generate password
       const salt = await bcrypt.genSalt(10);
       const hashpassword = await bcrypt.hash(req.body.password, salt);
 
@@ -43,7 +41,7 @@ module.exports.register_post = async (req, res) => {
         sexe: req.body.sexe,
         confirmation: req.body.confirmation,
       });
-    
+
       res.status(201).json({ client, message: "le client a bien été créer" });
 
       var mailOptions = {
@@ -239,6 +237,7 @@ module.exports.register_post = async (req, res) => {
     } catch (err) {
       res.status(400).json({ err });
     }
+  
 };
 
 module.exports.login_get = (req, res) => {
@@ -266,7 +265,7 @@ module.exports.login_post = async (req, res) => {
         try {
           const token = createToken(client);
           res.cookie("jwt", token, { httpOnly: true }); // http only pour que le coockies ne sera pas visualiser en js
-          res.status(200).json({ client: client, token });
+          res.status(200).json({ client: client, token })
         } catch (err) {
           res.status(400).json({ err: err.message, message: "Error" });
         }

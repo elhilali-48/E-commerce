@@ -42,9 +42,8 @@ import {required,email} from 'vuelidate/lib/validators'
 import NavBar from '../../components/NavBar.vue'
 export default {
   methods: {
-      
       connecter(){
-          this.$store.dispatch('auth/login',{
+          this.$store.dispatch('login',{
               email : this.email,
               password : this.password
           })
