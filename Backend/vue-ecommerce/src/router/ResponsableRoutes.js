@@ -30,6 +30,8 @@ import AddLivraison from "../views/backOffice/livraison/ajouter.vue"
 import UpdateLivraison from "../views/backOffice/livraison/modifier.vue"
 import showLivraison from "../views/backOffice/livraison/afficher.vue"
 
+import modifierPassword from"../views/Authentification/modifier.vue"
+
 const routes = [
     {
         path:'/admin/',
@@ -165,6 +167,7 @@ const routes = [
                 name :"afficher-livraison",
                 component : showLivraison
             },
+           
         ]
     
     },
@@ -181,6 +184,11 @@ const routes = [
               next()
             }
          }
+    },
+    {
+        path : "/Modifier/:id",
+        name :"ModifierPassword",
+        component : modifierPassword
     },
 ]
 

@@ -110,7 +110,7 @@
           </div>
 
       </div>
-      
+        
   </div>
 </template>
 
@@ -125,7 +125,7 @@ export default {
       user :{},
       idClient: "",
       livraisons : [],
-      livraisonPrix : "",
+      livraisonPrix : null,
       livraisonDuree : null
     }
   },
@@ -166,24 +166,37 @@ export default {
         })
     },
     addCommande(){
-        axios.post('http://localhost:3500/achat/commande/ajouter',{
-            idcli : this.idClient,
-            totale : this.getTotal
-        }).then(()=>{
-               axios.post('http://localhost:3500/achat/commande/ajouterd',{
-                   idcli : this.idClient,
-               }).then(()=>{
-                    this.$swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Votre Commande a été bien créer, Il vous reste le paiement',
-                    showConfirmButton: false,
-                    timer: 2500
+        if(this.livraisonPrix){
+            
+                axios.post('http://localhost:3500/achat/commande/ajouter',{
+                    idcli : this.idClient,
+                    totale : this.getTotal
+                }).then(()=>{
+                    axios.post('http://localhost:3500/achat/commande/ajouterd',{
+                        idcli : this.idClient,
+                    }).then(()=>{
+                            this.$swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Votre Commande a été bien créer, Il vous reste le paiement',
+                            showConfirmButton: false,
+                            timer: 2500
+                            })
                     })
-               })
-        }).catch((err)=>{
-            console.log(err)
-        })
+                }).catch((err)=>{
+                    console.log(err)
+                })
+        }
+        else{
+            this.$swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Vous devez choisir un mode de livraison',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    
     }
   
   },

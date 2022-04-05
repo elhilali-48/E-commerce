@@ -1,9 +1,24 @@
 <template>
   <div class="home">
   
-   <!-- <h1>{{user.id._id}}</h1> -->
   <nav-bar></nav-bar>
-  
+    <carousel autocomplete ease="0.2" perPage="1" class="mt-1">
+    <slide>
+       <img src="https://media.ldlc.com/encart/p/17086_b.jpg" alt="">
+    </slide>
+    <slide>
+      Slide 2 Content
+    </slide>
+    <slide>
+      Slide 2 Content
+    </slide>
+    <slide>
+      <img src="https://media.ldlc.com/encart/p/17086_b.jpg" alt="">
+    </slide>
+     <slide>
+      Slide 2 Content
+    </slide>
+  </carousel>
   <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
@@ -13,6 +28,8 @@
 import VueJwtDecode from "vue-jwt-decode";
 import NavBar from "../../components/NavBar.vue"
 import Vue from 'vue'
+import { Carousel, Slide } from 'vue-carousel';
+
 // import axios from 'axios'
 export default {
   components: { NavBar },
@@ -24,7 +41,9 @@ export default {
  
   name: 'HomeView',
   component : {
-    NavBar
+    NavBar,
+    Carousel,
+    Slide
   },
   methods:{
      getUserDetails() {

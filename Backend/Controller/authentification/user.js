@@ -2,14 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 
-const transport = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "8108134db847cf",
-    pass: "93e8ad02d5a811",
-  },
-});
+
 
 const User = require("../../models/authentifiaction/User");
 
