@@ -11,7 +11,7 @@
                      <label for="validationCustomUsername" class="form-label ">Email</label>
                     <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
-                    <input v-model="email" type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" >
+                    <input v-model="email" type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" ><br>
                     <span v-if="!$v.email.required && $v.email.$dirty" class="text-danger" >
                         Vous devez indiquer une adresse email valide.
                     </span>
@@ -28,8 +28,9 @@
                     </span>
                 </div>
                 
-                <button  type="submit" class="btn btn-primary">Se connecter</button>
+                <button  type="submit" class="btn btn-primary mt-2">Se connecter</button>
             </form>
+            <router-link :to="{name:'recuperer-compte'}" class="mt-3 nav-link">mot de passe oublié</router-link>
         </div> 
         
     </div>

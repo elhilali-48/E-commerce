@@ -79,7 +79,7 @@
         </div>
     </section>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <router-link to="/"  class="navbar-brand">Acceuil</router-link>
+        <router-link :to="{name :'accueil-page'}"  class="navbar-brand">Acceuil</router-link>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span> 
         </button>

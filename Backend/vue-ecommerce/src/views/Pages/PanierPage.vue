@@ -24,11 +24,11 @@
                             </div>
                              <div class="col-md-2">
                                 <p class="form-label">Quantité : </p>
-                                <input type="number" class="form-control" :value="article.quanttite">
+                                <input type="number" class="form-control" v-model="article.quanttite">
                             </div>
                             <div class="col-md-2">
                                 <button class="badge bg-danger" @click="deleteArticle(article.a._id,article.article)">Supprimer</button>
-                                <button class="badge bg-primary">Modifier</button>
+                                <button class="badge bg-primary" @click="editQuantite(article.article._id)">Modifier</button>
                             </div>
                         </div>
                         <hr class="bg-dark border-1 border-top border-dark">
@@ -46,8 +46,9 @@
                     <p class="fw-bold text-start">Nombre des articles : {{ lengthPanier }}</p>
                     <hr class="bg-dark border-3 border-top border-dark">
                     <h4 class="fw-bolder text-start">Total commande : <span class="text-end">{{ getTotal }} €</span></h4>
-                    <router-link  :to="{name : 'commande-front'}" class="btn btn-primary btn-lg mt-3" style="border-radius : 20px">Valider Commande</router-link> <br>
-                    <button class="btn btn-outline-danger btn-lg mt-3" style="border-radius : 20px">Supprimer Commande</button>
+                    <router-link v-if="lengthPanier>0" :to="{name : 'commande-front'}" class="btn btn-primary btn-lg mt-3" style="border-radius : 20px">Valider Commande</router-link> <br>
+                    <button v-if="lengthPanier<=0" disabled class="btn btn-warning btn-lg mt-3 mx-2" style="border-radius : 20px">Panier Vide</button>
+                    <!-- <button class="btn btn-outline-danger btn-lg mt-3" style="border-radius : 20px">Supprimer Commande</button> -->
                 </div>
                 
               </div>
@@ -59,12 +60,16 @@
 <script>
 import VueJwtDecode from "vue-jwt-decode";
 import Vue from "vue"
+import axios from "axios"
 // @ is an alias to /src
 export default {
   data () {
     return {
       user :{},
-      idClient: ""
+      idClient: "",
+      article : {
+        quanttite : ""
+      }
     }
   },
  
@@ -74,6 +79,16 @@ export default {
     deleteArticle(id,article){
       const idCli = this.idClient
         this.$store.dispatch('deleteArticle',{id,idCli,article})
+    },
+    editQuantite(id){
+      axios.put(`http://localhost:3500/achat/panier/modifier/${id}`,{
+        idcli : this.idClient,
+        quantiteselectionne : this.article.quanttite
+
+      }).then(()=>{
+        alert('HH')
+        this.$route.go('')
+      })
     },
     getUserDetails() {
       // get token from localstorage

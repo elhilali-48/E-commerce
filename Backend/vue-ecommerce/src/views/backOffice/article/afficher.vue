@@ -15,7 +15,7 @@
                                 {{article.nom}}
                             </td>
                         </tr>
-                        <tr>    
+                        <!-- <tr>    
                             <td>
                                 <strong>
                                     <span class="glyphicon glyphicon-user  text-primary"></span>    
@@ -25,7 +25,7 @@
                             <td class="text-primary">
                                 {{getProduitNom}}
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>        
                             <td>
                                 <strong>
@@ -70,7 +70,7 @@
                                 </strong>
                             </td>
                             <td class="text-primary">
-                                -
+                                0
                             </td>
                         </tr>
                                                      
@@ -100,11 +100,55 @@
         <h4 class="text-secondary text-start mt-3">{{article.description}}</h4>
       </div>
       <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">
-          RMA : 
-          {{ article.ram }}
-          <!-- {{ article.description_technique.pouces }} -->
-          <!-- {{ article.description_technique.stockage }} -->
-          <!-- {{ article.description_technique.processeur }} -->
+          <table class="table table-striped table-hover table-borderless p-3">
+                    <tbody >
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   RAM                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.ram}}
+                            </td>
+                        </tr>    
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   Stockage                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.stockage}}
+                            </td>
+                        </tr>    
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   Pouces                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.pouces}}
+                            </td>
+                        </tr>  
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   Processeur                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.processeur}}
+                            </td>
+                        </tr>                       
+                    </tbody>
+                </table>
+         
       </div>
         <div class="tab-pane fade bg-light p-5" :class="{ 'active show': isActive('contact') }" id="contact">
                 <div v-if="comments.length > 0">

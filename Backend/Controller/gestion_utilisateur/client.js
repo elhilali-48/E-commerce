@@ -37,25 +37,15 @@ module.exports.ajouterClient = async (req, res) => {
 
 module.exports.modifierClient = async (req, res) => {
   try {
-    const chercher_email = await Client.findOne({ _id: req.params.id });
-
-    if (chercher_email.email == req.body.user.email) {
-      res.status(400).json("email exist");
-    } else {
+      console.log(req.body.user)
       const data = await Client.updateOne(
         { _id: req.params.id },
         {
-          email: req.body.user.email,
-          telephone: req.body.user.telephone,
-          pays: req.body.user.pays,
-          ville: req.body.user.ville,
-          codePostale: req.body.user.codePostale,
-          adresse: req.body.user.adresse,
-          confirmation: req.body.user.confirmation,
+          ...req.body.user
         }
       );
       res.status(201).json({ data });
-    }
+    
   } catch (err) {
     res.status(404).json({ err: err.message });
   }

@@ -229,7 +229,7 @@ export default {
             }).then(()=>{
                 this.$swal.fire(
                     'Success!',
-                    'Responsable Ajouté!',
+                    'Responsable Ajouté! un email de confirmation du compte a été envoyer au responsable',
                     'success'
                 )
                 this.$router.push('/admin/responsable')

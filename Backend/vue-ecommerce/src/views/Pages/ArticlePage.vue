@@ -15,11 +15,11 @@
         </div>
         <div class="avis">
              <div class="d-flex align-items-center " >
-                  <div v-for="etoile in article.avis" :key="etoile">
+                  <div v-for="etoile in Math.floor(avis.result)" :key="etoile">
                     <span class="fas fa-star product d-felx justify-content-center" ></span> 
                   </div>
                   <div class="text-primary mx-3">
-                    23 avis
+                    {{ avis.nbp }} avis
                   </div>
             </div>
         </div>
@@ -51,6 +51,7 @@
           <button class="btn btn-lg btn-secondary" disabled v-if="quantite == 0">Rupture de stock</button>
           <button v-else @click.prevent="addCart(article)" class="btn btn-lg btn-success px-5 py-2" >Ajouter au panier</button>
         </div>
+       
       </div>
       <div class="col-md-10 mx-auto mt-5 mb-5">
             <ul class="nav nav-tabs nav-justified bg-light opacity-100">
@@ -79,9 +80,16 @@
                       </div>
                       <div class="col-md-6">
                         <div class=" border-5 border-danger">
+                          <div class="d-flex align-items-center " >
+                                <div v-for="avis in comment.avie" :key="avis">
+                                  <span class="fas fa-star product d-felx justify-content-center" style="width : 20px" ></span> 
+                                </div>
+                               
+                          </div>
                           <p class="mt-4" style="text-align : left">
                             {{comment.commentaire}}
                           </p>
+                          
                         </div>
                       </div>
                       <div class="col-md-3">
@@ -134,7 +142,8 @@ export default {
         idClient : "",
         commentaire : '',
         quatite : 1,
-        quantite : null
+        quantite : null,
+        avis : null
     }
   },
   mounted () {
@@ -142,8 +151,12 @@ export default {
                 
                 this.article = res.data
                 this.quantite = res.data.quantite
+                // console.log(res.data.personnecomment)
                 this.comments = res.data.personnecomment
                 
+        })
+        axios.get(`http://localhost:3500/client/commentaire/voiravis/${this.$route.params.id}`).then((res)=>{
+                this.avis = res.data     
         })
         this.getUserDetails();
       //  let client =  localStorage.getItem('client')
@@ -197,7 +210,7 @@ export default {
      
     }, 
       addCart(article){
-       
+      console.log(article._id)
         if(this.idClient !== ""){
           this.$store.dispatch('addToCart',{
             id : article._id ,
@@ -237,13 +250,30 @@ export default {
         }
           
       },
-      addCommentaire(){
-        axios.post(`http://localhost:3500/client/commentaire/ajouter/${this.$route.params.id}`,{
-          idcli : this.idClient,
-          commentaire : this.commentaire
-        }).then(()=>{
-          this.$router.go()
+      async addCommentaire(){
+         const { value: text } = await this.$swal.fire({
+          input: 'range',
+          inputLabel: 'Comment trouvez-vous cet Article ?',
+          inputPlaceholder: 'Noter sur 5',
+          inputAttributes: {
+            min: 1,
+            max: 5,
+            step: 1
+          },
+          inputValue : 3,
+          showCancelButton: true
         })
+
+        if (text) {
+          axios.post(`http://localhost:3500/client/commentaire/ajouter/${this.$route.params.id}`,{
+          idcli : this.idClient,
+          avie : text,
+          commentaire : this.commentaire
+          }).then(()=>{
+            this.$router.go()
+          })
+        } 
+        
       },
       editComment(comment){
         this.commentaire = comment.commentaire

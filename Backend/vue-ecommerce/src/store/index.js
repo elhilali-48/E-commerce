@@ -159,7 +159,7 @@ export default new Vuex.Store({
     },
 
     async addToCart({commit},{id,idcli,quantiteselectionne,article}){
-      
+
      await axios.post('http://localhost:3500/achat/panier/ajouter/',{
         produitselectionner : id ,
         idcli : idcli,
@@ -178,6 +178,10 @@ export default new Vuex.Store({
       axios.delete(`http://localhost:3500/achat/panier/supprimer/${id}`,{data:{idcli : idCli}}).then(()=>{
         commit('deleteArticle',article)
       })
+    },
+
+    async deleteAllArticle({commit}){
+      commit('deleteAll')
     },
 
     async IniPanier({commit},id){

@@ -58,10 +58,10 @@
                     <div class="col-md-12">
                         <label class="labels">Date de naissance</label>
                         
-                        <input type="date" class="form-control"  v-model="user.dateDeNaissance" >
+                        <input type="date" class="form-control"  v-model="getDate" >
                          <span class="text-danger"  v-if="!$v.user.dateDeNaissance.required && $v.user.dateDeNaissance.$dirty" >Date de naissance est obligatoire</span>
                     </div>
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
                         <label class="labels">Email</label>
                         <input type="email" class="form-control" placeholder="exemple@gmail.com"  v-model="user.email">
                          <span v-if="!$v.user.email.required && $v.user.email.$dirty" class="text-danger" >
@@ -70,7 +70,7 @@
                         <span v-if="!$v.user.email.email && $v.user.email.$dirty" class="text-danger" >
                                 C'est pas un email.
                         </span>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- <div class="row mt-3">
                     <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
@@ -132,7 +132,7 @@ export default {
              axios.put(`http://localhost:3500/client/gestion/modifier/${this.user._id}`,{user : this.user}).then(()=>{
                  this.$swal.fire(
                     'Good job!',
-                    'You clicked the button!',
+                    'Information modifié!',
                     'success'
                 )
                 this.$router.push({name :'HomePage'})

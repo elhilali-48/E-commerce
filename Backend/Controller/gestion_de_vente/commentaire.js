@@ -8,7 +8,7 @@ module.exports.ajouter = async (req, res) => {
     const comment = await Commentaire.create({
       commentaire: req.body.commentaire,
       avie: req.body.avie,
-      idclient: res.locals.client.id,
+      idclient: req.body.idcli,
     });
 
     await Article.updateOne(
@@ -65,14 +65,14 @@ module.exports.voiravis = async (req, res) => {
     let sum = 0;
     let result;
     const avis = await Article.findOne({ _id: req.params.id });
-console.log(avis.personneavis);
+// console.log(avis.personneavis);
     for (let i = 0; i < avis.personneavis.length; i++) {
-      sum = sum + avis.personneavis[i];
+      sum = sum + parseInt(avis.personneavis[i]);
     }
     result = sum / avis.personneavis.length;
-    console.log(result);
-
-    res.status(200).json({ result });
+    
+    const nbp = avis.personneavis.length
+    res.status(200).json({ result , nbp});
   } catch (err) {
     res.status(400).json({ err: err.message });
   }

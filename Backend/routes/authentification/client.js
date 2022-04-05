@@ -11,4 +11,7 @@ router.post("/login", checkClient, clientCtrl.login_post);
 router.get("/logout", clientCtrl.logout);
 router.post("/valider", clientCtrl.validerCompte);
 
+router.put("/modifiermdp/:id", clientCtrl.modifiermdp);
+router.post("/chercher", clientCtrl.chercherclient);
+
 module.exports = router;

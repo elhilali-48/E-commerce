@@ -1,6 +1,10 @@
 <template>
-  <div>
-   {{idClient}}
+  <div class="container">
+    <div class="row mt-4 justify-content-center">
+      <div class="col-md-8">
+        <h2 class="text-center text-success my-4">Votre commande est enregistré, il vous reste le paiement</h2>
+      </div>
+    </div>
     <stripe-checkout
       ref="checkoutRef"
       mode="payment"
@@ -11,7 +15,7 @@
       :cancel-url="cancelURL"
       @loading="v => loading = v"
     />
-    <button @click="submit">Pay now!</button>
+    <button @click="submit" class="btn btn-lg btn-success">Payer ma commande!</button>
   
 
   </div>

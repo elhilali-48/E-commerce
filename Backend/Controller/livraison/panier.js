@@ -71,7 +71,7 @@ module.exports.voirpanier = async (req, res) => {
 
 module.exports.modifierPanier = async (req, res) => {
   try {
-    const article = await Client.findOne({ _id: res.locals.client.id }); // recuperer les information du l'article
+    const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
 
     try {
       if (article.articleselectionner.length != 0) {

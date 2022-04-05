@@ -53,7 +53,7 @@ module.exports.inserer = async (req, res) => {
 // diminuer article
 module.exports.commandeterminer = async (req, res) => {
   try {
-    const essaie = await Client.findOne({ _id: res.req.body.idcli });
+    const essaie = await Client.findOne({ _id: req.body.idcli });
 
     const recuperer_dernier_element =
       essaie.commande[essaie.commande.length - 1];

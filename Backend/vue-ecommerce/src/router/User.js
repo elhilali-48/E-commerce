@@ -10,6 +10,10 @@ import CommandePage from "../views/Pages/CommandePage.vue"
 import EditerProfile from "../views/Pages/EditerProfile.vue"
 import EditerPassword from "../views/Pages/EditerPasswrod.vue"
 import EditerEmail from "../views/Pages/EditerEmail.vue"
+import AccueilPage from "../views/Pages/accueilPage.vue"
+
+import RecupererCompte from "../views/Authentification/Recuperer.vue"
+import RecupererMdp from "../views/Authentification/modifiermdp.vue"
 
   const routes =  [
     {
@@ -20,6 +24,12 @@ import EditerEmail from "../views/Pages/EditerEmail.vue"
         //   requiresAuth : true
         // },
         children :[
+          {
+            path : "/accueil",
+            name : 'accueil-page',
+            component : AccueilPage,
+          
+          },
           {
             path : "produit/:id",
             name : 'produit-front',
@@ -97,11 +107,23 @@ import EditerEmail from "../views/Pages/EditerEmail.vue"
                 next("/signin")
               }
            },
-          }
+           
+          },
+          {
+            path : "/recuperer",
+            name : 'recuperer-compte',
+            component : RecupererCompte
+           },
+           {
+            path : "/modifier/:id",
+            name : 'Modifier-Password-Client',
+            component : RecupererMdp
+           }
 
         ]
    },
-  
+
+   
       
     ]
 
