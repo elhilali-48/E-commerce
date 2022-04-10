@@ -29,7 +29,7 @@ module.exports.login_post = async (req, res) => {
           res.cookie("jwt", token, { httpOnly: true });
           res.status(200).json({ user: user, token });
         } catch (error) {
-          res.status(400).json({ errors });
+          res.status(400).json({ error });
         }
         res.status(201).json({ user: user });
       }

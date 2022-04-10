@@ -67,15 +67,17 @@ module.exports.supprimer = async (req, res) => {
 module.exports.voiravis = async (req, res) => {
   try {
     let sum = 0;
-    let result;
+    var result= 0;
     const avis = await Article.findOne({ _id: req.params.id });
 
     for (let i = 0; i < avis.personneavis.length; i++) {
       sum = sum + parseInt(avis.personneavis[i]);
     }
     result = sum / avis.personneavis.length;
+    
+    var nbp = avis.personneavis.length;
 
-    const nbp = avis.personneavis.length;
+    await Article.updateOne({_id: req.params.id}, {$set: {avis: result}} )
 
     res.status(200).json({ result, nbp });
   } catch (err) {
