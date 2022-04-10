@@ -1,4 +1,5 @@
 <template>
+<!-- un fichier Vue se compose du template ou on met du html, style pour CSS et script pour ajouter du code javasript  -->
   <div class="container rounded bg-light rounded-3 mt-5 mb-5">
     <div class="row">
         <div class="col-md-5 border-right">
@@ -42,8 +43,9 @@
 </template>
 
 <script>
+// cette partie comporte du code javacript
 import axios from "axios"
-
+// on import axios pour faire appel une fonction de backend
 
 export default {
 
@@ -56,11 +58,13 @@ export default {
         }
     },
        methods: {
-
+           // les fonctions 
            modifier(){
+               // la methode PUT d'axios permet de modifier, on spécifier le lien de la fonction au niveau backend avec les parametres et les données à passer dans le body 
             axios.put(`http://localhost:3500/responsable/gestion/modifiermdp/${this.$route.params.id}`, {
                 password : this.password
             }).then(()=>{
+                // la fonction a été bien effectuer il va retourner un message du success
                 this.$swal.fire(
                     'Good job!',
                     'Mot de passe modifié',
@@ -68,6 +72,7 @@ export default {
                 )
                 this.$router.push('/admin/login')
        }).catch((err)=>{
+           // un erreur est survenue, il affiche le message d'erreur 
       console.log(err)
     })
         }

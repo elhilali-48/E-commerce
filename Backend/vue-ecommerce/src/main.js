@@ -1,3 +1,4 @@
+// Fichier main.js comporte tous les packages qu'on an installé pour les utilisés 
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -47,5 +48,7 @@ new Vue({
   router,
   store,
   axios,
-  render: h => h(App)
+  render: h => h(App) // L'application est attaché à un seul element DOM avec un identifiant app qui se trouve dans le fichier APP.vue 
 }).$mount('#app')
+
+

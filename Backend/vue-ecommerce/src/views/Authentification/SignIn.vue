@@ -45,6 +45,7 @@ export default {
   methods: {
       
       connecter(){
+          // cette fonction fait appel a une methode dans le fichier index dans le dossier store (Vuex) et il passe dans le body des informatoins (email et password)
           this.$store.dispatch('auth/login',{
               email : this.email,
               password : this.password
@@ -53,7 +54,7 @@ export default {
 
       submitForm(){
           this.$v.$touch()
-            
+            // avant d'appeler la fonction connecter on verifier si les tous champs sont remplit 
           if(!this.$v.$invalid){
             this.connecter()
           }
@@ -62,11 +63,14 @@ export default {
       }
   },
   components :{
+      // ici on implémente des components ou des composants 
       NavBar
   },
   computed:{
+      // computed permet de modifer sur les informations dans le template
       token(){
-            return  this.$store.state.token
+           
+            return  this.$store.state.token // récupere le token stocker dans le state Vuex
       }
   },
  name : "SignIn",
@@ -78,13 +82,15 @@ export default {
     }
   },
   validations:{
+      // validation des inputs
       email : {
-          required,
+          //Input email : obligatoire et email 
+          required, 
           email
       },
       password :{
           
-          required
+          required // input required
       }
   },
 

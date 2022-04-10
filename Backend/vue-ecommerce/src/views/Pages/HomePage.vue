@@ -44,17 +44,9 @@ export default {
         }
       }
     },
-    //  getPanier(){
-    //    const id = this.user.id._id
-    //    this.$store.dispatch('IniPanier',id)
-    //     //  axios.post('http://localhost:3500/achat/panier/voirarticle',{idCli : id}).then((res)=>{
-    //     //     this.$store.dispatch('IniPanier',res.data)
-    //     // }).catch((err)=>{
-    //     //   console.log(err.message)
-    //     // })
-    //   }
   },
   created() {
+    // created est une fonction qui s'execute une fois le html de la page est affiché 
     this.getUserDetails();
     //récuperer le panier du client
 

@@ -1,3 +1,4 @@
+//Ce fichier compote tous les routes de backoffice  (Responsable et admin)
 import Login from "../views/backOffice/login.vue"
 import Home from "../views/backOffice/Home.vue"
 
@@ -35,10 +36,11 @@ import modifierPassword from"../views/Authentification/modifier.vue"
 
 const routes = [
     {
-        path:'/admin/',
-        name : "HomePage",
-        component : Home,
-        beforeEnter: (to, from, next) => {
+        path:'/admin/', // le URl de route 
+        name : "HomePage", // le nom  du route 
+        component : Home, // le component ou la vue lié au path
+        beforeEnter: (to, from, next) => {  
+            // vérifier si le client est connecté avant d'enter au route
             const isloggin = sessionStorage.getItem('tokenAdmin')
             if(isloggin != null){
               next()

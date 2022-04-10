@@ -156,6 +156,7 @@ export default {
     }
   },
   validations :{
+      
       client : {
           nom :{
               required
@@ -168,8 +169,8 @@ export default {
           },
           password : {
               required,
-              minLength : minLength(8),
-              maxLength :maxLength(20),
+              minLength : minLength(8), // nombre minimum de caractère : 8
+              maxLength :maxLength(20), // nombre maximum de caractère : 20
           },
           dateDeNaissance :{
               required
@@ -202,14 +203,15 @@ export default {
       submitForm(){
           this.$v.$touch()
           if(!this.$v.$invalid){
+              // vérifier si tous les champs sont remplit et respect les contraintes 
               this.creerCompte()
           }
       },
-       onSelect({name, iso2, dialCode}) {
-       alert(name, iso2, dialCode);
-     },
+      
       creerCompte(){
+          //fonction pour créer un compte
           axios.post('http://localhost:3500/client/register',{
+              // on passe les informations des inputs 
               nom : this.client.nom,
               prenom : this.client.prenom,
               email : this.client.email,

@@ -1,3 +1,5 @@
+// Vuex permet de structurer notre application en se basant sur le principe du state management gestionnaire d'état
+// vuex se compose : State, Getters , muttation , actions 
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -9,7 +11,8 @@ import auth from '@/store/modules/auth'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins : [createPersistedState()],
+  plugins : [createPersistedState()], // ce plugin permet de sauvgarder les données dans le state 
+  // state : permet de stocker  les données, c'est comme un store ou on stocke nos données 
   state: {
    
     client :{},
@@ -17,6 +20,7 @@ export default new Vuex.Store({
     panier :[],
     errorAdmin : ""
   },
+  // getters  : permet de récupérer les données stocker dans le state 
   getters: {
     
     getToken(state){
@@ -38,6 +42,7 @@ export default new Vuex.Store({
     }
 
   },
+  // mutations  : permet de modifier sur le state 
   mutations: {
   
 
@@ -45,6 +50,7 @@ export default new Vuex.Store({
       state.tokenAdmin = tokenAdmin
     },
     setClientData(state,data){
+      //enregistrer data dans le state
       state.client = data
     },
     setError(state){
@@ -88,12 +94,13 @@ export default new Vuex.Store({
 
     
   },
+  //actions : sont similaires aux mutations la différence aulieu de modifier les states directement on fait appel à une mutation 
   actions: {
 
     async fetchTokenAdmin({commit}){
       await commit('setToken', localStorage.getItem('tokenAdmin'))
     },
-
+  
     async loginAdmin({dispatch}, form){
      
       await axios.post('http://localhost:3500/admin/login',{

@@ -1,3 +1,5 @@
+//Ce fichier comporte tous les routes pour le client  
+
 import Vue from "vue"
 import HomePage from "../views/Pages/HomePage.vue"
 import ProduitPage from "../views/Pages/produit.vue"
@@ -17,12 +19,13 @@ import RecupererMdp from "../views/Authentification/modifiermdp.vue"
 
   const routes =  [
     {
-        path : "/",
-        name : "HomePage",
+        path : "/", // URL de route
+        name : "HomePage", // nom du route 
         component : HomePage,
         // meta:{
         //   requiresAuth : true
         // },
+        // children : comporte tous les routes fils de cette route 
         children :[
           {
             path : "/accueil",

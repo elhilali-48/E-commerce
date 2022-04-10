@@ -125,6 +125,7 @@ export default {
        
   },
     created() {
+        // aprés la creation du html de la page on récupére les informations de user et de panier de user
         this.getUserDetails();
         this.getPnaier()
     }
