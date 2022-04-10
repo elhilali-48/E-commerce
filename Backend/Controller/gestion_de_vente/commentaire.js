@@ -77,8 +77,6 @@ module.exports.voiravis = async (req, res) => {
     
     var nbp = avis.personneavis.length;
 
-    await Article.updateOne({_id: req.params.id}, {$set: {avis: result}} )
-
     res.status(200).json({ result, nbp });
   } catch (err) {
     res.status(400).json({ err: err.message });
