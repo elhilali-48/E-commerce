@@ -170,7 +170,7 @@
                             <img class="card-img-top" v-else alt="image Non disponible" >
                             <div class="card-body mt-2">
                                 <h6 class="font-weight-bold pt-1">{{article.nom}}</h6>
-                                <div class="text-muted description">{{article.description}}</div>
+                                <!-- <div class="text-muted description">{{article.description}}</div> -->
                                 <div class="d-flex align-items-center product" >
                                   <div v-for="etoile in article.avis" :key="etoile">
                                     <span class="fas fa-star d-felx justify-content-center"></span> 

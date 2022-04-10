@@ -35,7 +35,7 @@ export default {
               }
               // commit('setClientData',res.data.client)
             //   dispatch('IniPanier',res.data.client._id)
-              router.push('/')
+              router.push('/accueil')
               // dispatch('fetchToken')
             }).catch((err)=>{
               Swal.fire({

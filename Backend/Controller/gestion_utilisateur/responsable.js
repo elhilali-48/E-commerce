@@ -9,6 +9,8 @@ const transport = nodemailer.createTransport({
     pass: "93e8ad02d5a811",
   },
 });
+
+//  modifier un responsable
 module.exports.updateResponsable = async (req, res) => {
   try {
     const data = await Responsable.updateOne(
@@ -20,7 +22,7 @@ module.exports.updateResponsable = async (req, res) => {
     console.log(error);
   }
 };
-
+//ajouter un responsable et envoyé l'email pour qu'il chnage le mot de passe pour la première connexion
 module.exports.ajouterResponsable_post = async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -40,14 +42,13 @@ module.exports.ajouterResponsable_post = async (req, res) => {
       sexe: req.body.sexe,
       role: req.body.role,
     });
-    res.status(201).json({ responsable: responsable._id });
+    res.status(201).json({ responsable });
     var mailOptions = {
       from: '"BestTech Team" <bestteck@info.com>',
       to: responsable.email,
-      subject: ' modifier mot de passe',
+      subject: " modifier mot de passe",
       text: `Bonjour EL HILALI Abdelouahab`,
-      html: 
-      ` 
+      html: ` 
       <html>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -217,19 +218,20 @@ module.exports.ajouterResponsable_post = async (req, res) => {
         </table>
       </body>
     </html>
-      `
-  };
-  transport.sendMail(mailOptions ,(err,info)=>{
-      if(err){
-          return console.log(err.message)
+      `,
+    };
+    transport.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        return console.log(err.message);
       }
-      console.log('Message sent: %s', info.messageId)
-  })
+      console.log("Message sent: %s", info.messageId);
+    });
   } catch (err) {
-    res.status(400).json({ err });
+    res.status(400).json({ err: err.message });
   }
 };
 
+//supprimer un responsable
 module.exports.deleteResponsable = async (req, res) => {
   try {
     await Responsable.findOneAndDelete({ _id: req.params.id }, { ...req.body });
@@ -239,7 +241,7 @@ module.exports.deleteResponsable = async (req, res) => {
     res.status(400).json({ err });
   }
 };
-
+// afficher les informations d'un responsable
 module.exports.afficherInformation = async (req, res) => {
   try {
     const responsable = await Responsable.findById(
@@ -252,6 +254,7 @@ module.exports.afficherInformation = async (req, res) => {
     res.status(400).json({ err });
   }
 };
+// afficher les informations de tous les responsables
 module.exports.afficherInformationall = async (req, res) => {
   try {
     const a = req.body.dateDeNaissance;
@@ -263,20 +266,19 @@ module.exports.afficherInformationall = async (req, res) => {
   }
 };
 
+// modifier le mot de passse d'un responsable
 module.exports.modifiermdp = async (req, res) => {
   try {
- 
     console.log(req.body.password);
-      const salt = await bcrypt.genSalt(10);
-      const hashpassword = await bcrypt.hash(req.body.password, salt);
-      
-      const data = await Responsable.updateOne(
-        { _id: req.params.id },
-        { $set: { password: hashpassword } }
-      );
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(req.body.password, salt);
 
-      res.status(201).json({ data });
-    
+    const data = await Responsable.updateOne(
+      { _id: req.params.id },
+      { $set: { password: hashpassword } }
+    );
+
+    res.status(201).json({ data });
   } catch (err) {
     res.status(404).json({ err: err.message });
   }

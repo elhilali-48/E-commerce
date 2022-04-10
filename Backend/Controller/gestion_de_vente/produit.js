@@ -2,6 +2,7 @@ const Produit = require("../../models/product/Produit");
 const Categorie = require("../../models/product/Categorie");
 const Article = require("../../models/product/Article");
 
+// cette fonction permet de creer un produit dans la base de donnée
 module.exports.ajouterProduit = async (req, res) => {
   try {
     const produit = await Produit.create({
@@ -9,6 +10,7 @@ module.exports.ajouterProduit = async (req, res) => {
       categorie: req.body.categorie,
     });
     await Categorie.updateOne(
+      // on a fait push dans une attribut dans la table categorie pour afficher tous les produits de chaque categorie
       { _id: req.body.categorie },
       { $push: { produit: produit } }
     );
@@ -18,15 +20,17 @@ module.exports.ajouterProduit = async (req, res) => {
   }
 };
 
+// afficher tous les produits dans la base de donnée
 module.exports.voirall = async (req, res) => {
   try {
-    const data = await Produit.find().populate("article").populate("categorie");
+    const data = await Produit.find().populate("article").populate("categorie"); // on a utilisé populate pour aficher les information et non seulement les id
     res.status(200).json(data);
   } catch (err) {
     res.status(400).json({ err });
   }
 };
 
+//  modifier un produits spécifique demandé par le client
 module.exports.modifierproduit = async (req, res) => {
   try {
     const data = await Produit.findOneAndUpdate(
@@ -39,7 +43,7 @@ module.exports.modifierproduit = async (req, res) => {
     res.status(400).json(err);
   }
 };
-
+// supprime un produit spécifique demandé par le client
 module.exports.supprimerProduit = async (req, res) => {
   try {
     await Article.deleteMany({ produit: req.params.id });
@@ -51,6 +55,7 @@ module.exports.supprimerProduit = async (req, res) => {
   }
 };
 
+// affichee un produit spécifique demandé par le client
 module.exports.voirProduit = async (req, res) => {
   try {
     const data = await Produit.find({ _id: req.params.id }, { ...req.body })

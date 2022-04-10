@@ -1,6 +1,6 @@
 const Livraison = require("../../models/livraison/Livraison");
-// const Article = require("../../models/product/Article")
-// BackOffice
+
+// elle ajoute un nouveau mode de livraison
 module.exports.ajouterLivraison = async (req, res) => {
   try {
     const livraison = await Livraison.create({
@@ -15,6 +15,7 @@ module.exports.ajouterLivraison = async (req, res) => {
   }
 };
 
+// afficher un mode de livraison spécifique
 module.exports.showLivraison = async (req, res) => {
   try {
     const livraison = await Livraison.findOne({ _id: req.params.id });
@@ -24,6 +25,7 @@ module.exports.showLivraison = async (req, res) => {
   }
 };
 
+// afficher tous les modes de livraisons
 module.exports.showLivraisonAll = async (req, res) => {
   try {
     const livraison = await Livraison.find({ ...req.body });
@@ -31,6 +33,7 @@ module.exports.showLivraisonAll = async (req, res) => {
   } catch (error) {}
 };
 
+// modifier un mode de livraison
 module.exports.modifierLivraison = async (req, res) => {
   try {
     const data = await Livraison.findByIdAndUpdate(
@@ -43,6 +46,7 @@ module.exports.modifierLivraison = async (req, res) => {
   }
 };
 
+// suprimmer un mode de livraison
 module.exports.supprimerLivraison = async (req, res) => {
   try {
     const data = await Livraison.findByIdAndRemove({ _id: req.params.id });

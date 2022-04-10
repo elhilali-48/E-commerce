@@ -1,8 +1,8 @@
 const bodyParser = require("body-parser");
 const Commentaire = require("../../models/product/Commentaire");
 const Article = require("../../models/product/Article");
-const Client = require("../../models/authentifiaction/Client");
 
+// ajouter un commentaire
 module.exports.ajouter = async (req, res) => {
   try {
     const comment = await Commentaire.create({
@@ -10,12 +10,12 @@ module.exports.ajouter = async (req, res) => {
       avie: req.body.avie,
       idclient: req.body.idcli,
     });
-
+    // a chaque fois on ajoute un commentaire on utilise la commande push pour l'ajouter dnas la liste des commentaire de l'article
     await Article.updateOne(
       { _id: req.params.id },
       { $push: { personnecomment: comment } }
     );
-
+    // a chaque fois on ajoute un avis on utilise la commande push pour l'ajouter dnas la liste des avis de l'article pour calculer la moyenne
     await Article.updateOne(
       { _id: req.params.id },
       { $push: { personneavis: req.body.avie } }
@@ -27,6 +27,7 @@ module.exports.ajouter = async (req, res) => {
   }
 };
 
+// récupérer les information d'un commentaire
 module.exports.voircommentaire = async (req, res) => {
   try {
     const comment = await Commentaire.findOne(
@@ -39,6 +40,8 @@ module.exports.voircommentaire = async (req, res) => {
     res.status(400).json({ err: err.message });
   }
 };
+
+// modifier un commentaire spécifique
 module.exports.modifier = async (req, res) => {
   try {
     const comment = await Commentaire.findByIdAndUpdate(
@@ -50,7 +53,7 @@ module.exports.modifier = async (req, res) => {
     res.status(400).json({ err: err.message });
   }
 };
-
+// elle supprime un commentair spécifique
 module.exports.supprimer = async (req, res) => {
   try {
     await Commentaire.findByIdAndRemove({ _id: req.params.id });
@@ -60,19 +63,21 @@ module.exports.supprimer = async (req, res) => {
   }
 };
 
+// cette fonction calculela moyenne des avis de l'article
 module.exports.voiravis = async (req, res) => {
   try {
     let sum = 0;
     let result;
     const avis = await Article.findOne({ _id: req.params.id });
-// console.log(avis.personneavis);
+
     for (let i = 0; i < avis.personneavis.length; i++) {
       sum = sum + parseInt(avis.personneavis[i]);
     }
     result = sum / avis.personneavis.length;
-    
-    const nbp = avis.personneavis.length
-    res.status(200).json({ result , nbp});
+
+    const nbp = avis.personneavis.length;
+
+    res.status(200).json({ result, nbp });
   } catch (err) {
     res.status(400).json({ err: err.message });
   }

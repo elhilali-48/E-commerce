@@ -2,7 +2,7 @@
   <div class="row d-flex justify-content-center">
       <div class="col-md-10 my-5">
         <div class="d-flex justify-content-end"> 
-          <router-link :to="{ nallme : 'ajouter-responsable' }" class="btn btn-outline-success">Ajouter un responsable</router-link>
+          <router-link :to="{ name : 'ajouter-responsable' }" class="btn btn-outline-success">Ajouter un responsable</router-link>
         </div>
           <table class="table">
             <thead>

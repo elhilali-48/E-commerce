@@ -4,6 +4,8 @@ const router = express.Router();
 const clientCtrl = require("../../Controller/authentification/client");
 const checkClient = require("../../midlleware/authentification");
 
+
+// c'est le route elle enregistre le chemin dans l'url spécifique a chaque fonction
 router.get("/register", checkClient, clientCtrl.register_get);
 router.post("/register", checkClient, clientCtrl.register_post);
 router.get("/login", checkClient, clientCtrl.login_get);

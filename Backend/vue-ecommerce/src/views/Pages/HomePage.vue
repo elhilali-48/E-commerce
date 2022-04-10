@@ -2,23 +2,7 @@
   <div class="home">
   
   <nav-bar></nav-bar>
-    <carousel autocomplete ease="0.2" perPage="1" class="mt-1">
-    <slide>
-       <img src="https://media.ldlc.com/encart/p/17086_b.jpg" alt="">
-    </slide>
-    <slide>
-      Slide 2 Content
-    </slide>
-    <slide>
-      Slide 2 Content
-    </slide>
-    <slide>
-      <img src="https://media.ldlc.com/encart/p/17086_b.jpg" alt="">
-    </slide>
-     <slide>
-      Slide 2 Content
-    </slide>
-  </carousel>
+    
   <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>

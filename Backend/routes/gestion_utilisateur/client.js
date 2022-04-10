@@ -4,6 +4,7 @@ const router = express.Router();
 
 const clientCtrl = require("../../Controller/gestion_utilisateur/client");
 
+// c'est le route elle enregistre le chemin dans l'url spécifique a chaque fonction
 router.get("/afficher/:id", clientCtrl.show_client);
 router.post("/ajouter", clientCtrl.ajouterClient);
 router.put("/modifier/:id", clientCtrl.modifierClient);

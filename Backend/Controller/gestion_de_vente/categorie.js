@@ -1,6 +1,7 @@
 const Produit = require("../../models/product/Produit");
 const Categorie = require("../../models/product/Categorie");
 
+// cette fonction ajoute une catégorie dans la base de donnée
 module.exports.ajouterCategorie = async (req, res) => {
   try {
     const categorie = await Categorie.create({
@@ -13,6 +14,7 @@ module.exports.ajouterCategorie = async (req, res) => {
   }
 };
 
+// elle permet d'afficher tous les categorie en affichant les information du produit à l'aide du populate
 module.exports.voirall = async (req, res) => {
   try {
     const categorie = await Categorie.find().populate("produit");
@@ -22,9 +24,10 @@ module.exports.voirall = async (req, res) => {
   }
 };
 
+// cette fonction modifie la catégorie
 module.exports.modifierCategorie = async (req, res) => {
   try {
-    const categorie = await Categorie.findOneAndUpdate(
+    await Categorie.findOneAndUpdate(
       { _id: req.params.id },
       { $set: { nom: req.body.nom } }
     );
@@ -33,7 +36,7 @@ module.exports.modifierCategorie = async (req, res) => {
     res.status(400).json({ err: err.message });
   }
 };
-
+// cette fonction supprimer une catégorie
 module.exports.supprimerCategorie = async (req, res) => {
   try {
     await Produit.deleteMany({ categorie: req.params.id });
@@ -45,6 +48,7 @@ module.exports.supprimerCategorie = async (req, res) => {
   }
 };
 
+// elle affiche une catégorie spécifique
 module.exports.voirCategorie = async (req, res) => {
   try {
     const categorie = await Categorie.find(

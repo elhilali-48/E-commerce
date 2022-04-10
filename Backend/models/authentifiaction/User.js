@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 
+
+// c'est la base de données on a spécifier le type
 const userSchema = mongoose.Schema({
   nom: { type: String, required: true, maxlength: 30, minlegth: 2 },
   prenom: { type: String, required: true, maxlength: 30, minlength: 2 },
@@ -23,4 +25,5 @@ const userSchema = mongoose.Schema({
   role: { type: Boolean, required: true, default: false },
 });
 
+// on a utilisé exposrt pour pouvoir k'utilisr ailleur
 module.exports = mongoose.model("User", userSchema);

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
+
+// c'est la base de données on a spécifier le type
 const articleSchema = mongoose.Schema({
   nom: { type: String, required: true },
   quantite: { type: Number, required: true, min: 0 },

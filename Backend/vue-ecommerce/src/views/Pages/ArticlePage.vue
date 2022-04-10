@@ -67,9 +67,58 @@
           </ul>
           <div class="tab-content py-3" id="myTabContent">
               <div class="tab-pane fade " :class="{ 'active show': isActive('home') }" id="home">
-                  <h4 class="text-secondary">{{article.description}}</h4>
+                  <p class="text-secondary text-start gap-3">{{article.description}}</p>
               </div>
-              <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">Description technique </div>
+              <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">
+                 <table class="table table-striped table-hover table-borderless p-3">
+                    <tbody >
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   RAM                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.ram}}
+                            </td>
+                        </tr>    
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   Stockage                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.stockage}}
+                            </td>
+                        </tr>    
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   Pouces                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.pouces}}
+                            </td>
+                        </tr>  
+                        <tr>        
+                            <td class="h-100">
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                   Processeur                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{article.processeur}}
+                            </td>
+                        </tr>                       
+                    </tbody>
+                </table>  
+              </div>
               <div class="tab-pane fade bg-light p-5" :class="{ 'active show': isActive('contact') }" id="contact">
                 <div v-if="comments">
                   <div class="" v-for="comment in comments" :key="comment._id">
@@ -95,7 +144,7 @@
                       <div class="col-md-3">
                         <div class="mt-4">
                           {{moment(comment.createdAt).startOf('minut').fromNow()}}
-                          <button class="btn btn-primary" v-if="idClient && (idClient == comment.idclient)" @click="editComment(comment)">Edit</button>
+                          <!-- <button class="btn btn-primary" v-if="idClient && (idClient == comment.idclient)" @click="editComment(comment)">Edit</button> -->
                         </div>
                         
                       </div>
@@ -108,7 +157,7 @@
                 </div>
                 <div class="comment" v-if="idClient">
                   <form action="" @submit.prevent="addCommentaire">
-                    <label for="commentaire" class="float-start fw-bolder my-3" >Ajouter un commentaire :  </label><span class="btn btn-success" @click="swal">Laisser un avis</span>
+                    <label for="commentaire" class="float-start fw-bolder my-3" >Ajouter un commentaire :  </label>
                     <textarea class="form-control" id="commentaire" rows="3" v-model="commentaire"></textarea>
                     <button type="submit" class="btn btn-success mt-2 float-end text-white">Ajouter</button>
                   </form>

@@ -11,21 +11,22 @@ const transport = nodemailer.createTransport({
     pass: "93e8ad02d5a811",
   },
 });
+
+// cette fonction permet la creation du token, on a donnée le temps d'expiration 2 heurs
 const createToken = (id) => {
   return jwt.sign({ id }, "RANDOM_TOKEN_SECRET", { expiresIn: "2h" });
 };
-
+// permet de recuperer la page d'inscription 
 module.exports.register_get = (req, res) => {
-  
   res.render("register");
 };
 
+//  cette fonction permet d'enregistrer le compte du client dans la base de donnée
 module.exports.register_post = async (req, res) => {
   try {
-    const client =await Client.findOne
-        ({email: req.body.email });
-    if(!client){
-         //generate password
+    const client = await Client.findOne({ email: req.body.email });
+    if (!client) {
+
       const salt = await bcrypt.genSalt(10);
       const hashpassword = await bcrypt.hash(req.body.password, salt);
 
@@ -43,16 +44,15 @@ module.exports.register_post = async (req, res) => {
         sexe: req.body.sexe,
         confirmation: req.body.confirmation,
       });
-    
-      res.status(201).json({ client, message: "le client a bien été créer" });
 
+      res.status(201).json({ client, message: "le client a bien été créer" });
+// on a utilisé mailoption pour mettre les information pour l'envoir de l'email
       var mailOptions = {
         from: '"BestTech Team" <bestteck@info.com>',
         to: client.email,
-        subject: 'Création de votre compte ',
+        subject: "Création de votre compte ",
         text: `Bonjour EL HILALI Abdelouahab`,
-        html: 
-        ` 
+        html: ` 
         <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -222,34 +222,35 @@ module.exports.register_post = async (req, res) => {
           </table>
         </body>
       </html>
-        `
-    };
-    transport.sendMail(mailOptions ,(err,info)=>{
-        if(err){
-            return console.log(err.message)
+        `,
+      };
+      transport.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          return console.log(err.message);
         }
-        console.log('Message sent: %s', info.messageId)
-    })
-    
-   }
-    else{
-      res.status(400).json({error :"Un utilisateur a déjà créer un compte avec ce email"})
+        console.log("Message sent: %s", info.messageId);
+      });
+    } else {
+      res
+        .status(400)
+        .json({ error: "Un utilisateur a déjà créer un compte avec ce email" });
     }
-   
-    } catch (err) {
-      res.status(400).json({ err });
-    }
+  } catch (err) {
+    res.status(400).json({ err });
+  }
 };
 
+//permet de récuperer la page de connexion
 module.exports.login_get = (req, res) => {
   res.render("login");
 };
+// cette fonction déconnecte le client en changant la durée du cookie en 1 miliseconde
 module.exports.logout = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/login");
 };
 
-//login post
+//login post récupère les information depuis la base de donnée pour les comparer et laisser le client de se conecter
 module.exports.login_post = async (req, res) => {
   try {
     const client = await Client.findOne({ email: req.body.email });
@@ -266,24 +267,22 @@ module.exports.login_post = async (req, res) => {
         try {
           const token = createToken(client);
           res.cookie("jwt", token, { httpOnly: true }); // http only pour que le coockies ne sera pas visualiser en js
-          res.status(200).json({ client: client, token })
+          res.status(200).json({ client: client, token });
         } catch (err) {
           res.status(400).json({ err: err.message, message: "Error" });
         }
       }
     } else {
-      res
-        .status(400)
-        .json({
-          error: "Aucun client est enregistrer avec cette adresse email",
-        });
+      res.status(400).json({
+        error: "Aucun client est enregistrer avec cette adresse email",
+      });
     }
   } catch (err) {
     console.log(err);
   }
 };
 
-//Validation du compte
+//cette fonction change la confirmation du compte dans la base de donné
 
 module.exports.validerCompte = async (req, res) => {
   try {
@@ -297,24 +296,19 @@ module.exports.validerCompte = async (req, res) => {
   }
 };
 
+// elle récupère l'email puis le compare avec si il existe dans la base de donnée. si il existe en envoie un email pour changer le mot de passe
 module.exports.chercherclient = async (req, res) => {
-
- 
-    const client = await Client.findOne({email: req.body.email})
-    if(!client)
-    {
-      res.status(400).json("client existe")
-    }
-    else
-    {
-      res.status(200).json("client trouve")
-      var mailOptions = {
-        from: '"BestTech Team" <bestteck@info.com>',
-        to: client.email,
-        subject: ' modifier mot de passe',
-        text: `Bonjour EL HILALI Abdelouahab`,
-        html: 
-        ` 
+  const client = await Client.findOne({ email: req.body.email });
+  if (!client) {
+    res.status(400).json("client existe");
+  } else {
+    res.status(200).json("client trouve");
+    var mailOptions = {
+      from: '"BestTech Team" <bestteck@info.com>',
+      to: client.email,
+      subject: " modifier mot de passe",
+      text: `Bonjour EL HILALI Abdelouahab`,
+      html: ` 
         <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -484,31 +478,31 @@ module.exports.chercherclient = async (req, res) => {
           </table>
         </body>
       </html>
-        `
-    };transport.sendMail(mailOptions ,(err,info)=>{
-      if(err){
-          return console.log(err.message)
+        `,
+    };
+    transport.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        return console.log(err.message);
       }
-      console.log('Message sent: %s', info.messageId)
-  })
-    }
+      console.log("Message sent: %s", info.messageId);
+    });
+  }
 };
 
+// aprés l'envoie de l'email pour changer le mot de passe cette fonction change le mot de passe en le cryptant 
 module.exports.modifiermdp = async (req, res) => {
   try {
-
     console.log(req.body.password);
- 
-      const salt = await bcrypt.genSalt(10);
-      const hashpassword = await bcrypt.hash(req.body.password, salt);
-      
-      const data = await Client.updateOne(
-        { _id: req.params.id },
-        { $set: { password: hashpassword } }
-      );
 
-      res.status(201).json( "ayayay" );
-    
+    const salt = await bcrypt.genSalt(10);  // on a crypté le mot de passe à l'aide de bcrypt
+    const hashpassword = await bcrypt.hash(req.body.password, salt);
+
+    await Client.updateOne(
+      { _id: req.params.id },
+      { $set: { password: hashpassword } }
+    );
+
+    res.status(201).json("changement de mot de passe réussi");
   } catch (err) {
     res.status(404).json({ err: err.message });
   }

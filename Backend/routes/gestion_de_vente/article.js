@@ -3,6 +3,7 @@ const articleCtrl = require("../../Controller/gestion_de_vente/article");
 const router = express.Router();
 const multer = require("multer");
 
+// on a utilisé la librairie multer pour affihcer les images
 const storage = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
@@ -30,6 +31,7 @@ const storage = multer({
     }
   },
 });
+// c'est le route elle enregistre le chemin dans l'url spécifique a chaque fonction
 router.post('/ajouter',storage.single('file'), articleCtrl.ajouterArticle);
 router.put('/modifier/:id',storage.single('file'), articleCtrl.modifierArticle);
 router.delete('/supprimer/:id', articleCtrl.supprimerArticle);

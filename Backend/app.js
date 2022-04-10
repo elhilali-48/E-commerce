@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-
+// on a affecter les chemain de routes dans une variable pour les utiliser plus tard
 const routesauth = require("./routes/authentification/client");
 const routesAuthUser = require("./routes/authentification/user");
 const routesres = require("./routes/gestion_utilisateur/responsable");
@@ -20,14 +20,16 @@ const routeslivraison = require("./routes/livraison/livraison");
 const cookieParser = require("cookie-parser");
 
 const stripepublic = process.env.STRIPE_KEY_PUBLIC;
-
 const app = express();
+
+// elle permet de donner accée du frontend ver le backend
 app.use(
   cors({
     origin: "http://localhost:8080",
   })
 );
 
+// on connecte la base de donné
 mongoose
   .connect(
     "mongodb+srv://admin:admin@cluster0.nctg3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
@@ -48,6 +50,7 @@ app.get("/", (req, res) =>
   })
 );
 
+// on ajoute le préfix de chaque chemain url
 app.use("/client", routesauth);
 app.use("/responsable/gestion", routesres);
 app.use(routesAuthUser);
@@ -63,4 +66,6 @@ app.use("/gestion/paiment", routespaiment);
 
 routescategorie;
 
+
+// on l'a exporter pour les utiliser ailleurs
 module.exports = app;

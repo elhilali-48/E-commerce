@@ -27,7 +27,6 @@
                         Vous devez indiquer un mot de passe.
                     </span>
                 </div>
-                <router-link :to="{name:'recuperer-compte'}">mot de passe oublié</router-link>
                 
                 <button  type="submit" class="btn btn-primary mt-2">Se connecter</button>
             </form>

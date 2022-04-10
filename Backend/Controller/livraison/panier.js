@@ -3,6 +3,7 @@ const Panier = require("../../models/product/Panier");
 const Article = require("../../models/product/Article");
 const Commande = require("../../models/livraison/Commande");
 
+// ajouter les articles dans le panier
 module.exports.ajouterPanier = async (req, res) => {
   console.log(req.body);
   try {
@@ -23,12 +24,14 @@ module.exports.ajouterPanier = async (req, res) => {
           );
         } else {
           try {
+            // créer un panier.
             const panier = await Panier.create({
               produitselectionner: req.body.produitselectionner,
               quantiteselectionne: req.body.quantiteselectionne,
               idcli: req.body.idcli,
             });
             await Client.updateOne(
+              // on ajouter le panier dans les articles seleconner pour le client
               { _id: req.body.idcli },
               { $push: { articleselectionner: panier } }
             );
@@ -57,6 +60,7 @@ module.exports.ajouterPanier = async (req, res) => {
   }
 };
 
+// cette fonction affiche un panier spécifique
 module.exports.voirpanier = async (req, res) => {
   try {
     const panier = await Panier.findOne(
@@ -69,6 +73,7 @@ module.exports.voirpanier = async (req, res) => {
   }
 };
 
+// modifier un panier dans la base donnée
 module.exports.modifierPanier = async (req, res) => {
   try {
     const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
@@ -99,8 +104,8 @@ module.exports.modifierPanier = async (req, res) => {
   }
 };
 
+//  supprimer un panier dans la base de donnée
 module.exports.supprimerPanier = async (req, res) => {
-  // console.log(req.body)
   try {
     const article = await Client.findOne({ _id: req.body.idcli }); // recuperer les information du l'article
 
@@ -115,7 +120,7 @@ module.exports.supprimerPanier = async (req, res) => {
             await Panier.findByIdAndDelete({ _id: req.params.id }); // j'envoie le id du panier
             await Client.updateOne(
               { _id: req.body.idcli },
-              { $pull: { articleselectionner: element } }
+              { $pull: { articleselectionner: element } } // je stocke les articles selectionné
             );
           }
         }
@@ -131,6 +136,7 @@ module.exports.supprimerPanier = async (req, res) => {
   }
 };
 
+// recupérer les articles et la quantité pour les afficher
 module.exports.afficherProduit = async (req, res) => {
   try {
     const tab = [];
@@ -147,6 +153,7 @@ module.exports.afficherProduit = async (req, res) => {
 
         const article = await Article.findOne({ _id: b });
 
+        // on ajoute la quantité et l'article dans un tableau sous format d'objet
         tab.push({ article, quanttite, a });
       }
     }

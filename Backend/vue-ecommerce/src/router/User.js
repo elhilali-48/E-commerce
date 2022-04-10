@@ -6,7 +6,7 @@ import PanierPage from "../views/Pages/PanierPage.vue"
 import PayPage from '../views/Pages/PayPage.vue'
 import SuccessPage from "../views/Pages/SuccessPage.vue"
 import CommandePage from "../views/Pages/CommandePage.vue"
-// import ValidationCompte from "../views/ValidationCompte.vue"
+import ValidationCompte from "../views/ValidationCompte.vue"
 import EditerProfile from "../views/Pages/EditerProfile.vue"
 import EditerPassword from "../views/Pages/EditerPasswrod.vue"
 import EditerEmail from "../views/Pages/EditerEmail.vue"
@@ -127,6 +127,11 @@ import RecupererMdp from "../views/Authentification/modifiermdp.vue"
             path : "/modifier/:id",
             name : 'Modifier-Password-Client',
             component : RecupererMdp
+           },
+           {
+            path : "/validation/:id",
+            name : 'ValidationCompte',
+            component : ValidationCompte
            }
 
         ]
