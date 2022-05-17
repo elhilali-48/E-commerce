@@ -26,10 +26,10 @@
 
                     <div class="d-flex d-none d-md-flex flex-row align-items-center">    
                              <div class="dropdown">
-                                <router-link :to="{name : 'panier-front'}" class="btn btn-secondary dropdown-toggle shop-bag" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <router-link :to="{name :'panier-front'}" 
+                                 class="btn btn-secondary dropdown-toggle shop-bag" type="button" id="dropdownMenuButton1"  aria-expanded="false">
                                     <i class='bx bxs-shopping-bag' style="width : 20px"></i>
                                 </router-link>
-                               
                                 <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton1" style="min-width : 390px ; right :0px; left : auto">
                                     <div v-if="lengthPanier>0">
                                         <div v-for="article in panier" :key="article._id" >
@@ -67,19 +67,13 @@
                                 </ul> -->
                             </div>
                         <div class="d-flex flex-column ms-2"> <span class="qty">{{lengthPanier}} Product</span> <span class="fw-bold">{{getTotal}} €</span> </div>
-                        <div class="d-flex flex-column ms-2">
-                            <router-link :to="{name : 'editer-profile'}" class="btn btn-secondary  shop-bag" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class='bx bx-male'></i>
-                            </router-link>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <router-link :to="{name :'accueil-page'}"  class="navbar-brand">Acceuil</router-link>
+        <router-link to="/"  class="navbar-brand">Acceuil</router-link>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span> 
         </button>
